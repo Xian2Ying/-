@@ -7,6 +7,7 @@
 ## 文档导航
 
 - [AGENTS.md](AGENTS.md) — AI 协作规范与项目背景（所有 AI 必读，共享上下文）
+- [CONTRIBUTING.md](CONTRIBUTING.md) — **队友必看**：git 协作流程、日常三步曲、谁碰什么文件、冲突怎么办
 - [docs/00-项目章程.md](docs/00-项目章程.md) — 命题理解、痛点、目标与价值
 - [docs/01-功能拆解-draft.md](docs/01-功能拆解-draft.md) — 玩法循环与功能模块（草稿）
 - [docs/02-待拍板问题.md](docs/02-待拍板问题.md) — 需要团队确认的问题清单
