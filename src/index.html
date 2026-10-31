@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<title>词勇者 · Word Quest</title>
+<style>
+  :root{
+    --bg:#15121f; --bg2:#1e1a2e; --panel:#262038; --line:#0d0b14; --edge:#5b5182;
+    --ink:#f4f1e8; --dim:#a49bb8;
+    --gold:#f5c542; --green:#4ade80; --red:#f87171; --purple:#8b7cf6; --blue:#60a5fa;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;padding:0;height:100%}
+  body{
+    background:
+      radial-gradient(circle at 20% 0%, #2b2445 0%, transparent 55%),
+      radial-gradient(circle at 85% 100%, #241f3a 0%, transparent 50%),
+      var(--bg);
+    color:var(--ink);
+    font-family:"SF Mono",Menlo,Consolas,"Courier New","PingFang SC","Microsoft YaHei",monospace;
+    font-size:15px;line-height:1.6;
+    display:flex;justify-content:center;
+  }
+  #app{width:100%;max-width:430px;min-height:100vh;padding:14px 14px 28px;position:relative}
+  .screen{display:none;animation:fade .18s ease-out}
+  .screen.on{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+  /* 像素外框 */
+  .panel{
+    background:var(--panel);border:3px solid var(--edge);
+    box-shadow:0 4px 0 var(--line), inset 0 0 0 1px rgba(255,255,255,.05);
+    padding:14px;margin-bottom:14px;
+  }
+  .btn{
+    display:block;width:100%;font-family:inherit;font-size:15px;
+    padding:14px 12px;margin-bottom:10px;cursor:pointer;
+    background:var(--purple);color:#fff;border:3px solid var(--edge);
+    box-shadow:0 4px 0 var(--line);border-radius:0;font-weight:bold;
+  }
+  .btn:active{transform:translateY(4px);box-shadow:0 0 0 var(--line)}
+  .btn.gold{background:var(--gold);color:#241f0b}
+  .btn.ghost{background:transparent;color:var(--dim);border-color:rgba(244,241,232,.25);box-shadow:none;font-weight:normal}
+  .btn.sm{display:inline-block;width:auto;padding:8px 12px;font-size:13px;margin:0 6px 0 0}
+  .row{display:flex;gap:8px}
+  .row .btn{margin-bottom:0}
+
+  h1{font-size:26px;margin:6px 0 2px;letter-spacing:2px}
+  h2{font-size:16px;margin:0 0 10px}
+  .sub{color:var(--dim);font-size:12px;margin-bottom:16px}
+  .center{text-align:center}
+  .dim{color:var(--dim)}
+  .tiny{font-size:11.5px}
+
+  /* 顶部状态条 */
+  .topbar{
+    display:flex;justify-content:space-between;align-items:center;
+    background:var(--bg2);border:3px solid var(--edge);padding:8px 10px;margin-bottom:14px;
+  }
+  .topbar b{color:var(--gold)}
+  .back{cursor:pointer;color:var(--dim);font-size:13px;border:none;background:none;font-family:inherit;padding:0}
+
+  /* 地图 */
+  .node{
+    display:flex;align-items:center;gap:12px;
+    background:var(--panel);border:3px solid var(--edge);
+    padding:14px;margin-bottom:12px;cursor:pointer;position:relative;
+  }
+  .node:active{transform:translateY(2px)}
+  .node .icon{
+    width:46px;height:46px;flex:0 0 46px;display:flex;align-items:center;justify-content:center;
+    font-size:22px;border:3px solid var(--edge);background:var(--bg2);
+  }
+  .node .nm{font-size:15px;font-weight:bold}
+  .node .st{color:var(--gold);font-size:13px;letter-spacing:2px}
+  .node.locked{opacity:.45;cursor:not-allowed}
+  .node.clear .icon{background:#20402c}
+  .link{width:3px;height:14px;background:rgba(244,241,232,.18);margin:-10px 0 -10px 30px}
+
+  /* 答题 */
+  .prog{height:12px;background:var(--bg2);border:3px solid var(--edge);margin-bottom:12px}
+  .prog i{display:block;height:100%;background:var(--green);width:0;transition:width .25s}
+  .qmeta{display:flex;justify-content:space-between;font-size:12px;color:var(--dim);margin-bottom:10px}
+  .combo{color:var(--gold);font-weight:bold}
+  .word{font-size:30px;margin:14px 0 2px;letter-spacing:1px}
+  .phon{color:var(--dim);font-size:13px;margin-bottom:4px}
+  .ask{font-size:14px;color:var(--dim);margin-bottom:14px}
+  .opt{
+    display:block;width:100%;text-align:left;font-family:inherit;font-size:15px;
+    padding:14px 12px;margin-bottom:9px;cursor:pointer;
+    background:var(--bg2);color:var(--ink);border:3px solid var(--edge);box-shadow:0 4px 0 var(--line);
+  }
+  .opt:active{transform:translateY(3px);box-shadow:0 1px 0 var(--line)}
+  .opt.right{background:#20402c;border-color:var(--green);color:#c9f7dc}
+  .opt.wrong{background:#4a1f24;border-color:var(--red);color:#ffd4d4}
+  .opt .k{display:inline-block;width:22px;color:var(--dim)}
+  .spell{
+    width:100%;font-family:inherit;font-size:20px;text-align:center;letter-spacing:2px;
+    padding:14px;background:var(--bg);color:var(--gold);border:3px solid var(--edge);margin-bottom:12px;
+  }
+  .blanks{font-size:26px;letter-spacing:6px;color:var(--gold);margin:14px 0}
+
+  /* 结算 */
+  .stars{font-size:40px;letter-spacing:8px;margin:10px 0 4px}
+  .nums{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0}
+  .nums div{background:var(--bg2);border:2px solid var(--edge);padding:10px 4px;text-align:center}
+  .nums b{display:block;font-size:19px;color:var(--gold)}
+  .nums span{font-size:11px;color:var(--dim)}
+  .npc{display:flex;gap:10px;background:var(--bg2);border:3px solid var(--edge);padding:12px;margin-top:6px}
+  .npc .ava{width:44px;height:44px;flex:0 0 44px;background:#3b2f5e;border:3px solid var(--edge);display:flex;align-items:center;justify-content:center;font-size:22px}
+
+  /* 错题本 */
+  .mw{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px dotted rgba(244,241,232,.18)}
+  .mw:last-child{border-bottom:none}
+  .mw .l b{display:block;font-size:15px}
+  .mw .l span{font-size:12px;color:var(--dim)}
+  .mw .r{display:flex;gap:6px;align-items:center}
+  .chip{font-size:11px;background:#4a1f24;color:#ffd4d4;border:2px solid var(--edge);padding:1px 6px}
+
+  /* PC 端 */
+  @media (min-width:1024px){
+    #app{max-width:900px;padding:22px}
+    .panel{padding:20px}
+    .opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .opts .opt{margin-bottom:0}
+    .nodes{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .link{display:none}
+    .word{font-size:38px}
+    .btn{font-size:16px}
+  }
+</style>
+</head>
+<body>
+<div id="app">
+
+  <!-- 首页 -->
+  <section class="screen on" id="s-home">
+    <div class="center" style="padding:34px 0 20px">
+      <div style="font-size:52px">⚔️</div>
+      <h1>词勇者</h1>
+      <div class="sub">Word Quest · 打怪就是背词</div>
+      <div class="panel center tiny" style="text-align:left">
+        这片大陆被<b style="color:var(--gold)">遗忘咒</b>笼罩，<br>
+        只有念对单词，才能击退单词怪。
+      </div>
+      <button class="btn gold" id="btn-start">开始冒险</button>
+      <button class="btn ghost" id="btn-go-mistake">我的错题本</button>
+      <button class="btn ghost" id="btn-go-set">设置</button>
+      <div class="tiny dim" style="margin-top:16px">进度存在本机 · 断网也能玩</div>
+    </div>
+  </section>
+
+  <!-- 地图 -->
+  <section class="screen" id="s-map">
+    <div class="topbar">
+      <div>Lv.<b id="tb-lv">1</b> · <span id="tb-xp">0</span> XP</div>
+      <div>🪙 <b id="tb-coin">0</b></div>
+    </div>
+    <h2>冒险地图</h2>
+    <div class="nodes" id="nodes"></div>
+    <div class="panel">
+      <h2>其他地方</h2>
+      <button class="btn ghost sm" id="btn-mistake">📕 错题本</button>
+      <button class="btn ghost sm" id="btn-npc">💬 口语镇</button>
+      <button class="btn ghost sm" id="btn-set">⚙️ 设置</button>
+    </div>
+    <div class="tiny dim center" id="map-tip"></div>
+  </section>
+
+  <!-- 答题 -->
+  <section class="screen" id="s-quiz">
+    <div class="topbar">
+      <button class="back" id="btn-quit">✕ 退出</button>
+      <div>🪙 <b id="q-coin">0</b> <span class="combo" id="q-combo"></span></div>
+    </div>
+    <div class="prog"><i id="q-prog"></i></div>
+    <div class="qmeta"><span id="q-idx">第 1/10 题</span><span id="q-type"></span></div>
+    <div class="panel" id="q-body"></div>
+  </section>
+
+  <!-- 结算 -->
+  <section class="screen" id="s-result">
+    <div class="panel center">
+      <div class="tiny dim" id="r-title">第 1 关 · 通关</div>
+      <div class="stars" id="r-stars">★★★</div>
+      <div class="nums">
+        <div><b id="r-rate">100%</b><span>正确率</span></div>
+        <div><b id="r-coin">0</b><span>获得金币</span></div>
+        <div><b id="r-time">0:00</b><span>用时</span></div>
+      </div>
+      <div class="npc">
+        <div class="ava">🧙</div>
+        <div class="tiny" id="r-say" style="text-align:left"></div>
+      </div>
+    </div>
+    <button class="btn gold" id="btn-again">再来一关</button>
+    <button class="btn" id="btn-back-map">回到地图</button>
+    <button class="btn ghost" id="btn-mistake2">看看这次错的词</button>
+    <div class="tiny dim center" id="r-wrong" style="margin-top:10px"></div>
+  </section>
+
+  <!-- 错题本 -->
+  <section class="screen" id="s-mistake">
+    <div class="topbar">
+      <button class="back" id="btn-back1">← 返回</button>
+      <div id="m-count">错题 0</div>
+    </div>
+    <div class="panel" id="m-list"></div>
+    <button class="btn gold" id="btn-practice-all">一键重练（最多 10 个）</button>
+    <div class="tiny dim center" style="margin-top:8px">连续答对 2 次，这个词就毕业啦</div>
+  </section>
+
+  <!-- 设置 -->
+  <section class="screen" id="s-set">
+    <div class="topbar">
+      <button class="back" id="btn-back2">← 返回</button>
+      <div>设置</div>
+    </div>
+    <div class="panel">
+      <h2>音效</h2>
+      <button class="btn sm" id="btn-sfx">🔊 开</button>
+      <h2 style="margin-top:16px">发音语速</h2>
+      <button class="btn sm" id="btn-rate">正常 1.0x</button>
+      <h2 style="margin-top:16px">数据</h2>
+      <button class="btn ghost" id="btn-clear">清空全部进度</button>
+    </div>
+    <div class="tiny dim center">词勇者 v0.1 · 词库 100 词</div>
+  </section>
+
+</div>
+
+<!--WORDS:START-->
+<script id="word-data" type="application/json">{"meta":{"version":1,"name":"四级高频词 100 词","source":"内容官 A 校对台 · 已校对 100/100","updated":"2026-10-31","levels":{"1":{"name":"遗忘森林","count":35},"2":{"name":"回声洞穴","count":33},"3":{"name":"静默雪山","count":32}},"total":100},"words":[{"id":"w001","en":"abandon","phonetic":"/əˈbændən/","pos":"v.","zh":"放弃；抛弃","example":"They had to abandon the plan because of the storm.","exampleZh":"由于暴风雨，他们不得不放弃这个计划。","level":1,"distractors":["abdicate","abduct","absorb"]},{"id":"w002","en":"ability","phonetic":"/əˈbɪləti/","pos":"n.","zh":"能力；才能","example":"She has the ability to solve difficult problems.","exampleZh":"她有解决难题的能力。","level":1,"distractors":["agency","capability","activity"]},{"id":"w003","en":"achieve","phonetic":"/əˈtʃiːv/","pos":"v.","zh":"实现；取得","example":"He worked hard to achieve his goal.","exampleZh":"他努力工作以实现目标。","level":1,"distractors":["acquire","arrive","approach"]},{"id":"w004","en":"ancient","phonetic":"/ˈeɪnʃənt/","pos":"adj.","zh":"古代的；古老的","example":"We visited an ancient temple in the mountains.","exampleZh":"我们参观了山中的一座古庙。","level":1,"distractors":["antique","aged","annual"]},{"id":"w005","en":"annual","phonetic":"/ˈænjuəl/","pos":"adj.","zh":"每年的；年度的","example":"The annual meeting will be held in May.","exampleZh":"年度会议将在五月举行。","level":1,"distractors":["manual","actual","usual"]},{"id":"w006","en":"approach","phonetic":"/əˈproʊtʃ/","pos":"n./v.","zh":"方法；接近","example":"We need a new approach to this problem.","exampleZh":"我们需要一种新方法来解决这个问题。","level":1,"distractors":["appear","approve","arrange"]},{"id":"w007","en":"available","phonetic":"/əˈveɪləbl/","pos":"adj.","zh":"可获得的；有空的","example":"Tickets are still available at the box office.","exampleZh":"售票处仍有票可售。","level":1,"distractors":["valuable","variable","avoidable"]},{"id":"w008","en":"benefit","phonetic":"/ˈbenɪfɪt/","pos":"n./v.","zh":"利益；受益","example":"Regular exercise will benefit your health.","exampleZh":"经常锻炼对你的健康有益。","level":1,"distractors":["profit","budget","behalf"]},{"id":"w009","en":"capable","phonetic":"/ˈkeɪpəbl/","pos":"adj.","zh":"有能力的；能够的","example":"She is capable of handling the project alone.","exampleZh":"她有能力独自处理这个项目。","level":1,"distractors":["possible","probable","compatible"]},{"id":"w010","en":"challenge","phonetic":"/ˈtʃælɪndʒ/","pos":"n./v.","zh":"挑战；质疑","example":"Learning a language is a real challenge.","exampleZh":"学一门语言是真正的挑战。","level":1,"distractors":["change","channel","chance"]},{"id":"w011","en":"community","phonetic":"/kəˈmjuːnəti/","pos":"n.","zh":"社区；团体","example":"The new library serves the whole community.","exampleZh":"新图书馆服务于整个社区。","level":1,"distractors":["society","facility","communion"]},{"id":"w012","en":"concentrate","phonetic":"/ˈkɑːnsntreɪt/","pos":"v.","zh":"集中；专心","example":"I can't concentrate with all this noise.","exampleZh":"这么吵我无法集中注意力。","level":1,"distractors":["contrast","contribute","conclude"]},{"id":"w013","en":"confident","phonetic":"/ˈkɑːnfɪdənt/","pos":"adj.","zh":"自信的；确信的","example":"She feels confident about the interview.","exampleZh":"她对面试很有信心。","level":1,"distractors":["confidential","consistent","convenient"]},{"id":"w014","en":"consider","phonetic":"/kənˈsɪdər/","pos":"v.","zh":"考虑；认为","example":"Please consider my suggestion carefully.","exampleZh":"请仔细考虑我的建议。","level":1,"distractors":["consult","consist","conserve"]},{"id":"w015","en":"culture","phonetic":"/ˈkʌltʃər/","pos":"n.","zh":"文化","example":"Chinese culture has a long history.","exampleZh":"中国文化历史悠久。","level":1,"distractors":["custom","agriculture","creature"]},{"id":"w016","en":"decide","phonetic":"/dɪˈsaɪd/","pos":"v.","zh":"决定","example":"They decided to move to another city.","exampleZh":"他们决定搬到另一个城市。","level":1,"distractors":["derive","deprive","desire"]},{"id":"w017","en":"develop","phonetic":"/dɪˈveləp/","pos":"v.","zh":"发展；开发","example":"The company plans to develop a new app.","exampleZh":"公司计划开发一款新应用。","level":1,"distractors":["deliver","envelop","depart"]},{"id":"w018","en":"effort","phonetic":"/ˈefərt/","pos":"n.","zh":"努力","example":"Success comes from constant effort.","exampleZh":"成功来自持续的努力。","level":1,"distractors":["effect","afford","offer"]},{"id":"w019","en":"environment","phonetic":"/ɪnˈvaɪrənmənt/","pos":"n.","zh":"环境","example":"We should protect the environment.","exampleZh":"我们应该保护环境。","level":1,"distractors":["equipment","agreement","enjoyment"]},{"id":"w020","en":"experience","phonetic":"/ɪkˈspɪriəns/","pos":"n./v.","zh":"经验；经历","example":"She has ten years of teaching experience.","exampleZh":"她有十年教学经验。","level":1,"distractors":["experiment","expense","existence"]},{"id":"w021","en":"familiar","phonetic":"/fəˈmɪliər/","pos":"adj.","zh":"熟悉的","example":"His voice sounded familiar to me.","exampleZh":"他的声音听起来很熟悉。","level":1,"distractors":["similar","family","fashionable"]},{"id":"w022","en":"generation","phonetic":"/ˌdʒenəˈreɪʃn/","pos":"n.","zh":"一代人","example":"The younger generation loves online shopping.","exampleZh":"年轻一代喜爱网购。","level":1,"distractors":["general","operation","graduation"]},{"id":"w023","en":"improve","phonetic":"/ɪmˈpruːv/","pos":"v.","zh":"改善；提高","example":"Reading every day will improve your writing.","exampleZh":"每天阅读会提高你的写作。","level":1,"distractors":["approve","remove","prove"]},{"id":"w024","en":"influence","phonetic":"/ˈɪnfluəns/","pos":"n./v.","zh":"影响","example":"Parents have a great influence on children.","exampleZh":"父母对孩子有很大影响。","level":1,"distractors":["affluence","inflation","instance"]},{"id":"w025","en":"knowledge","phonetic":"/ˈnɑːlɪdʒ/","pos":"n.","zh":"知识","example":"Knowledge is power.","exampleZh":"知识就是力量。","level":1,"distractors":["acknowledge","college","notice"]},{"id":"w026","en":"manage","phonetic":"/ˈmænɪdʒ/","pos":"v.","zh":"管理；设法做到","example":"She manages a team of twenty people.","exampleZh":"她管理着一个二十人的团队。","level":1,"distractors":["message","damage","image"]},{"id":"w027","en":"opportunity","phonetic":"/ˌɑːpərˈtuːnəti/","pos":"n.","zh":"机会","example":"This job is a great opportunity for you.","exampleZh":"这份工作对你是很好的机会。","level":1,"distractors":["opposition","operation","optimism"]},{"id":"w028","en":"personal","phonetic":"/ˈpɜːrsənl/","pos":"adj.","zh":"个人的；私人的","example":"He never talks about his personal life.","exampleZh":"他从不谈自己的私生活。","level":1,"distractors":["personnel","partial","practical"]},{"id":"w029","en":"possible","phonetic":"/ˈpɑːsəbl/","pos":"adj.","zh":"可能的","example":"It is possible to finish the work today.","exampleZh":"今天完成这项工作是可能的。","level":1,"distractors":["probable","portable","positive"]},{"id":"w030","en":"prepare","phonetic":"/prɪˈper/","pos":"v.","zh":"准备","example":"We must prepare for the exam.","exampleZh":"我们必须为考试做准备。","level":1,"distractors":["repair","compare","declare"]},{"id":"w031","en":"provide","phonetic":"/prəˈvaɪd/","pos":"v.","zh":"提供","example":"The school provides free lunch for students.","exampleZh":"学校为学生提供免费午餐。","level":1,"distractors":["preside","propose","protect"]},{"id":"w032","en":"reason","phonetic":"/ˈriːzn/","pos":"n.","zh":"原因；理由","example":"What is the reason for your absence?","exampleZh":"你缺席的原因是什么？","level":1,"distractors":["season","region","reasoning"]},{"id":"w033","en":"reduce","phonetic":"/rɪˈduːs/","pos":"v.","zh":"减少；降低","example":"We should reduce the use of plastic.","exampleZh":"我们应该减少塑料的使用。","level":1,"distractors":["deduce","produce","introduce"]},{"id":"w034","en":"support","phonetic":"/səˈpɔːrt/","pos":"n./v.","zh":"支持","example":"My family always supports my choices.","exampleZh":"我的家人总是支持我的选择。","level":1,"distractors":["suppose","report","suggest"]},{"id":"w035","en":"tradition","phonetic":"/trəˈdɪʃn/","pos":"n.","zh":"传统","example":"It is a tradition to eat dumplings at Spring Festival.","exampleZh":"春节吃饺子是一种传统。","level":1,"distractors":["transition","translation","trainee"]},{"id":"w036","en":"accurate","phonetic":"/ˈækjərət/","pos":"adj.","zh":"准确的；精确的","example":"The report gives an accurate description of the event.","exampleZh":"这份报告对事件做了准确的描述。","level":2,"distractors":["curate","accelerate","adequate"]},{"id":"w037","en":"adapt","phonetic":"/əˈdæpt/","pos":"v.","zh":"适应；改编","example":"Children adapt to new environments quickly.","exampleZh":"孩子们能很快适应新环境。","level":2,"distractors":["adopt","adept","accept"]},{"id":"w038","en":"afford","phonetic":"/əˈfɔːrd/","pos":"v.","zh":"负担得起","example":"I can't afford such an expensive car.","exampleZh":"我买不起这么贵的车。","level":2,"distractors":["offer","affect","effort"]},{"id":"w039","en":"appreciate","phonetic":"/əˈpriːʃieɪt/","pos":"v.","zh":"欣赏；感激","example":"I really appreciate your help.","exampleZh":"我非常感激你的帮助。","level":2,"distractors":["associate","appreciable","apprehend"]},{"id":"w040","en":"assume","phonetic":"/əˈsuːm/","pos":"v.","zh":"假定；承担","example":"Don't assume that everyone agrees with you.","exampleZh":"不要假定每个人都同意你。","level":2,"distractors":["resume","consume","presume"]},{"id":"w041","en":"attitude","phonetic":"/ˈætɪtuːd/","pos":"n.","zh":"态度","example":"A positive attitude helps you go further.","exampleZh":"积极的态度能帮你走得更远。","level":2,"distractors":["altitude","aptitude","latitude"]},{"id":"w042","en":"aware","phonetic":"/əˈwer/","pos":"adj.","zh":"意识到的；知道的","example":"Are you aware of the risks involved?","exampleZh":"你意识到其中的风险了吗？","level":2,"distractors":["award","awake","awareness"]},{"id":"w043","en":"compete","phonetic":"/kəmˈpiːt/","pos":"v.","zh":"竞争；比赛","example":"Ten teams will compete for the prize.","exampleZh":"十支队伍将争夺这个奖项。","level":2,"distractors":["complete","compute","compel"]},{"id":"w044","en":"complex","phonetic":"/kəmˈpleks/","pos":"adj.","zh":"复杂的","example":"This is a complex issue with no easy answer.","exampleZh":"这是一个没有简单答案的复杂问题。","level":2,"distractors":["context","perplex","complexity"]},{"id":"w045","en":"contribute","phonetic":"/kənˈtrɪbjuːt/","pos":"v.","zh":"贡献；促成","example":"Everyone contributed to the success of the event.","exampleZh":"每个人都为活动的成功做出了贡献。","level":2,"distractors":["distribute","attribute","constitute"]},{"id":"w046","en":"convince","phonetic":"/kənˈvɪns/","pos":"v.","zh":"说服；使确信","example":"She convinced me to change my mind.","exampleZh":"她说服我改变了主意。","level":2,"distractors":["convict","conceive","consist"]},{"id":"w047","en":"declare","phonetic":"/dɪˈkler/","pos":"v.","zh":"宣布；声明","example":"The government declared a state of emergency.","exampleZh":"政府宣布进入紧急状态。","level":2,"distractors":["decline","decorate","clarify"]},{"id":"w048","en":"demand","phonetic":"/dɪˈmænd/","pos":"n./v.","zh":"需求；要求","example":"The demand for clean energy is growing.","exampleZh":"对清洁能源的需求在增长。","level":2,"distractors":["command","remark","demanding"]},{"id":"w049","en":"deposit","phonetic":"/dɪˈpɑːzɪt/","pos":"n./v.","zh":"存款；押金","example":"You need to pay a deposit before moving in.","exampleZh":"入住前你需要交押金。","level":2,"distractors":["depose","depict","position"]},{"id":"w050","en":"deserve","phonetic":"/dɪˈzɜːrv/","pos":"v.","zh":"应得；值得","example":"You deserve a rest after all that work.","exampleZh":"做了那么多工作，你应该休息一下。","level":2,"distractors":["reserve","observe","presume"]},{"id":"w051","en":"distinguish","phonetic":"/dɪˈstɪŋɡwɪʃ/","pos":"v.","zh":"区分；辨别","example":"Can you distinguish between the two twins?","exampleZh":"你能区分这对双胞胎吗？","level":2,"distractors":["extinguish","distinct","distract"]},{"id":"w052","en":"efficient","phonetic":"/ɪˈfɪʃnt/","pos":"adj.","zh":"高效的","example":"The new system is much more efficient.","exampleZh":"新系统效率高得多。","level":2,"distractors":["sufficient","proficient","affectionate"]},{"id":"w053","en":"emphasize","phonetic":"/ˈemfəsaɪz/","pos":"v.","zh":"强调","example":"The teacher emphasized the importance of practice.","exampleZh":"老师强调了练习的重要性。","level":2,"distractors":["emphasis","empathize","energize"]},{"id":"w054","en":"essential","phonetic":"/ɪˈsenʃl/","pos":"adj.","zh":"必要的；本质的","example":"Water is essential to all living things.","exampleZh":"水对所有生物都是必不可少的。","level":2,"distractors":["special","sensible","sequential"]},{"id":"w055","en":"estimate","phonetic":"/ˈestɪmeɪt/","pos":"n./v.","zh":"估计；估算","example":"Experts estimate the cost at one million dollars.","exampleZh":"专家估计成本为一百万美元。","level":2,"distractors":["intimate","ultimate","esteem"]},{"id":"w056","en":"guarantee","phonetic":"/ˌɡærənˈtiː/","pos":"n./v.","zh":"保证；担保","example":"We guarantee the quality of our products.","exampleZh":"我们保证产品的质量。","level":2,"distractors":["guarantor","grantee","guardian"]},{"id":"w057","en":"ignore","phonetic":"/ɪɡˈnɔːr/","pos":"v.","zh":"忽视；不理","example":"He ignored my advice and failed.","exampleZh":"他忽视我的建议，结果失败了。","level":2,"distractors":["ignite","recognize","ignorance"]},{"id":"w058","en":"impress","phonetic":"/ɪmˈpres/","pos":"v.","zh":"给…留下深刻印象","example":"Her speech impressed everyone in the room.","exampleZh":"她的演讲给屋里每个人留下深刻印象。","level":2,"distractors":["express","compress","suppress"]},{"id":"w059","en":"indicate","phonetic":"/ˈɪndɪkeɪt/","pos":"v.","zh":"表明；指示","example":"The results indicate a clear improvement.","exampleZh":"结果表明有明显的进步。","level":2,"distractors":["dedicate","indict","intimate"]},{"id":"w060","en":"maintain","phonetic":"/meɪnˈteɪn/","pos":"v.","zh":"维持；保养","example":"It is important to maintain a healthy diet.","exampleZh":"保持健康饮食很重要。","level":2,"distractors":["contain","retain","remain"]},{"id":"w061","en":"obtain","phonetic":"/əbˈteɪn/","pos":"v.","zh":"获得；取得","example":"You must obtain permission before entering.","exampleZh":"进入前你必须获得许可。","level":2,"distractors":["attain","sustain","abstain"]},{"id":"w062","en":"participate","phonetic":"/pɑːrˈtɪsɪpeɪt/","pos":"v.","zh":"参加；参与","example":"All students are encouraged to participate.","exampleZh":"鼓励所有学生参加。","level":2,"distractors":["anticipate","participant","participle"]},{"id":"w063","en":"persuade","phonetic":"/pərˈsweɪd/","pos":"v.","zh":"劝说；说服","example":"He persuaded her to try again.","exampleZh":"他说服她再试一次。","level":2,"distractors":["pervade","dissuade","persuasion"]},{"id":"w064","en":"potential","phonetic":"/pəˈtenʃl/","pos":"n./adj.","zh":"潜力；潜在的","example":"The young player has great potential.","exampleZh":"这位年轻球员潜力巨大。","level":2,"distractors":["potent","patience","portal"]},{"id":"w065","en":"recognize","phonetic":"/ˈrekəɡnaɪz/","pos":"v.","zh":"认出；承认","example":"I didn't recognize him with a beard.","exampleZh":"他留了胡子，我没认出他。","level":2,"distractors":["realize","organize","reorganize"]},{"id":"w066","en":"reflect","phonetic":"/rɪˈflekt/","pos":"v.","zh":"反映；反思","example":"The survey reflects public opinion.","exampleZh":"这项调查反映了公众意见。","level":2,"distractors":["deflect","neglect","select"]},{"id":"w067","en":"reluctant","phonetic":"/rɪˈlʌktənt/","pos":"adj.","zh":"不情愿的","example":"She was reluctant to leave her hometown.","exampleZh":"她不情愿离开家乡。","level":2,"distractors":["redundant","resistant","relevant"]},{"id":"w068","en":"sufficient","phonetic":"/səˈfɪʃnt/","pos":"adj.","zh":"足够的","example":"We have sufficient food for a week.","exampleZh":"我们有够吃一周的食物。","level":2,"distractors":["deficient","proficient","efficient"]},{"id":"w069","en":"accomplish","phonetic":"/əˈkɑːmplɪʃ/","pos":"v.","zh":"完成；实现","example":"She accomplished the task ahead of schedule.","exampleZh":"她提前完成了任务。","level":3,"distractors":["accompany","polish","abolish"]},{"id":"w070","en":"adequate","phonetic":"/ˈædɪkwət/","pos":"adj.","zh":"足够的；适当的","example":"The room is adequate for two people.","exampleZh":"这个房间供两人住是够的。","level":3,"distractors":["accurate","adoptive","adherent"]},{"id":"w071","en":"anticipate","phonetic":"/ænˈtɪsɪpeɪt/","pos":"v.","zh":"预期；预料","example":"We anticipate a rise in prices.","exampleZh":"我们预计价格会上涨。","level":3,"distractors":["participate","participant","estimate"]},{"id":"w072","en":"arbitrary","phonetic":"/ˈɑːrbɪtreri/","pos":"adj.","zh":"任意的；武断的","example":"The decision seemed completely arbitrary.","exampleZh":"这个决定看起来完全是武断的。","level":3,"distractors":["ordinary","arbitrate","artificial"]},{"id":"w073","en":"assess","phonetic":"/əˈses/","pos":"v.","zh":"评估；评定","example":"Teachers assess students' progress each term.","exampleZh":"老师每学期评估学生的进步。","level":3,"distractors":["access","assert","assets"]},{"id":"w074","en":"comprehensive","phonetic":"/ˌkɑːmprɪˈhensɪv/","pos":"adj.","zh":"全面的；综合的","example":"The book offers a comprehensive overview of history.","exampleZh":"这本书提供了对历史的全面概览。","level":3,"distractors":["comprehensible","comprehend","compressive"]},{"id":"w075","en":"consistent","phonetic":"/kənˈsɪstənt/","pos":"adj.","zh":"一致的；持续的","example":"His story is consistent with the facts.","exampleZh":"他的说法与事实一致。","level":3,"distractors":["insistent","resistant","constant"]},{"id":"w076","en":"contemporary","phonetic":"/kənˈtempəreri/","pos":"adj.","zh":"当代的；同时代的","example":"She studies contemporary art in college.","exampleZh":"她在大学学习当代艺术。","level":3,"distractors":["temporary","contempt","contemplate"]},{"id":"w077","en":"crucial","phonetic":"/ˈkruːʃl/","pos":"adj.","zh":"关键的；至关重要的","example":"This is a crucial moment for the team.","exampleZh":"这对球队来说是关键时刻。","level":3,"distractors":["critical","crude","cruel"]},{"id":"w078","en":"deliberate","phonetic":"/dɪˈlɪbərət/","pos":"adj.","zh":"故意的；深思熟虑的","example":"The damage was clearly deliberate.","exampleZh":"这一损坏显然是故意的。","level":3,"distractors":["delicate","liberate","celebrate"]},{"id":"w079","en":"diminish","phonetic":"/dɪˈmɪnɪʃ/","pos":"v.","zh":"减少；削弱","example":"His influence has diminished over the years.","exampleZh":"多年来他的影响力已经减弱。","level":3,"distractors":["demolish","diminutive","minister"]},{"id":"w080","en":"elaborate","phonetic":"/ɪˈlæbərət/","pos":"adj./v.","zh":"详尽的；详细阐述","example":"Could you elaborate on your plan?","exampleZh":"你能详细说明一下你的计划吗？","level":3,"distractors":["elaboration","electorate","collaborate"]},{"id":"w081","en":"enormous","phonetic":"/ɪˈnɔːrməs/","pos":"adj.","zh":"巨大的","example":"They live in an enormous house in the countryside.","exampleZh":"他们住在乡下一栋巨大的房子里。","level":3,"distractors":["anonymous","enormity","famous"]},{"id":"w082","en":"exaggerate","phonetic":"/ɪɡˈzædʒəreɪt/","pos":"v.","zh":"夸大；夸张","example":"Don't exaggerate; it wasn't that serious.","exampleZh":"别夸张，没那么严重。","level":3,"distractors":["exaggeration","exasperate","aggravate"]},{"id":"w083","en":"explicit","phonetic":"/ɪkˈsplɪsɪt/","pos":"adj.","zh":"明确的；直白的","example":"She gave explicit instructions for the task.","exampleZh":"她为这项任务给出了明确的指示。","level":3,"distractors":["implicit","explicate","explicable"]},{"id":"w084","en":"fluctuate","phonetic":"/ˈflʌktʃueɪt/","pos":"v.","zh":"波动；起伏","example":"Prices fluctuate with market demand.","exampleZh":"价格随市场需求波动。","level":3,"distractors":["fluctuation","fabricate","formulate"]},{"id":"w085","en":"fundamental","phonetic":"/ˌfʌndəˈmentl/","pos":"adj.","zh":"根本的；基础的","example":"Reading is a fundamental skill in education.","exampleZh":"阅读是教育中的一项基本技能。","level":3,"distractors":["foundation","fundamentalist","funeral"]},{"id":"w086","en":"hypothesis","phonetic":"/haɪˈpɑːθəsɪs/","pos":"n.","zh":"假设；假说","example":"The data support the original hypothesis.","exampleZh":"数据支持最初的假设。","level":3,"distractors":["hypothetical","hyphen","hypocrisy"]},{"id":"w087","en":"implement","phonetic":"/ˈɪmplɪment/","pos":"v.","zh":"实施；执行","example":"The school decided to implement a new policy.","exampleZh":"学校决定实施一项新政策。","level":3,"distractors":["implicate","complement","implant"]},{"id":"w088","en":"inevitable","phonetic":"/ɪnˈevɪtəbl/","pos":"adj.","zh":"不可避免的","example":"Change is inevitable in any organization.","exampleZh":"在任何组织中，变革都是不可避免的。","level":3,"distractors":["ineligible","invincible","invaluable"]},{"id":"w089","en":"interpret","phonetic":"/ɪnˈtɜːrprət/","pos":"v.","zh":"解释；口译","example":"How do you interpret this sentence?","exampleZh":"你怎么解释这句话？","level":3,"distractors":["interrupt","intercept","interpretation"]},{"id":"w090","en":"justify","phonetic":"/ˈdʒʌstɪfaɪ/","pos":"v.","zh":"证明…正当；辩护","example":"Nothing can justify such behavior.","exampleZh":"没有什么能为这种行为辩护。","level":3,"distractors":["justice","justifiable","testify"]},{"id":"w091","en":"legitimate","phonetic":"/lɪˈdʒɪtɪmət/","pos":"adj.","zh":"合法的；合理的","example":"He has a legitimate reason for being late.","exampleZh":"他迟到有正当理由。","level":3,"distractors":["legislate","literate","legacy"]},{"id":"w092","en":"negotiate","phonetic":"/nɪˈɡoʊʃieɪt/","pos":"v.","zh":"谈判；协商","example":"The two companies are negotiating a contract.","exampleZh":"两家公司正在协商一份合同。","level":3,"distractors":["negate","navigate","negotiation"]},{"id":"w093","en":"obscure","phonetic":"/əbˈskjʊr/","pos":"adj./v.","zh":"模糊的；使模糊","example":"The meaning of the poem is rather obscure.","exampleZh":"这首诗的含义相当晦涩。","level":3,"distractors":["obscene","obsess","obscurity"]},{"id":"w094","en":"phenomenon","phonetic":"/fəˈnɑːmɪnən/","pos":"n.","zh":"现象","example":"Online shopping is a worldwide phenomenon.","exampleZh":"网购是一种世界性现象。","level":3,"distractors":["phenomena","phenomenal","philanthropy"]},{"id":"w095","en":"precise","phonetic":"/prɪˈsaɪs/","pos":"adj.","zh":"精确的；确切的","example":"Please give me the precise time of arrival.","exampleZh":"请告诉我确切的到达时间。","level":3,"distractors":["concise","premise","precede"]},{"id":"w096","en":"preserve","phonetic":"/prɪˈzɜːrv/","pos":"v.","zh":"保护；保存","example":"We should preserve the old buildings in the city.","exampleZh":"我们应该保护城市里的老建筑。","level":3,"distractors":["reserve","perverse","persist"]},{"id":"w097","en":"reluctance","phonetic":"/rɪˈlʌktəns/","pos":"n.","zh":"不情愿；勉强","example":"He agreed with great reluctance.","exampleZh":"他非常勉强地同意了。","level":3,"distractors":["relevance","resistance","reliance"]},{"id":"w098","en":"simultaneously","phonetic":"/ˌsaɪmlˈteɪniəsli/","pos":"adv.","zh":"同时地","example":"The two events happened simultaneously.","exampleZh":"两件事同时发生。","level":3,"distractors":["simultaneous","spontaneously","similarly"]},{"id":"w099","en":"sustainable","phonetic":"/səˈsteɪnəbl/","pos":"adj.","zh":"可持续的","example":"We need sustainable solutions for the future.","exampleZh":"我们需要面向未来的可持续方案。","level":3,"distractors":["sustained","sustain","attainable"]},{"id":"w100","en":"vulnerable","phonetic":"/ˈvʌlnərəbl/","pos":"adj.","zh":"易受伤害的；脆弱的","example":"Young children are vulnerable to infections.","exampleZh":"幼儿容易受感染。","level":3,"distractors":["voluntary","valuable","vulnerably"]}]}</script>
+<!--WORDS:END-->
+
+<script>
+(function(){
+"use strict";
+
+/* ============ 数据层：唯一读写入口（视图层不得直接碰 localStorage） ============ */
+var KEY = "wordquest.save.v1";
+var Store = {
+  data: null,
+  load: function(){
+    if(this.data) return this.data;
+    var raw = null;
+    try { raw = localStorage.getItem(KEY); } catch(e){}
+    var d = null;
+    if(raw){ try { d = JSON.parse(raw); } catch(e){ d = null; } }
+    if(!d || d.v !== 1) d = this.fresh();
+    this.data = d;
+    return d;
+  },
+  fresh: function(){
+    return {
+      v:1,
+      profile:{level:1,xp:0,coins:0,lastPlayDate:""},
+      progress:{1:{stars:0,bestRate:0},2:{stars:0,bestRate:0},3:{stars:0,bestRate:0}},
+      words:{}, mistakes:[], settings:{sfx:true,ttsRate:1}
+    };
+  },
+  save: function(){
+    try { localStorage.setItem(KEY, JSON.stringify(this.data)); } catch(e){}
+  },
+  reset: function(){ this.data = this.fresh(); this.save(); }
+};
+var save = Store.load();
+
+/* ============ 词库 ============ */
+var DATA = {words:[]};
+try { DATA = JSON.parse(document.getElementById("word-data").textContent) || DATA; } catch(e){}
+var WORDS = DATA.words || [];
+var LEVEL_NAME = {1:"遗忘森林",2:"回声洞穴",3:"静默雪山"};
+var LEVEL_ICON = {1:"🌲",2:"🕳️",3:"🏔️"};
+var QSIZE = 10;
+
+/* ============ 音效（Web Audio 合成，无需素材文件） ============ */
+var actx = null;
+function ensureAudio(){
+  if(!actx){ try { actx = new (window.AudioContext || window.webkitAudioContext)(); } catch(e){} }
+  if(actx && actx.state === "suspended") actx.resume();
+}
+function beep(freq, dur, type, vol){
+  if(!save.settings.sfx) return;
+  ensureAudio(); if(!actx) return;
+  var o = actx.createOscillator(), g = actx.createGain();
+  o.type = type || "square"; o.frequency.value = freq;
+  g.gain.setValueAtTime(vol || 0.07, actx.currentTime);
+  g.gain.exponentialRampToValueAtTime(0.001, actx.currentTime + dur);
+  o.connect(g); g.connect(actx.destination);
+  o.start(); o.stop(actx.currentTime + dur);
+}
+var SFX = {
+  right: function(){ beep(660,.08); setTimeout(function(){beep(990,.10);},80); },
+  wrong: function(){ beep(180,.22,"sawtooth",.05); },
+  clear: function(){ [523,659,784,1047].forEach(function(f,i){ setTimeout(function(){beep(f,.14);}, i*110); }); },
+  tap:   function(){ beep(440,.05,"triangle",.04); }
+};
+
+/* ============ 发音 ============ */
+function speak(text){
+  if(!window.speechSynthesis) return;
+  try{
+    window.speechSynthesis.cancel();
+    var u = new SpeechSynthesisUtterance(text);
+    u.lang = "en-US"; u.rate = save.settings.ttsRate || 1;
+    window.speechSynthesis.speak(u);
+  }catch(e){}
+}
+
+/* ============ 屏幕切换 ============ */
+var SCREENS = ["home","map","quiz","result","mistake","set"];
+function show(name){
+  SCREENS.forEach(function(s){
+    document.getElementById("s-"+s).classList.toggle("on", s === name);
+  });
+  if(location.hash.slice(1) !== name){ try{ history.replaceState(null,"","#"+name); }catch(e){} }
+  window.scrollTo(0,0);
+}
+function $(id){ return document.getElementById(id); }
+
+/* ============ 地图 ============ */
+function unlocked(level){
+  if(level === 1) return true;
+  return (save.progress[level-1] && save.progress[level-1].stars >= 1);
+}
+function renderMap(){
+  $("tb-lv").textContent = save.profile.level;
+  $("tb-xp").textContent = save.profile.xp;
+  $("tb-coin").textContent = save.profile.coins;
+  var box = $("nodes"); box.innerHTML = "";
+  [1,2,3].forEach(function(lv){
+    if(lv > 1){ var lk = document.createElement("div"); lk.className = "link"; box.appendChild(lk); }
+    var p = save.progress[lv] || {stars:0};
+    var open = unlocked(lv);
+    var d = document.createElement("div");
+    d.className = "node" + (open ? "" : " locked") + (p.stars >= 1 ? " clear" : "");
+    var star = p.stars > 0 ? "★".repeat(p.stars) + "☆".repeat(3-p.stars) : "未通关";
+    d.innerHTML =
+      '<div class="icon">' + LEVEL_ICON[lv] + '</div>' +
+      '<div><div class="nm">第 ' + lv + ' 关 · ' + LEVEL_NAME[lv] + '</div>' +
+      '<div class="st">' + (open ? star : "🔒 先通过第 " + (lv-1) + " 关") + '</div></div>';
+    if(open) d.onclick = function(){ SFX.tap(); startLevel(lv); };
+    else d.onclick = function(){ SFX.wrong(); $("map-tip").textContent = "先通过第 " + (lv-1) + " 关才能解锁哦"; };
+    box.appendChild(d);
+  });
+  var total = Object.keys(save.words).length;
+  $("map-tip").textContent = "已接触 " + total + " / 100 词 · 错题 " + save.mistakes.length + " 个";
+}
+
+/* ============ 出题 ============ */
+function shuffle(a){
+  for(var i=a.length-1;i>0;i--){ var j = Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; }
+  return a;
+}
+function poolOf(level){ return WORDS.filter(function(w){ return w.level === level; }); }
+
+function buildQuestions(level){
+  var pool = poolOf(level).slice();
+  var wrongIds = save.mistakes.filter(function(m){
+    return pool.some(function(w){ return w.id === m.wordId; });
+  }).map(function(m){ return m.wordId; });
+
+  var picked = [];
+  if(wrongIds.length){                       // 复习题优先：错过的词先来
+    var wid = wrongIds[0];
+    var w = pool.filter(function(x){ return x.id === wid; })[0];
+    if(w) picked.push(w);
+  }
+  var rest = shuffle(pool.filter(function(x){ return picked.indexOf(x) < 0; }));
+  while(picked.length < QSIZE && rest.length) picked.push(rest.pop());
+
+  var pattern = ["T1","T2","T3","T1","T2","T3","T1","T2","T3"];
+  var qs = picked.slice(0,9).map(function(w,i){ return makeQ(w, pattern[i] || "T1", level); });
+  if(picked[9]) qs.push(makeQ(picked[9], "T1", level));   // 第 10 题：复习/补位
+  return qs;
+}
+function makeQ(w, type, level){
+  var q = {type:type, word:w};
+  if(type === "T1"){                          // 看词选义：中文选项
+    var others = shuffle(poolOf(level).filter(function(x){ return x.id !== w.id; })).slice(0,3);
+    q.options = shuffle([w.zh].concat(others.map(function(x){ return x.zh; })));
+    q.answer = w.zh;
+  } else if(type === "T2"){                   // 听音选词：干扰项
+    var ds = (w.distractors || []).slice(0,3);
+    while(ds.length < 3){ ds.push("—"); }
+    q.options = shuffle([w.en].concat(ds));
+    q.answer = w.en;
+  } else {                                    // 拼写填空
+    q.answer = w.en;
+  }
+  return q;
+}
+
+/* ============ 答题流程 ============ */
+var run = null;
+function startLevel(level){
+  run = {
+    level: level, qs: buildQuestions(level), i: 0, right: 0, combo: 0, gained: 0,
+    startAt: Date.now(), wrongIds: [], locked: false
+  };
+  show("quiz"); renderQ();
+}
+function startCustom(list, title){            // 错题重练
+  if(!list.length) return;
+  var qs = shuffle(list.slice(0,10)).map(function(w,i){
+    return makeQ(w, ["T1","T2","T3"][i % 3], w.level);
+  });
+  run = {level:0, title:title||"错题重练", qs:qs, i:0, right:0, combo:0, gained:0,
+         startAt:Date.now(), wrongIds:[], locked:false};
+  show("quiz"); renderQ();
+}
+function renderQ(){
+  var q = run.qs[run.i];
+  $("q-idx").textContent = "第 " + (run.i+1) + "/" + run.qs.length + " 题";
+  $("q-type").textContent = q.type === "T1" ? "看词选义" : (q.type === "T2" ? "听音选词" : "拼写填空");
+  $("q-prog").style.width = (run.i / run.qs.length * 100) + "%";
+  $("q-coin").textContent = save.profile.coins;
+  $("q-combo").textContent = run.combo >= 2 ? "🔥 " + run.combo + " 连对" : "";
+  var body = $("q-body");
+  run.locked = false;
+
+  if(q.type === "T3"){
+    var blanks = q.word.en.charAt(0) + " " + "_ ".repeat(q.word.en.length - 1).trim();
+    body.innerHTML =
+      '<div class="ask">根据中文释义拼写单词</div>' +
+      '<div class="word" style="font-size:18px">' + q.word.zh + '</div>' +
+      '<div class="blanks">' + blanks + '</div>' +
+      '<input class="spell" id="sp" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="输入完整单词">' +
+      '<div class="row"><button class="btn" id="ok" style="margin:0">确认</button>' +
+      '<button class="btn ghost" id="spk" style="margin:0">🔊 听一遍</button></div>';
+    $("spk").onclick = function(){ speak(q.word.en); };
+    var submit = function(){
+      if(run.locked) return;
+      var v = ($("sp").value || "").trim().toLowerCase();
+      if(!v) return;
+      judge(v === q.word.en.toLowerCase(), v);
+    };
+    $("ok").onclick = submit;
+    $("sp").onkeydown = function(e){ if(e.key === "Enter") submit(); };
+    setTimeout(function(){ try{ $("sp").focus(); }catch(e){} }, 60);
+  } else {
+    var head = q.type === "T1"
+      ? '<div class="word">' + q.word.en + '</div><div class="phon">' + q.word.phonetic + '</div><div class="ask">选出正确的中文释义</div>'
+      : '<div class="word" style="font-size:22px">🔊 听发音，选单词</div><div class="ask">点喇叭可以再听一遍</div>';
+    body.innerHTML = head + '<div class="opts" id="opts"></div>' +
+      (q.type === "T2" ? '<button class="btn ghost" id="spk2" style="margin-top:12px">🔊 再听一遍</button>' : '');
+    var box = $("opts");
+    q.options.forEach(function(op, idx){
+      var b = document.createElement("button");
+      b.className = "opt";
+      b.innerHTML = '<span class="k">' + (idx+1) + '</span>' + op;
+      b.onclick = function(){ if(!run.locked) judge(op === q.answer, op, b); };
+      box.appendChild(b);
+    });
+    if(q.type === "T2"){ $("spk2").onclick = function(){ speak(q.word.en); }; setTimeout(function(){ speak(q.word.en); }, 120); }
+  }
+}
+function judge(ok, chosen, btn){
+  run.locked = true;
+  var q = run.qs[run.i], w = q.word;
+  var rec = save.words[w.id] || {right:0,wrong:0,stage:0,dueAt:0};
+
+  if(ok){
+    run.right++; run.combo++;
+    var gain = 10 + Math.min((run.combo-1)*2, 10);
+    run.gained += gain; save.profile.coins += gain;
+    save.profile.xp += 5;
+    rec.right++; rec.stage = Math.min(4, rec.stage + 1);
+    SFX.right();
+    var mi = save.mistakes.findIndex(function(m){ return m.wordId === w.id; });
+    if(mi >= 0){
+      save.mistakes[mi].streakRight = (save.mistakes[mi].streakRight || 0) + 1;
+      if(save.mistakes[mi].streakRight >= 2) save.mistakes.splice(mi,1);
+    }
+  } else {
+    run.combo = 0; run.wrongIds.push(w.id);
+    rec.wrong++; rec.stage = 0;
+    SFX.wrong();
+    var m = save.mistakes.find(function(x){ return x.wordId === w.id; });
+    if(m){ m.wrongCount++; m.streakRight = 0; m.lastWrongAt = Date.now(); }
+    else save.mistakes.unshift({wordId:w.id, wrongCount:1, streakRight:0, lastWrongAt:Date.now()});
+    if(q.type === "T3"){
+      var tip = document.createElement("div");
+      tip.className = "tiny"; tip.style.color = "var(--gold)";
+      tip.style.marginTop = "8px";
+      tip.textContent = "正确拼写：" + w.en;
+      $("q-body").appendChild(tip);
+    }
+  }
+  save.words[w.id] = rec;
+  var lvl = Math.floor(save.profile.xp / 100) + 1;
+  if(lvl > save.profile.level){ save.profile.level = lvl; }
+  Store.save();
+
+  // 即时视觉反馈
+  if(q.type !== "T3"){
+    Array.prototype.forEach.call(document.querySelectorAll("#opts .opt"), function(b){
+      var t = b.textContent.replace(/^\d/, "").trim();
+      if(t === q.answer) b.classList.add("right");
+      else if(b === btn) b.classList.add("wrong");
+    });
+  } else if(btn !== undefined){
+    var b2 = $("ok");
+    if(b2) b2.style.background = ok ? "#20402c" : "#4a1f24";
+  }
+
+  setTimeout(function(){
+    run.i++;
+    if(run.i >= run.qs.length) finish();
+    else renderQ();
+  }, q.type === "T3" ? 1100 : 850);
+}
+function finish(){
+  var n = run.qs.length, rate = Math.round(run.right / n * 100);
+  var stars = rate === 100 ? 3 : (rate >= 80 ? 2 : (rate >= 60 ? 1 : 0));
+  var sec = Math.round((Date.now() - run.startAt) / 1000);
+
+  if(run.level > 0){
+    if(stars >= 1){
+      save.profile.xp += 50;
+      var p = save.progress[run.level];
+      p.stars = Math.max(p.stars, stars);
+      p.bestRate = Math.max(p.bestRate, rate);
+      if(!p.clearedAt) p.clearedAt = new Date().toISOString();
+      SFX.clear();
+    } else { SFX.wrong(); }
+    var lvl = Math.floor(save.profile.xp / 100) + 1;
+    save.profile.level = Math.max(save.profile.level, lvl);
+  } else { if(run.right > 0) SFX.clear(); }
+  Store.save();
+
+  $("r-title").textContent = (run.title || ("第 " + run.level + " 关")) + (stars >= 1 ? " · 通关！" : " · 再来一次");
+  $("r-stars").textContent = "★".repeat(stars) + "☆".repeat(3 - stars);
+  $("r-stars").style.color = stars ? "var(--gold)" : "var(--dim)";
+  $("r-rate").textContent = rate + "%";
+  $("r-coin").textContent = "+" + run.gained;
+  $("r-time").textContent = Math.floor(sec/60) + ":" + ("0" + (sec%60)).slice(-2);
+  $("r-say").textContent = stars === 3 ? "漂亮！这一关的单词怪全被你收服了。"
+    : stars === 2 ? "不错嘛，再来一次就满分了。"
+    : stars === 1 ? "过关了！错的那几个我帮你记下来了。"
+    : "差一点点～ 先去错题本热个身吧。";
+  $("r-wrong").textContent = run.wrongIds.length
+    ? "本次错了 " + run.wrongIds.length + " 个词，已放进错题本"
+    : "全对！一个错词都没有 🎉";
+  $("btn-again").textContent = run.level > 0 ? "再来一关（换 10 个词）" : "再练一次";
+  show("result");
+}
+
+/* ============ 错题本 ============ */
+function renderMistake(){
+  $("m-count").textContent = "错题 " + save.mistakes.length;
+  var box = $("m-list");
+  if(!save.mistakes.length){
+    box.innerHTML = '<div class="center dim">还没有错题，去闯关吧 👊</div>';
+    $("btn-practice-all").style.display = "none";
+    return;
+  }
+  $("btn-practice-all").style.display = "block";
+  box.innerHTML = "";
+  save.mistakes.slice(0,30).forEach(function(m){
+    var w = WORDS.filter(function(x){ return x.id === m.wordId; })[0];
+    if(!w) return;
+    var d = document.createElement("div");
+    d.className = "mw";
+    d.innerHTML = '<div class="l"><b>' + w.en + ' <span class="dim tiny">' + w.phonetic + '</span></b>' +
+                  '<span>' + w.zh + '</span></div>' +
+                  '<div class="r">' + (m.wrongCount > 1 ? '<span class="chip">错 ' + m.wrongCount + ' 次</span>' : '') +
+                  '<button class="btn sm ghost">练</button>' +
+                  '<button class="btn sm ghost">🔊</button></div>';
+    var bs = d.querySelectorAll("button");
+    bs[0].onclick = function(){ SFX.tap(); startCustom([w], "单练 · " + w.en); };
+    bs[1].onclick = function(){ speak(w.en); };
+    box.appendChild(d);
+  });
+}
+
+/* ============ 设置 ============ */
+function renderSet(){
+  $("btn-sfx").textContent = save.settings.sfx ? "🔊 开" : "🔇 关";
+  $("btn-rate").textContent = (save.settings.ttsRate === 1 ? "正常" : "慢速") + " " + save.settings.ttsRate + "x";
+}
+
+/* ============ 事件绑定 ============ */
+$("btn-start").onclick = function(){ ensureAudio(); SFX.tap(); renderMap(); show("map"); };
+$("btn-go-mistake").onclick = function(){ renderMistake(); show("mistake"); };
+$("btn-go-set").onclick = function(){ renderSet(); show("set"); };
+$("btn-mistake").onclick = $("btn-mistake2").onclick = function(){ SFX.tap(); renderMistake(); show("mistake"); };
+$("btn-set").onclick = function(){ renderSet(); show("set"); };
+$("btn-npc").onclick = function(){ alert("口语镇还在建造中 🏗️\n预计 11 月中旬开放：可以跟 NPC 用英语随便聊，不会打分。"); };
+$("btn-quit").onclick = function(){
+  if(confirm("退出本关？已答的题会记进错题本，但本关进度不保留。")){ renderMap(); show("map"); }
+};
+$("btn-again").onclick = function(){
+  if(run && run.level > 0) startLevel(run.level);
+  else if(run) startCustom(save.mistakes.map(function(m){
+    return WORDS.filter(function(w){ return w.id === m.wordId; })[0];
+  }).filter(Boolean), "错题重练");
+};
+$("btn-back-map").onclick = function(){ renderMap(); show("map"); };
+$("btn-back1").onclick = function(){ renderMap(); show("map"); };
+$("btn-back2").onclick = function(){ renderMap(); show("map"); };
+$("btn-practice-all").onclick = function(){
+  SFX.tap();
+  startCustom(save.mistakes.map(function(m){
+    return WORDS.filter(function(w){ return w.id === m.wordId; })[0];
+  }).filter(Boolean), "错题重练");
+};
+$("btn-sfx").onclick = function(){ save.settings.sfx = !save.settings.sfx; Store.save(); renderSet(); if(save.settings.sfx) SFX.tap(); };
+$("btn-rate").onclick = function(){
+  save.settings.ttsRate = save.settings.ttsRate === 1 ? 0.8 : 1; Store.save(); renderSet(); speak("hello");
+};
+$("btn-clear").onclick = function(){
+  if(confirm("确定清空全部进度？金币、星级、错题都会没有，无法恢复。")){
+    Store.reset(); save = Store.load(); renderSet(); alert("已清空，回到最初的样子。"); show("home");
+  }
+};
+
+/* 键盘（PC 端）：1-4 选项，Enter 确认 / 下一题，Esc 返回 */
+document.addEventListener("keydown", function(e){
+  var sc = (location.hash || "#home").slice(1);
+  if(sc === "quiz"){
+    if(e.key >= "1" && e.key <= "4"){
+      var b = document.querySelectorAll("#opts .opt")[parseInt(e.key,10) - 1];
+      if(b) b.click();
+    }
+    if(e.key === "Enter"){ var ok = $("ok"); if(ok) ok.click(); }
+    if(e.key === "Escape"){ renderMap(); show("map"); }
+  } else if(e.key === "Escape" && sc !== "home"){ renderMap(); show("map"); }
+});
+
+/* 首屏：按 hash 直达（方便快速验收） */
+(function(){
+  var h = (location.hash || "").slice(1);
+  if(h === "map"){ renderMap(); show("map"); }
+  else if(h === "mistake"){ renderMistake(); show("mistake"); }
+  else if(h === "set"){ renderSet(); show("set"); }
+})();
+
+})();
+</script>
+</body>
+</html>

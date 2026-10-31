@@ -77,7 +77,9 @@
 - [x] 需求调研：同类产品拆解（多邻国、百词斩、不背单词、Quizlet、Speak、像素游戏参考）→ [`docs/12-竞品拆解与差异化.md`](https://github.com/Xian2Ying/-/blob/main/docs/12-竞品拆解与差异化.md)
 - [x] PRD 初稿（[`docs/05-PRD.md`](https://github.com/Xian2Ying/-/blob/main/docs/05-PRD.md)）：9 个 P0 模块含验收标准，待队长确认 4 处
 - [x] 词库交付：内容官 A 校对 100/100，已转 [`src/data/words.json`](https://github.com/Xian2Ying/-/blob/main/src/data/words.json)（35/33/32），质检见 [`docs/14`](https://github.com/Xian2Ying/-/blob/main/docs/14-词库质检报告.md)
-- [ ] 单文件 `index.html` 游戏骨架（关卡地图 + 3 题型 + 结算）
+- [x] 单文件 `index.html` 第一版：**已能玩**（首页/地图/3 种题型/结算/错题本/设置，进度存本机）→ [`src/index.html`](https://github.com/Xian2Ying/-/blob/main/src/index.html)，冒烟自检 `python tools/smoke.py`
+- [ ] AI 口语 NPC（P1，最晚 11-20）
+- [ ] PC 端布局优化 + 美术素材替换（AI 生成像素角色）
 - [ ] [~] 技术方案初稿（[`docs/06-技术方案.md`](docs/06-技术方案.md)）：待队友 B 回复技术背景后定稿（是否引引擎 / 云端方案）
 - [ ] UI 原型（移动端 H5，`design/`）
 - [ ] 人物角色三视图（AI 生成，`assets/`）
