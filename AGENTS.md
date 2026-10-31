@@ -76,6 +76,8 @@
 - [ ] [~] 团队拍板：**已选定「小游戏为主载体 + AI 对话为模块」，见 [`docs/04-方案选型决策.md`](docs/04-方案选型决策.md)**；待队友确认游戏名 / MVP / 技术栈后回填 `docs/02`
 - [x] 需求调研：同类产品拆解（多邻国、百词斩、不背单词、Quizlet、Speak、像素游戏参考）→ [`docs/12-竞品拆解与差异化.md`](https://github.com/Xian2Ying/-/blob/main/docs/12-竞品拆解与差异化.md)
 - [x] PRD 初稿（[`docs/05-PRD.md`](https://github.com/Xian2Ying/-/blob/main/docs/05-PRD.md)）：9 个 P0 模块含验收标准，待队长确认 4 处
+- [x] 词库交付：内容官 A 校对 100/100，已转 [`src/data/words.json`](https://github.com/Xian2Ying/-/blob/main/src/data/words.json)（35/33/32），质检见 [`docs/14`](https://github.com/Xian2Ying/-/blob/main/docs/14-词库质检报告.md)
+- [ ] 单文件 `index.html` 游戏骨架（关卡地图 + 3 题型 + 结算）
 - [ ] [~] 技术方案初稿（[`docs/06-技术方案.md`](docs/06-技术方案.md)）：待队友 B 回复技术背景后定稿（是否引引擎 / 云端方案）
 - [ ] UI 原型（移动端 H5，`design/`）
 - [ ] 人物角色三视图（AI 生成，`assets/`）
@@ -109,3 +111,4 @@
 11. [docs/11-任务计划-组长.md](https://github.com/Xian2Ying/-/blob/main/docs/11-任务计划-组长.md) — 组长行动清单与即时下一步
 12. [docs/12-竞品拆解与差异化.md](https://github.com/Xian2Ying/-/blob/main/docs/12-竞品拆解与差异化.md) — 竞品机制拆解、抄什么/不抄什么、差异化矩阵（PPT 素材）
 13. [docs/13-队长行动卡.html](https://github.com/Xian2Ying/-/blob/main/docs/13-队长行动卡.html) — **队长每天只看这一页**：倒计时 + 今日 4 件事 + 8 项拍板 + 可复制群消息
+14. [docs/14-词库质检报告.md](https://github.com/Xian2Ying/-/blob/main/docs/14-词库质检报告.md) — 100 词交接结论、7 项脚本校验、已修 7 处干扰项问题、给队长的 2 个新决策
