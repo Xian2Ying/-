@@ -88,14 +88,21 @@
 
 ## 九、文档索引（AI 按此顺序读）
 
-1. [`docs/00-项目章程.md`](docs/00-项目章程.md) — 命题理解、痛点、核心价值、分工、里程碑
-2. [`docs/01-功能拆解-draft.md`](docs/01-功能拆解-draft.md) — 玩法循环、模块清单、MVP 切法、技术候选
-3. [`docs/02-待拍板问题.md`](docs/02-待拍板问题.md) — 待确认决策清单（待回填）
-4. [`docs/03-决策结论.md`](docs/03-决策结论.md) — 客观约束分析与八项选择（历史底稿）
-5. [`docs/04-方案选型决策.md`](docs/04-方案选型决策.md) — **当前执行依据**：对话式 AI vs 小游戏选型、MVP、时间表、降级预案
-6. [`docs/06-技术方案.md`](docs/06-技术方案.md) — 移动端优先 + 双端数据互通的分层架构、目录结构、开发节奏
-7. [`docs/07-组长作战手册.md`](docs/07-组长作战手册.md) — 零经验三人队的四周作战表、门禁、分工、风险兜底、日常检查清单
-8. [`docs/08-分工与责任表.md`](docs/08-分工与责任表.md) — **三人角色定位、逐人责任清单、时间轴交付、协作红线**
-9. [`docs/09-任务计划-内容官A.html`](docs/09-任务计划-内容官A.html) — **队友 A 稳定打开版（单文件 HTML，双击即开）**：详细任务 + 100 词预分 3 关清单，只补例句+校对（配套 `.md` 版在 `docs/09-任务计划-内容官A.md`）
-10. [`docs/10-任务计划-体验官B.md`](docs/10-任务计划-体验官B.md) — 队友 B 详细任务（手机测玩+截图发群，附测试记录表）
-11. [`docs/11-任务计划-组长.md`](docs/11-任务计划-组长.md) — 组长行动清单与即时下一步
+> 以下为 GitHub 绝对链接，任何软件/设备打开都能点开（相对路径在本地记事本里会失效）。
+
+- 仓库首页：`https://github.com/Xian2Ying/-`
+- [AGENTS.md](https://github.com/Xian2Ying/-/blob/main/AGENTS.md) — 本文件，AI 共享大脑
+- [README.md](https://github.com/Xian2Ying/-/blob/main/README.md) — 项目简介与导航
+- [CONTRIBUTING.md](https://github.com/Xian2Ying/-/blob/main/CONTRIBUTING.md) — 队友协作指南（git 流程/分工/冲突）
+
+1. [docs/00-项目章程.md](https://github.com/Xian2Ying/-/blob/main/docs/00-项目章程.md) — 命题理解、痛点、核心价值、分工、里程碑
+2. [docs/01-功能拆解-draft.md](https://github.com/Xian2Ying/-/blob/main/docs/01-功能拆解-draft.md) — 玩法循环、模块清单、MVP 切法、技术候选
+3. [docs/02-待拍板问题.md](https://github.com/Xian2Ying/-/blob/main/docs/02-待拍板问题.md) — 待确认决策清单（待回填）
+4. [docs/03-决策结论.md](https://github.com/Xian2Ying/-/blob/main/docs/03-决策结论.md) — 客观约束分析与八项选择（历史底稿）
+5. [docs/04-方案选型决策.md](https://github.com/Xian2Ying/-/blob/main/docs/04-方案选型决策.md) — **当前执行依据**：对话式 AI vs 小游戏选型、MVP、时间表、降级预案
+6. [docs/06-技术方案.md](https://github.com/Xian2Ying/-/blob/main/docs/06-技术方案.md) — 移动端优先 + 双端数据互通的分层架构、目录结构、开发节奏
+7. [docs/07-组长作战手册.md](https://github.com/Xian2Ying/-/blob/main/docs/07-组长作战手册.md) — 零经验三人队的四周作战表、门禁、分工、风险兜底、日常检查清单
+8. [docs/08-分工与责任表.md](https://github.com/Xian2Ying/-/blob/main/docs/08-分工与责任表.md) — **三人角色定位、逐人责任清单、时间轴交付、协作红线**
+9. [docs/09-任务计划-内容官A.html](https://github.com/Xian2Ying/-/blob/main/docs/09-任务计划-内容官A.html) — **队友 A 稳定打开版（单文件 HTML，双击即开）**：详细任务 + 100 词预分 3 关清单，只补例句+校对（配套 `.md` 版在 [docs/09-任务计划-内容官A.md](https://github.com/Xian2Ying/-/blob/main/docs/09-任务计划-内容官A.md)）
+10. [docs/10-任务计划-体验官B.md](https://github.com/Xian2Ying/-/blob/main/docs/10-任务计划-体验官B.md) — 队友 B 详细任务（手机测玩+截图发群，附测试记录表）
+11. [docs/11-任务计划-组长.md](https://github.com/Xian2Ying/-/blob/main/docs/11-任务计划-组长.md) — 组长行动清单与即时下一步
