@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>队长行动卡 · 词勇者</title>
+<style>
+  :root{
+    --bg:#f4efe3;
+    --panel:#fffdf6;
+    --ink:#22202b;
+    --ink2:#5d5a6b;
+    --line:#22202b;
+    --purple:#6c5ce7;
+    --green:#1fa971;
+    --gold:#e8a020;
+    --red:#d64541;
+    --shadow:4px 4px 0 var(--line);
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;padding:0}
+  body{
+    background:
+      repeating-linear-gradient(0deg,rgba(34,32,43,.035) 0 1px,transparent 1px 4px),
+      var(--bg);
+    color:var(--ink);
+    font-family:"SF Mono",Menlo,Consolas,"Courier New","PingFang SC","Microsoft YaHei",monospace;
+    font-size:15px;
+    line-height:1.65;
+    padding:14px 12px 60px;
+    max-width:560px;
+    margin:0 auto;
+  }
+  h1{font-size:20px;margin:0 0 2px;letter-spacing:.5px}
+  .sub{font-size:11.5px;color:var(--ink2);margin-bottom:14px}
+  .card{
+    background:var(--panel);
+    border:2.5px solid var(--line);
+    box-shadow:var(--shadow);
+    border-radius:0;
+    padding:13px 13px 15px;
+    margin-bottom:16px;
+  }
+  .card h2{
+    font-size:14px;margin:0 0 10px;padding-bottom:7px;
+    border-bottom:2px dashed rgba(34,32,43,.25);
+    display:flex;align-items:center;gap:7px;
+  }
+  .tag{
+    font-size:10px;padding:1px 6px;border:2px solid var(--line);
+    background:var(--gold);color:#1a1a1a;font-weight:bold;
+  }
+  .tag.p{background:var(--purple);color:#fff}
+  .tag.g{background:var(--green);color:#fff}
+  .tag.r{background:var(--red);color:#fff}
+
+  /* 倒计时 */
+  .clock{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:4px}
+  .clock div{
+    border:2.5px solid var(--line);background:#fff;
+    padding:8px 4px;text-align:center;box-shadow:3px 3px 0 rgba(34,32,43,.18);
+  }
+  .clock b{display:block;font-size:26px;line-height:1.1;letter-spacing:-1px}
+  .clock span{font-size:10.5px;color:var(--ink2);display:block;margin-top:3px}
+  .clock .hot b{color:var(--red)}
+  .clock .warm b{color:var(--gold)}
+  .clock .cool b{color:var(--green)}
+  .cls{font-size:10.5px;color:var(--ink2);text-align:center;margin-top:8px}
+
+  /* 清单 */
+  ul.none{list-style:none;margin:0;padding:0}
+  ul.none>li{
+    display:flex;gap:9px;align-items:flex-start;
+    padding:9px 0;border-bottom:1px dotted rgba(34,32,43,.22);
+  }
+  ul.none>li:last-child{border-bottom:none;padding-bottom:0}
+  .box{
+    flex:0 0 auto;width:20px;height:20px;margin-top:2px;
+    border:2.5px solid var(--line);background:#fff;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+    font-size:13px;font-weight:bold;color:#fff;line-height:1;
+    user-select:none;
+  }
+  .box.on{background:var(--green)}
+  li.done .txt{opacity:.45;text-decoration:line-through}
+  .txt{flex:1;font-size:14px}
+  .txt small{display:block;color:var(--ink2);font-size:11.5px;margin-top:2px;text-decoration:none}
+  .who{font-size:10px;border:2px solid var(--line);padding:0 4px;margin-right:4px;background:#fff}
+
+  /* 拍板 */
+  .vote{border:2px solid rgba(34,32,43,.3);padding:9px 10px;margin-bottom:9px;background:#fff}
+  .vote .q{font-size:12px;color:var(--ink2);margin-bottom:3px}
+  .vote .a{font-size:14px;font-weight:bold;margin-bottom:7px}
+  .vote .a em{font-style:normal;background:linear-gradient(transparent 62%, #ffe08a 62%)}
+  .btns{display:flex;gap:7px}
+  .btn{
+    flex:1;font-family:inherit;font-size:12px;padding:7px 4px;cursor:pointer;
+    border:2.5px solid var(--line);background:#fff;color:var(--ink);
+    box-shadow:2px 2px 0 rgba(34,32,43,.2);border-radius:0;
+  }
+  .btn:active{transform:translate(2px,2px);box-shadow:none}
+  .btn.ok.sel{background:var(--green);color:#fff}
+  .btn.no.sel{background:var(--red);color:#fff}
+
+  /* 文案 */
+  .msg{position:relative;border:2px solid rgba(34,32,43,.28);background:#fff;padding:10px;margin-bottom:10px}
+  .msg pre{
+    margin:0;font-family:inherit;font-size:12.5px;white-space:pre-wrap;
+    word-break:break-word;line-height:1.7;color:#2a2833;
+  }
+  .msg .copy{
+    margin-top:9px;width:100%;font-family:inherit;font-size:12px;
+    padding:8px;cursor:pointer;border:2.5px solid var(--line);
+    background:var(--purple);color:#fff;font-weight:bold;
+    box-shadow:2px 2px 0 rgba(34,32,43,.25);
+  }
+  .msg .copy:active{transform:translate(2px,2px);box-shadow:none}
+  .hint{font-size:11px;color:var(--ink2);margin:0 0 8px}
+
+  table{width:100%;border-collapse:collapse;font-size:12px}
+  th,td{border:1.5px solid rgba(34,32,43,.3);padding:6px 7px;text-align:left;vertical-align:top}
+  th{background:#efe9d9;font-size:11px}
+
+  .redline{border-left:6px solid var(--red);background:#fff5f4;padding:8px 10px;font-size:12.5px;margin-bottom:8px}
+  .redline b{color:var(--red)}
+  .foot{text-align:center;font-size:10.5px;color:var(--ink2);margin-top:22px}
+  .bar{height:9px;background:#e6dfcd;border:2px solid var(--line);margin-top:8px}
+  .bar i{display:block;height:100%;background:var(--green);width:0;transition:width .3s}
+</style>
+</head>
+<body>
+
+<h1>🧭 队长行动卡</h1>
+<div class="sub">词勇者 · Word Quest ｜ 第一届校园 AI 智能体创新应用大赛 ｜ 更新 2026-10-31</div>
+
+<div class="card">
+  <h2>⏳ 倒计时（红线上别松手）</h2>
+  <div class="clock">
+    <div class="hot"><b id="d1">–</b><span>天 · 报名截止<br>11-13</span></div>
+    <div class="warm"><b id="d2">–</b><span>天 · 代码冻结<br>11-24</span></div>
+    <div class="cool"><b id="d3">–</b><span>天 · 作品提交<br>11-28</span></div>
+  </div>
+  <div class="cls" id="dsum"></div>
+</div>
+
+<div class="card">
+  <h2>① 今天只做这 4 件事 <span class="tag" id="pcount">0/4</span></h2>
+  <ul class="none" id="todo">
+    <li data-k="t1">
+      <div class="box"></div>
+      <div class="txt"><span class="who">2分钟</span>定游戏名：选「词勇者」<small>下面第 ② 块点「同意」就是拍板，我立刻回填全部文档</small></div>
+    </li>
+    <li data-k="t2">
+      <div class="box"></div>
+      <div class="txt"><span class="who">10分钟</span>找老师要报名二维码 / 报名链接<small>群里问，拿到后截图存档（这是全项目唯一不可补救的死线）</small></div>
+    </li>
+    <li data-k="t3">
+      <div class="box"></div>
+      <div class="txt"><span class="who">3分钟</span>把任务计划发给队友 A、B<small>直接复制第 ③ 块的群消息，含链接，他们点开就能看</small></div>
+    </li>
+    <li data-k="t4">
+      <div class="box"></div>
+      <div class="txt"><span class="who">已完成</span>调研拆解 + PRD 初稿已写好<small>docs/12-竞品拆解与差异化.md、docs/05-PRD.md，可直接发给队友看</small></div>
+    </li>
+  </ul>
+  <div class="bar"><i id="pbar"></i></div>
+</div>
+
+<div class="card">
+  <h2>② 一页纸拍板单 <span class="tag p">8 项</span></h2>
+  <p class="hint">每条都给了推荐结论。同意就点左边，不同意点右边并说明——你的选择会自动存在本机。</p>
+  <div id="votes"></div>
+  <div class="hint" id="vsum" style="margin-top:10px">已拍板 0 / 8</div>
+</div>
+
+<div class="card">
+  <h2>③ 复制即发 <span class="tag g">3 条</span></h2>
+  <p class="hint">改一下括号里的名字/时间就能发。链接已写成完整地址，手机上点得开。</p>
+
+  <div class="msg">
+    <pre id="m-a">A 你好，咱们参赛项目定下来了，你负责「内容官」这一块，不用写代码。
+
+你要做的事（任务书在这里，手机点开就能看）：
+https://github.com/Xian2Ying/-/blob/main/docs/09-任务计划-内容官A.html
+
+核心就一件：整理 100 个四级高频词，用表格写，五列——
+单词 / 音标 / 中文释义 / 英文例句 / 例句中文。
+然后按难度分成 3 关（30 / 35 / 35 个）。
+
+截稿：11 月 5 日之前给我第一版（先交 30 个也行，我这边先搭骨架）。
+你只碰词表，不用管代码，代码我来写。
+
+有不确定的随时问我。</pre>
+    <button class="copy" data-t="m-a">复制这段发 A</button>
+  </div>
+
+  <div class="msg">
+    <pre id="m-b">B 你好，咱们参赛项目定下来了，你负责「体验官」这一块，不用写代码。
+
+你要做的事（任务书在这里）：
+https://github.com/Xian2Ying/-/blob/main/docs/10-任务计划-体验官B.md
+
+核心就一件：用你自己的手机反复玩我做的版本，把「哪里不对、哪里别扭」记下来。
+每条只要三句话：我点了什么 / 出现了什么 / 我以为会怎样。能截图就截图。
+
+节奏：11 月 6 号起我给你第一个能玩的版本，之后每天玩 10 分钟就行。
+你找到的 bug 越多，我们作品分越高——这个角色特别重要。</pre>
+    <button class="copy" data-t="m-b">复制这段发 B</button>
+  </div>
+
+  <div class="msg">
+    <pre id="m-c">老师您好，我们是参加「第一届校园 AI 智能体创新应用大赛」的队伍（3 人，队名待定），
+项目是「词勇者」——一个像素闯关风的英语单词 H5 小游戏。
+
+想跟您确认三件事：
+1. 报名二维码 / 报名链接在哪里获取？我们想在 11 月 13 日截止前完成报名。
+2. 我们做的是学习类游戏应用，赛道应该归到「AI+教学科研」还是别的？想确认一下口径。
+3. 提交时除了「可访问的链接」和「作品说明」，还需要交 PPT 或视频吗？格式和时长有要求吗？
+
+麻烦您了，谢谢老师！</pre>
+    <button class="copy" data-t="m-c">复制这段发老师</button>
+  </div>
+</div>
+
+<div class="card">
+  <h2>④ 这周的时间表</h2>
+  <table>
+    <tr><th>时间</th><th>你要做的</th></tr>
+    <tr><td>今天 10-31</td><td>发任务书给 A、B；要报名码；拍板 8 项</td></tr>
+    <tr><td>11-01 ~ 11-02</td><td>收 A 的词表第一批；我出 UI 原型给你看</td></tr>
+    <tr><td>11-03 ~ 11-05</td><td>词表验收；我把词转 JSON + 搭出单文件游戏骨架</td></tr>
+    <tr><td>11-06 ~ 11-08</td><td>第一个能玩的版本给 B 测；每天转 bug 给我</td></tr>
+    <tr><td>11-13</td><td>🔴 <b>报名截止</b>（你扫码）+ 3 关跑通</td></tr>
+    <tr><td>11-24</td><td>🔴 <b>代码冻结</b>，只修致命 bug</td></tr>
+    <tr><td>11-24 ~ 11-28</td><td>PPT + 宣发视频 + 作品说明 + 提交</td></tr>
+  </table>
+</div>
+
+<div class="card">
+  <h2>⑤ 你的四条红线</h2>
+  <div class="redline"><b>11-13 报名</b>：卡住这条，后面做得再好都没用。</div>
+  <div class="redline"><b>11-24 冻结</b>：之后只修致命 bug，不加功能。</div>
+  <div class="redline"><b>新需求一律进 P1/P2</b>：你的标准回答是「这个进清单，第一版不做」。</div>
+  <div class="redline"><b>链接必须打得开</b>：提交前 3 天起每天点一次，截图留证。</div>
+</div>
+
+<div class="foot">这张卡可以直接加进手机主屏 · 拍板结果存在本机浏览器</div>
+
+<script>
+(function(){
+  "use strict";
+  var LS = "wq.leader.card.v1";
+  var state = {};
+  try { state = JSON.parse(localStorage.getItem(LS) || "{}") || {}; } catch(e){ state = {}; }
+  function save(){ try{ localStorage.setItem(LS, JSON.stringify(state)); }catch(e){} }
+
+  /* ---------- 倒计时 ---------- */
+  var targets = [
+    {el:"d1", d:"2026-11-13T23:59:59+08:00"},
+    {el:"d2", d:"2026-11-24T23:59:59+08:00"},
+    {el:"d3", d:"2026-11-28T23:59:59+08:00"}
+  ];
+  var now = new Date();
+  var minLeft = null;
+  targets.forEach(function(t){
+    var diff = new Date(t.d).getTime() - now.getTime();
+    var day = Math.ceil(diff / 86400000);
+    document.getElementById(t.el).textContent = day > 0 ? day : (day === 0 ? "今天" : "已过");
+  });
+  var left1 = Math.ceil((new Date(targets[0].d).getTime() - now.getTime())/86400000);
+  document.getElementById("dsum").textContent =
+    now.toLocaleDateString("zh-CN") + " · 距报名只剩 " + left1 + " 天，先扫码再谈别的";
+
+  /* ---------- 今日清单 ---------- */
+  var todo = document.getElementById("todo");
+  var items = todo.querySelectorAll("li");
+  function renderTodo(){
+    var done = 0;
+    items.forEach(function(li){
+      var k = li.getAttribute("data-k");
+      var on = !!state["todo_" + k];
+      li.querySelector(".box").classList.toggle("on", on);
+      li.querySelector(".box").textContent = on ? "✓" : "";
+      li.classList.toggle("done", on);
+      if(on) done++;
+    });
+    document.getElementById("pcount").textContent = done + "/" + items.length;
+    document.getElementById("pbar").style.width = (done / items.length * 100) + "%";
+  }
+  items.forEach(function(li){
+    li.querySelector(".box").addEventListener("click", function(){
+      var k = "todo_" + li.getAttribute("data-k");
+      state[k] = !state[k];
+      save(); renderTodo();
+    });
+  });
+  renderTodo();
+
+  /* ---------- 拍板单 ---------- */
+  var votes = [
+    {k:"name", q:"1 · 游戏名字与世界观", a:'叫「<em>词勇者</em>」，RPG 风像素闯关，怪物是「单词怪」'},
+    {k:"mvp",  q:"2 · MVP 范围", a:'只做 docs/04 那 9 个 P0 模块，AI 口语做<em>演示版</em>，其余全进 P1/P2'},
+    {k:"tech", q:"3 · 技术栈", a:'原生 HTML+CSS+JS，<em>不引游戏引擎</em>，第一版单个 index.html'},
+    {k:"ai",   q:"4 · AI 口语怎么做", a:'<em>文字对话 + 点击发音</em>，接 DeepSeek，不做语音识别；断网走固定脚本'},
+    {k:"deck", q:"5 · 词库口径", a:'<em>四级高频 100 词</em>，分 3 关（30/35/35），内容官自整理 + 人工校对'},
+    {k:"art",  q:"6 · 美术风格", a:'AI 生成<em>像素三视图</em>，UI 参考星露谷，角色感参考 Undertale（纯文字+立绘也够）'},
+    {k:"repo", q:"7 · 代码仓库", a:'直接用已建好的 <em>github.com/Xian2Ying/-</em>，三人共用 main 分支'},
+    {k:"acc",  q:"8 · 移动端验收", a:'竖屏优先、按钮 ≥44px、<em>断网可玩</em>、首屏 3 秒、链接 3 台设备能打开'}
+  ];
+  var box = document.getElementById("votes");
+  votes.forEach(function(v){
+    var d = document.createElement("div");
+    d.className = "vote";
+    d.innerHTML =
+      '<div class="q">' + v.q + '</div>' +
+      '<div class="a">' + v.a + '</div>' +
+      '<div class="btns">' +
+        '<button class="btn ok' + (state["v_"+v.k]==="ok"?" sel":"") + '" data-k="'+v.k+'" data-v="ok">同意，就这么定</button>' +
+        '<button class="btn no' + (state["v_"+v.k]==="no"?" sel":"") + '" data-k="'+v.k+'" data-v="no">要改</button>' +
+      '</div>';
+    box.appendChild(d);
+  });
+  box.addEventListener("click", function(e){
+    var b = e.target.closest("button.btn");
+    if(!b) return;
+    var k = b.getAttribute("data-k"), v = b.getAttribute("data-v");
+    state["v_" + k] = (state["v_" + k] === v) ? null : v;
+    save();
+    box.querySelectorAll('button[data-k="'+k+'"]').forEach(function(x){
+      x.classList.toggle("sel", x.getAttribute("data-v") === state["v_" + k]);
+    });
+    renderVotes();
+  });
+  function renderVotes(){
+    var ok = 0, no = 0;
+    votes.forEach(function(v){
+      if(state["v_"+v.k]==="ok") ok++;
+      if(state["v_"+v.k]==="no") no++;
+    });
+    var t = "已拍板 " + ok + " / 8";
+    if(no > 0) t += " · 有 " + no + " 项要改（把这些告诉我）";
+    if(ok === 8) t += " · 全定！让 AI 开工";
+    document.getElementById("vsum").textContent = t;
+  }
+  renderVotes();
+
+  /* ---------- 复制 ---------- */
+  document.querySelectorAll(".copy").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      var id = btn.getAttribute("data-t");
+      var text = document.getElementById(id).innerText;
+      function done(){
+        var old = btn.textContent;
+        btn.textContent = "✓ 已复制，去粘贴吧";
+        setTimeout(function(){ btn.textContent = old; }, 1600);
+      }
+      function fallback(){
+        var ta = document.createElement("textarea");
+        ta.value = text;
+        ta.style.position = "fixed"; ta.style.opacity = "0";
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand("copy"); done(); }
+        catch(e){ alert("长按选中下面这段文字，手动复制：\n\n" + text); }
+        document.body.removeChild(ta);
+      }
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(done).catch(fallback);
+      } else { fallback(); }
+    });
+  });
+})();
+</script>
+</body>
+</html>

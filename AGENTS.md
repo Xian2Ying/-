@@ -74,8 +74,8 @@
 
 - [x] 仓库初始化并关联远程（main 分支，已推送至 `https://github.com/Xian2Ying/-`；合并了 GitHub 初始 commit 的 `.gitignore`/`LICENSE`）
 - [ ] [~] 团队拍板：**已选定「小游戏为主载体 + AI 对话为模块」，见 [`docs/04-方案选型决策.md`](docs/04-方案选型决策.md)**；待队友确认游戏名 / MVP / 技术栈后回填 `docs/02`
-- [ ] 需求调研：同类产品拆解（多邻国、百词斩、不背单词、像素闯关玩法元素）
-- [ ] PRD 初稿（`docs/05-PRD.md`）
+- [x] 需求调研：同类产品拆解（多邻国、百词斩、不背单词、Quizlet、Speak、像素游戏参考）→ [`docs/12-竞品拆解与差异化.md`](https://github.com/Xian2Ying/-/blob/main/docs/12-竞品拆解与差异化.md)
+- [x] PRD 初稿（[`docs/05-PRD.md`](https://github.com/Xian2Ying/-/blob/main/docs/05-PRD.md)）：9 个 P0 模块含验收标准，待队长确认 4 处
 - [ ] [~] 技术方案初稿（[`docs/06-技术方案.md`](docs/06-技术方案.md)）：待队友 B 回复技术背景后定稿（是否引引擎 / 云端方案）
 - [ ] UI 原型（移动端 H5，`design/`）
 - [ ] 人物角色三视图（AI 生成，`assets/`）
@@ -100,9 +100,12 @@
 3. [docs/02-待拍板问题.md](https://github.com/Xian2Ying/-/blob/main/docs/02-待拍板问题.md) — 待确认决策清单（待回填）
 4. [docs/03-决策结论.md](https://github.com/Xian2Ying/-/blob/main/docs/03-决策结论.md) — 客观约束分析与八项选择（历史底稿）
 5. [docs/04-方案选型决策.md](https://github.com/Xian2Ying/-/blob/main/docs/04-方案选型决策.md) — **当前执行依据**：对话式 AI vs 小游戏选型、MVP、时间表、降级预案
+5.1 [docs/05-PRD.md](https://github.com/Xian2Ying/-/blob/main/docs/05-PRD.md) — **开发唯一口径**：9 个 P0 模块、数据结构、数值规则、12 条验收清单
 6. [docs/06-技术方案.md](https://github.com/Xian2Ying/-/blob/main/docs/06-技术方案.md) — 移动端优先 + 双端数据互通的分层架构、目录结构、开发节奏
 7. [docs/07-组长作战手册.md](https://github.com/Xian2Ying/-/blob/main/docs/07-组长作战手册.md) — 零经验三人队的四周作战表、门禁、分工、风险兜底、日常检查清单
 8. [docs/08-分工与责任表.md](https://github.com/Xian2Ying/-/blob/main/docs/08-分工与责任表.md) — **三人角色定位、逐人责任清单、时间轴交付、协作红线**
 9. [docs/09-任务计划-内容官A.html](https://github.com/Xian2Ying/-/blob/main/docs/09-任务计划-内容官A.html) — **队友 A 稳定打开版（单文件 HTML，双击即开）**：详细任务 + 100 词预分 3 关清单，只补例句+校对（配套 `.md` 版在 [docs/09-任务计划-内容官A.md](https://github.com/Xian2Ying/-/blob/main/docs/09-任务计划-内容官A.md)）
 10. [docs/10-任务计划-体验官B.md](https://github.com/Xian2Ying/-/blob/main/docs/10-任务计划-体验官B.md) — 队友 B 详细任务（手机测玩+截图发群，附测试记录表）
 11. [docs/11-任务计划-组长.md](https://github.com/Xian2Ying/-/blob/main/docs/11-任务计划-组长.md) — 组长行动清单与即时下一步
+12. [docs/12-竞品拆解与差异化.md](https://github.com/Xian2Ying/-/blob/main/docs/12-竞品拆解与差异化.md) — 竞品机制拆解、抄什么/不抄什么、差异化矩阵（PPT 素材）
+13. [docs/13-队长行动卡.html](https://github.com/Xian2Ying/-/blob/main/docs/13-队长行动卡.html) — **队长每天只看这一页**：倒计时 + 今日 4 件事 + 8 项拍板 + 可复制群消息
