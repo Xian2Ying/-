@@ -256,18 +256,21 @@ https://github.com/Xian2Ying/-/blob/main/docs/10-任务计划-体验官B.md
 
   /* ---------- 倒计时 ---------- */
   var targets = [
-    {el:"d1", d:"2026-11-13T23:59:59+08:00"},
-    {el:"d2", d:"2026-11-24T23:59:59+08:00"},
-    {el:"d3", d:"2026-11-28T23:59:59+08:00"}
+    {el:"d1", d:"2026-11-13"},
+    {el:"d2", d:"2026-11-24"},
+    {el:"d3", d:"2026-11-28"}
   ];
   var now = new Date();
-  var minLeft = null;
+  var today0 = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+  function dayLeft(dstr){
+    var t = new Date(dstr + "T00:00:00").getTime();
+    return Math.round((t - today0) / 86400000);
+  }
   targets.forEach(function(t){
-    var diff = new Date(t.d).getTime() - now.getTime();
-    var day = Math.ceil(diff / 86400000);
+    var day = dayLeft(t.d);
     document.getElementById(t.el).textContent = day > 0 ? day : (day === 0 ? "今天" : "已过");
   });
-  var left1 = Math.ceil((new Date(targets[0].d).getTime() - now.getTime())/86400000);
+  var left1 = dayLeft(targets[0].d);
   document.getElementById("dsum").textContent =
     now.toLocaleDateString("zh-CN") + " · 距报名只剩 " + left1 + " 天，先扫码再谈别的";
 
