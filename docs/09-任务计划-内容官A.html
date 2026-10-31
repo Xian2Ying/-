@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>内容官 A 任务计划 · 词勇者</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: #f4f6fb; color: #1f2733; line-height: 1.7;
+    padding: 16px;
+  }
+  .wrap { max-width: 760px; margin: 0 auto; }
+  header {
+    background: linear-gradient(135deg, #5b6cff, #8a5bff);
+    color: #fff; border-radius: 16px; padding: 22px 20px; margin-bottom: 16px;
+  }
+  header h1 { font-size: 22px; margin-bottom: 6px; }
+  header p { font-size: 14px; opacity: .92; }
+  .card {
+    background: #fff; border-radius: 14px; padding: 18px 18px;
+    margin-bottom: 14px; box-shadow: 0 2px 10px rgba(40,50,90,.06);
+  }
+  .card h2 {
+    font-size: 17px; color: #3a47d6; margin-bottom: 10px;
+    border-left: 4px solid #5b6cff; padding-left: 10px;
+  }
+  .card h3 { font-size: 15px; margin: 14px 0 6px; color: #2a3340; }
+  p, li { font-size: 15px; }
+  ul, ol { padding-left: 22px; margin: 8px 0; }
+  li { margin: 5px 0; }
+  .tip {
+    background: #fff7e6; border: 1px solid #ffe2a8; border-radius: 10px;
+    padding: 12px 14px; margin: 10px 0; font-size: 14px;
+  }
+  .good { color: #1a8a4a; font-weight: 600; }
+  .bad { color: #c0392b; font-weight: 600; }
+  code {
+    background: #eef0f7; border-radius: 5px; padding: 1px 6px;
+    font-family: Consolas, monospace; font-size: 13px; color: #3a47d6;
+  }
+  .step {
+    display: flex; gap: 10px; align-items: flex-start; margin: 12px 0;
+  }
+  .step .n {
+    flex: 0 0 26px; height: 26px; background: #5b6cff; color: #fff;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700;
+  }
+  .step .t { flex: 1; }
+  table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 14px; }
+  th, td { border: 1px solid #e2e6f0; padding: 7px 9px; text-align: left; }
+  th { background: #f0f2fa; }
+  .words { font-size: 13px; line-height: 1.9; }
+  .words b { color: #3a47d6; }
+  .level { background: #eef1ff; border-radius: 8px; padding: 10px 12px; margin: 8px 0; }
+  .check { accent-color: #5b6cff; width: 16px; height: 16px; }
+  label.chk { display: block; margin: 6px 0; font-size: 15px; }
+  .footer { text-align: center; color: #8b94a6; font-size: 12px; margin: 18px 0 6px; }
+  .tag { display:inline-block; background:#eef1ff; color:#3a47d6; border-radius:6px; padding:2px 8px; font-size:12px; margin-left:6px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1>📚 内容官（队友 A）任务计划</h1>
+    <p>你是游戏里所有单词、释义、例句的「源头」。不写代码，只用表格填内容，AI 帮你转成游戏格式。</p>
+  </header>
+
+  <div class="card">
+    <h2>你的总目标</h2>
+    <p>在 <b>11-06 前</b> 交付：<b>100 个四级高频词</b>（带例句、分 3 关）+ 3 种题型的题目。</p>
+    <div class="tip">
+      <b>为什么这活不难：</b>我已经把 100 个词按难度预分成 3 关了（见下方）。所以你<b>不用自己想词、不用查音标、不用写释义</b>——单词/音标/释义由 AI 预填你只校对；你唯一要原创的是给每个词写 <b>1 句简单例句</b>。
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>超详细步骤（照着做）</h2>
+
+    <div class="step"><div class="n">1</div><div class="t">
+      <h3 style="margin-top:0">建一个表格</h3>
+      <p>打开 Excel / WPS 表格 / 腾讯文档表格，第一行写这 4 列：</p>
+      <p><code>单词 | 音标 | 释义 | 我的例句</code></p>
+    </div></div>
+
+    <div class="step"><div class="n">2</div><div class="t">
+      <h3 style="margin-top:0">把词抄进去</h3>
+      <p>从下方「100 词清单」把<b>第 1 关</b>的 35 个词抄到「单词」列。<b>音标、释义先空着</b>（AI 会补，你后面校对）。</p>
+    </div></div>
+
+    <div class="step"><div class="n">3</div><div class="t">
+      <h3 style="margin-top:0">写例句（你最核心的活）</h3>
+      <p>给每个词写 <b>1 句简单英文例句</b>（8 个词以内最好），能体现词义：</p>
+      <p><span class="good">✅ 好例子：</span><code>He has the ability to solve it.</code>（ability = 能力）</p>
+      <p><span class="bad">❌ 不好：</span>抄词典超长句、或用词太偏。例句里尽量包含该单词本身。</p>
+    </div></div>
+
+    <div class="step"><div class="n">4</div><div class="t">
+      <h3 style="margin-top:0">校对音标和释义</h3>
+      <p>AI 补完音标、释义后，你<b>逐行看一遍</b>：释义翻译对不对？不对就改或圈出来发群里。</p>
+    </div></div>
+
+    <div class="step"><div class="n">5</div><div class="t">
+      <h3 style="margin-top:0">分级微调</h3>
+      <p>3 关难度你觉得不合适，把词在关与关之间挪一挪（比如某词太简单，从第 1 关移到第 2 关）。</p>
+    </div></div>
+
+    <div class="step"><div class="n">6</div><div class="t">
+      <h3 style="margin-top:0">出 3 种题型素材</h3>
+      <p>针对第 1 关的词，各出几道：</p>
+      <ul>
+        <li><b>选择题</b>：单词 + 4 个释义选项（1 对 3 错）</li>
+        <li><b>拼写题</b>：给释义，让玩家拼出单词（你提供正确拼写）</li>
+        <li><b>听音选词</b>：你标注「这个词要能发音」</li>
+      </ul>
+    </div></div>
+
+    <div class="step"><div class="n">7</div><div class="t">
+      <h3 style="margin-top:0">交付</h3>
+      <p>把表格发到群里 <b>@ 组长</b>，或存成 <code>.csv</code> 发群里。AI 会转成游戏用的 JSON，<b>你不用碰代码</b>。</p>
+    </div></div>
+  </div>
+
+  <div class="card">
+    <h2>交付标准（勾选）</h2>
+    <label class="chk"><input type="checkbox" class="check"> 100 个词全部填好「我的例句」一列</label>
+    <label class="chk"><input type="checkbox" class="check"> 音标、释义校对过一遍</label>
+    <label class="chk"><input type="checkbox" class="check"> 3 关分级合理（每关约 30–35 词）</label>
+    <label class="chk"><input type="checkbox" class="check"> 第 1 关出了 3 种题型各至少 5 道</label>
+    <label class="chk"><input type="checkbox" class="check"> 表格已发群里</label>
+  </div>
+
+  <div class="card">
+    <h2>100 词清单（已预分 3 关）</h2>
+    <p style="font-size:13px;color:#8b94a6">抄进表格用。释义/音标由 AI 补全后你校对；觉得超纲或太简单可替换成你熟悉的词。</p>
+
+    <div class="level">
+      <h3 style="margin-top:0">第 1 关（基础，35 词）</h3>
+      <p class="words">abandon, ability, abroad, absence, absolute, absorb, academic, accept, access, accident, accompany, accomplish, account, accurate, achieve, acquire, actual, adapt, adequate, adjust, admire, adopt, advance, advantage, adventure, advice, affect, afford, afraid, against, amount, ambition, analyze, ancient, announce</p>
+    </div>
+    <div class="level">
+      <h3 style="margin-top:0">第 2 关（进阶，35 词）</h3>
+      <p class="words">anxiety, appreciate, appropriate, approve, arrange, aspect, assist, assume, atmosphere, attach, attract, audience, authority, available, average, avoid, aware, barrier, benefit, beyond, blame, brilliant, calendar, campaign, candidate, capable, career, casual, celebrate, century, challenge, characteristic, circumstance, cite, civil</p>
+    </div>
+    <div class="level">
+      <h3 style="margin-top:0">第 3 关（较难，30 词）</h3>
+      <p class="words">claim, comment, compensate, competent, complex, compose, comprehensive, comprise, conceal, conclude, conduct, conference, confident, confirm, confront, conscious, consequence, considerable, consist, constant, constitute, consult, consume, contact, contain, contemporary, context, contract, contrast, contribute, controversial, convince</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>常见问题</h2>
+    <h3>Q：例句不会写怎么办？</h3>
+    <p>A：用「主语 + 动词 + 这个单词」造最短句。不会查词典 APP，抄一个简单例句改短。</p>
+    <h3>Q：音标看不懂要不要管？</h3>
+    <p>A：不用你写。AI 补完后你只看「释义」对不对，音标留给 AI 和组长。</p>
+    <h3>Q：一定要 100 个吗？</h3>
+    <p>A：第一版 100 个够了。实在赶，先交第 1 关 35 个，AI 也能先跑通一关。</p>
+    <h3>Q：表格发群里组长怎么用？</h3>
+    <p>A：组长 / AI 会把它转成游戏读的 JSON 文件，你完全不用碰代码，功劳还是你的（你是内容源头）。</p>
+  </div>
+
+  <div class="footer">词勇者 · 校园 AI 智能体创新应用大赛 · 内容官任务计划</div>
+
+</div>
+</body>
+</html>
