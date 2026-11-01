@@ -24,6 +24,8 @@
 
 ## 跑起来（三种方式，任选）
 
+0. **手机直接玩（最新版在线链接）**：https://word-quest-60356.app.workbuddy.host/?sharecode=YMRKAOKJ7P
+   —— 发到微信/QQ 里点开即可，体验官 B 用这个测。
 1. **最省事**：双击 `src/index.html`，浏览器直接打开就能玩（词库已内联，断网也能玩）。
 2. **手机测玩**：把 `src/index.html` 发到微信/QQ 传给手机，用浏览器打开；或等 AI 部署成链接。
 3. **改了词库之后**：内容官改完 `src/data/words.json`，在仓库根目录跑一次
