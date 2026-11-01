@@ -310,9 +310,15 @@ var voiceResult = "";        // "ok" / "fail"，供设置页自测显示
 var sharedAudio = null;      // 用于 iOS 音频解锁
 var audioUnlocked = false;
 
+/* 部署平台要求分享口令才能取静态文件（不带会被 403），本地双击打开时为空 */
+var SHARE_Q = (function(){
+  var m = (location.search || "").match(/[?&]sharecode=[^&]*/);
+  return m ? m[0].replace(/^&/, "?") : "";
+})();
+
 /* 0=本地录音 1=在线接口 2=无（转设备合成音） */
 function voiceSrc(text, stage){
-  if(stage === 0) return "audio/" + encodeURIComponent(text) + ".mp3";
+  if(stage === 0) return "audio/" + encodeURIComponent(text) + ".mp3" + SHARE_Q;
   if(stage === 1) return "https://dict.youdao.com/dictvoice?audio=" + encodeURIComponent(text) + "&type=2";
   return "";
 }
