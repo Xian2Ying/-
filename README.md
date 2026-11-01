@@ -26,13 +26,23 @@
 
 0. **手机直接玩（最新版在线链接）**：https://word-quest-60356.app.workbuddy.host/?sharecode=YMRKAOKJ7P
    —— 发到微信/QQ 里点开即可，体验官 B 用这个测。
-1. **最省事**：双击 `src/index.html`，浏览器直接打开就能玩（词库已内联，断网也能玩）。
-2. **手机测玩**：把 `src/index.html` 发到微信/QQ 传给手机，用浏览器打开；或等 AI 部署成链接。
+1. **最省事**：双击 `src/index.html`，浏览器直接打开就能玩（词库已内联，断网也能玩；**发音也离线可用**）。
+2. **手机测玩**：把 `src` 整个文件夹发到微信/QQ 传给手机，用浏览器打开 `index.html`；或直接用上面的在线链接。
+   ⚠️ 只发 `index.html` 一个文件的话单词没声音——发音音频在同目录 `audio/` 里。
 3. **改了词库之后**：内容官改完 `src/data/words.json`，在仓库根目录跑一次
    ```bash
-   python tools/build.py     # 把 JSON 注入 index.html
-   python tools/smoke.py     # 自动点一遍，自检有没有跑崩
+   python tools/build.py        # 把 JSON 注入 index.html
+   python tools/fetch_audio.py  # 补齐新词的发音 mp3（已有的会跳过）
+   python tools/smoke.py        # 自动点一遍，自检有没有跑崩
    ```
+
+## 发音为什么不用浏览器自带语音
+
+手机端（微信内置浏览器、iOS Safari）的 `speechSynthesis` 经常静默失效，听起来就是「完全没声音」。
+所以 100 个词的真人发音已提前下载到 `src/audio/<单词>.mp3`（共约 1.2 MB，平均 12 KB/词），游戏直接播本地文件：
+无延迟、离线可用、跨机型一致。万一某个文件缺失，会自动退回在线发音接口，再不行才用设备合成音。
+
+> 音频来自公开词典发音接口，仅用于本参赛作品的教学演示。词库改动后跑 `python tools/fetch_audio.py` 补齐即可。
 
 ## 当前状态
 

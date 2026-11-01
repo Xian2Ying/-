@@ -220,7 +220,10 @@
     <div class="panel">
       <h2>音效</h2>
       <button class="btn sm" id="btn-sfx">🔊 开</button>
-      <h2 style="margin-top:16px">发音语速</h2>
+      <h2 style="margin-top:16px">发音</h2>
+      <button class="btn sm" id="btn-test">🔊 点这里试听 abandon</button>
+      <div class="tiny dim" id="voice-tip" style="margin-top:8px;line-height:1.6">换手机或发现没声音，先点这里试听。听到单词才说明设备能发音。</div>
+      <h2 style="margin-top:16px">发音语速（仅备用合成音生效）</h2>
       <button class="btn sm" id="btn-rate">正常 1.0x</button>
       <h2 style="margin-top:16px">数据</h2>
       <button class="btn ghost" id="btn-clear">清空全部进度</button>
@@ -298,16 +301,121 @@ var SFX = {
   tap:   function(){ beep(440,.05,"triangle",.04); }
 };
 
-/* ============ 发音 ============ */
-function speak(text){
-  if(!window.speechSynthesis) return;
+/* ============ 发音 ============
+   手机端的 speechSynthesis 经常静默失效（微信内置浏览器基本不出声，iOS 还要装语音包），
+   所以主路径改成随游戏分发的本地 mp3（离线也能听），接口只做备用，最后才退回设备合成音。 */
+var voiceCache = {};         // 单词 -> 预加载的 <audio>
+var voiceFail = 0;           // 连续失败次数，达 3 次本次会话直接走合成音
+var voiceResult = "";        // "ok" / "fail"，供设置页自测显示
+var sharedAudio = null;      // 用于 iOS 音频解锁
+var audioUnlocked = false;
+
+/* 0=本地录音 1=在线接口 2=无（转设备合成音） */
+function voiceSrc(text, stage){
+  if(stage === 0) return "audio/" + encodeURIComponent(text) + ".mp3";
+  if(stage === 1) return "https://dict.youdao.com/dictvoice?audio=" + encodeURIComponent(text) + "&type=2";
+  return "";
+}
+
+/* iOS 必须由一次真实用户手势解锁音频；解锁后同一个元素可反复换 src 播放 */
+function unlockVoice(){
+  if(audioUnlocked) return;
+  audioUnlocked = true;
+  try{
+    if(!sharedAudio) sharedAudio = new Audio();
+    sharedAudio.onplaying = function(){ voiceFail = 0; voiceResult = "ok"; };
+    sharedAudio.src = "data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAgD4AAAB9AAACABAAZGF0YQAAAAA=";
+    var p = sharedAudio.play();
+    if(p && p.catch) p.catch(function(){});
+  }catch(e){}
+}
+
+function voiceFor(text){
+  var a = voiceCache[text];
+  if(a) return a;
+  a = new Audio();
+  a.preload = "auto";
+  a.dataset.stage = "0";
+  a.onplaying = function(){ voiceFail = 0; voiceResult = "ok"; };
+  a.onerror = function(){
+    var st = parseInt(a.dataset.stage || "0", 10);
+    if(st < 2){
+      var next = voiceSrc(text, st + 1);
+      a.dataset.stage = String(st + 1);
+      if(next){ a.src = next; return; }   // 本地文件缺失就换在线，在线也失败才放弃
+    }
+    voiceFail++; voiceResult = "fail";
+    speakNative(text);
+  };
+  a.src = voiceSrc(text, 0);
+  voiceCache[text] = a;
+  return a;
+}
+
+/* 出题时提前缓存，点喇叭就没延迟 */
+function preloadVoice(text){
+  if(!text || voiceFail >= 3) return;
+  try{ voiceFor(text).load(); }catch(e){}
+}
+
+/* 最后兜底：设备自带语音合成 */
+function speakNative(text){
+  if(!window.speechSynthesis) return false;
   try{
     window.speechSynthesis.cancel();
     var u = new SpeechSynthesisUtterance(text);
     u.lang = "en-US"; u.rate = save.settings.ttsRate || 1;
+    u.volume = 1;
     window.speechSynthesis.speak(u);
-  }catch(e){}
+    return true;
+  }catch(e){ return false; }
 }
+
+/* 换掉 src 用已解锁元素重试（应对自动播放被拦截） */
+function playShared(text){
+  try{
+    if(!sharedAudio) return false;
+    sharedAudio.src = voiceSrc(text, 0);
+    var p = sharedAudio.play();
+    if(p && p.catch) p.catch(function(){ voiceResult = "fail"; speakNative(text); });
+    return true;
+  }catch(e){ return false; }
+}
+
+var lastSpoken = "";
+function speak(text){
+  if(!text) return;
+  lastSpoken = text;
+  unlockVoice();
+
+  if(voiceFail < 3){
+    var a;
+    try{ a = voiceFor(text); }catch(e){ a = null; }
+    if(a){
+      // 只留一个声音在放，避免快速连点叠音
+      for(var k in voiceCache){
+        if(k !== text){ try{ voiceCache[k].pause(); voiceCache[k].currentTime = 0; }catch(e){} }
+      }
+      try{ window.speechSynthesis && window.speechSynthesis.cancel(); }catch(e){}
+      try{ a.pause(); a.currentTime = 0; }catch(e){}
+      var p = a.play();
+      if(p && p.catch){
+        p.catch(function(err){
+          if(err && err.name === "AbortError") return;   // 换 src 引起的中断，不算失败
+          if(playShared(text)) return;   // 自动播放被拦，换已解锁元素再来一次
+          voiceFail++; voiceResult = "fail"; speakNative(text);
+        });
+      }
+      return;
+    }
+  }
+  speakNative(text);
+}
+
+/* 首次任意手势里解锁音频（iOS / 微信内置浏览器必需），否则后续 play() 会被静默拦截 */
+["pointerdown","touchstart","click"].forEach(function(ev){
+  document.addEventListener(ev, function(){ unlockVoice(); ensureAudio(); }, {once:true, passive:true});
+});
 
 /* ============ 屏幕切换 ============ */
 var SCREENS = ["home","map","quiz","result","mistake","set"];
@@ -420,6 +528,7 @@ function renderQ(){
   $("q-combo").textContent = run.combo >= 2 ? "🔥 " + run.combo + " 连对" : "";
   var body = $("q-body");
   run.locked = false;
+  preloadVoice(q.word.en);   // 提前拉音频，点喇叭立即出声
 
   if(q.type === "T3"){
     var blanks = q.word.en.charAt(0) + " " + "_ ".repeat(q.word.en.length - 1).trim();
@@ -454,7 +563,7 @@ function renderQ(){
       b.onclick = function(){ if(!run.locked) judge(op === q.answer, op, b); };
       box.appendChild(b);
     });
-    if(q.type === "T2"){ $("spk2").onclick = function(){ speak(q.word.en); }; setTimeout(function(){ speak(q.word.en); }, 120); }
+    if(q.type === "T2"){ $("spk2").onclick = function(){ speak(q.word.en); }; speak(q.word.en); }
   }
 }
 function judge(ok, chosen, btn){
@@ -608,6 +717,20 @@ $("btn-practice-all").onclick = function(){
   }).filter(Boolean), "错题重练");
 };
 $("btn-sfx").onclick = function(){ save.settings.sfx = !save.settings.sfx; Store.save(); renderSet(); if(save.settings.sfx) SFX.tap(); };
+$("btn-test").onclick = function(){
+  voiceResult = "";
+  unlockVoice(); ensureAudio(); SFX.tap();
+  var tip = $("voice-tip");
+  tip.textContent = "正在播放…请把手机媒体音量调大一点听。";
+  speak("abandon");
+  setTimeout(function(){
+    if(voiceResult === "ok"){
+      tip.textContent = "✅ 能听到声音，发音正常（在线真人音）。";
+    } else {
+      tip.textContent = "⚠️ 没听到？先检查手机是否静音、媒体音量是否为 0。若还是没有声音，请把手机机型告诉我，我改用内置音频文件。";
+    }
+  }, 2600);
+};
 $("btn-rate").onclick = function(){
   save.settings.ttsRate = save.settings.ttsRate === 1 ? 0.8 : 1; Store.save(); renderSet(); speak("hello");
 };
