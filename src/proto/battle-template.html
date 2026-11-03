@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>词勇者 · 战斗原型（模板）</title>
+<style>
+:root{--bg:#15121f;--bg2:#1e1a2e;--panel:#262038;--gold:#f4c75b;--green:#5dc26a;--red:#e0573f;--txt:#f3eefb;--dim:#a89fc0;}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+body{margin:0;background:radial-gradient(circle at 50% 0%,#241d39,#15121f 70%);color:var(--txt);font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;min-height:100vh;display:flex;justify-content:center;}
+#app{width:100%;max-width:430px;padding:16px;overflow:hidden;}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+.combo{font-weight:700;color:var(--gold);min-height:22px;transition:transform .15s;font-size:15px;}
+.combo.pop{transform:scale(1.5);}
+.progress{font-size:12px;color:var(--dim);}
+.stage{position:relative;background:var(--panel);border:2px solid #3a3358;border-radius:16px;padding:18px;margin:8px 0;min-height:300px;transition:box-shadow .2s;}
+.stage.flash-ok{box-shadow:0 0 0 3px var(--green) inset;}
+.stage.flash-bad{box-shadow:0 0 0 3px var(--red) inset;}
+.monster{display:flex;flex-direction:column;align-items:center;margin:6px 0 14px;}
+.mob{font-size:64px;line-height:1;transition:transform .25s,opacity .25s;filter:drop-shadow(0 6px 10px rgba(0,0,0,.4));}
+.mob.hit{transform:translateY(40px) scale(.4) rotate(12deg);opacity:0;}
+.mob.attack{animation:shake .4s;}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-10px)}40%{transform:translateX(10px)}60%{transform:translateX(-7px)}80%{transform:translateX(7px)}}
+.mobname{margin-top:6px;font-size:14px;color:var(--gold);}
+.mobline{font-size:12px;color:var(--dim);margin-top:2px;font-style:italic;}
+.qword{text-align:center;font-size:34px;font-weight:700;letter-spacing:1px;margin:6px 0;}
+.phon{text-align:center;color:var(--dim);font-size:13px;margin-bottom:10px;}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.opt{background:var(--bg2);border:2px solid #3a3358;border-radius:12px;padding:14px 10px;font-size:15px;color:var(--txt);cursor:pointer;text-align:center;position:relative;transition:transform .1s,border-color .15s;}
+.opt:active{transform:scale(.96);}
+.opt.correct{border-color:var(--green);background:#1d3a24;}
+.opt.wrong{border-color:var(--red);background:#3a1d1d;}
+.opt.dim{opacity:.45;pointer-events:none;}
+.opt .mark{position:absolute;top:4px;right:8px;font-weight:700;font-size:16px;}
+.mark.ok{color:var(--green);}.mark.no{color:var(--red);}
+.speak{display:block;margin:0 auto 10px;background:var(--bg2);border:2px solid #3a3358;border-radius:20px;color:var(--txt);padding:8px 16px;font-size:14px;cursor:pointer;}
+.feedback{text-align:center;min-height:20px;font-size:14px;margin:10px 0;font-weight:600;}
+.feedback.ok{color:var(--green);}.feedback.bad{color:var(--red);}
+.next{width:100%;background:var(--gold);color:#2a1d05;border:none;border-radius:12px;padding:14px;font-size:16px;font-weight:700;cursor:pointer;margin-top:6px;}
+.next:disabled{opacity:.4;}
+.hint{font-size:12px;color:var(--dim);text-align:center;margin-top:8px;}
+</style>
+</head>
+<body>
+<div id="app">
+  <div class="topbar">
+    <div class="combo" id="combo"></div>
+    <div class="progress" id="prog"></div>
+  </div>
+  <div class="stage" id="stage">
+    <div class="monster">
+      <div class="mob" id="mob">👻</div>
+      <div class="mobname" id="mobname">遗弃怪</div>
+      <div class="mobline" id="mobline">「把我丢下不管？」</div>
+    </div>
+    <button class="speak" id="speak">🔊 听发音</button>
+    <div class="qword" id="qword">abandon</div>
+    <div class="phon" id="phon">/əˈbændən/</div>
+    <div class="opts" id="opts"></div>
+    <div class="feedback" id="fb"></div>
+    <button class="next" id="next" disabled>下一题 →</button>
+    <div class="hint">模板演示：词=怪的战斗反馈。原始游戏 src/index.html 未改动，此为对照组之外的新文件。</div>
+  </div>
+</div>
+<script>
+const DEMO=[
+ {en:"abandon",phon:"/əˈbændən/",mob:"👻",mname:"遗弃怪",mline:"「把我丢下不管？」",ans:"放弃；抛弃",opts:["放弃；抛弃","获得；赢得","修理；修复","隐藏；掩盖"]},
+ {en:"vulnerable",phon:"/ˈvʌlnərəbl/",mob:"🥚",mname:"脆脆怪",mline:"「轻轻一碰就碎…」",ans:"脆弱的；易受伤的",opts:["脆弱的；易受伤的","强壮的；坚固的","昂贵的；奢侈的","普通的；常见的"]},
+ {en:"efficient",phon:"/ɪˈfɪʃnt/",mob:"💨",mname:"疾风怪",mline:"「慢吞吞的别想追上我」",ans:"高效的；效率高的",opts:["高效的；效率高的","浪费的；低效的","危险的；冒险的","好奇的；求知欲强的"]}
+];
+let i=0,combo=0,answered=false;
+const $=id=>document.getElementById(id);
+let actx;
+function blip(freq,dur,type){try{if(!actx)actx=new (window.AudioContext||window.webkitAudioContext)();if(actx.state==="suspended")actx.resume();const o=actx.createOscillator(),g=actx.createGain();o.type=type||"sine";o.frequency.value=freq;o.connect(g);g.connect(actx.destination);const t=actx.currentTime;g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.2,t+.01);g.gain.exponentialRampToValueAtTime(.0001,t+dur);o.start(t);o.stop(t+dur);}catch(e){}}
+function speak(t){try{const u=new SpeechSynthesisUtterance(t);u.lang="en-US";speechSynthesis.cancel();speechSynthesis.speak(u);}catch(e){}}
+function render(){
+ answered=false;$("next").disabled=true;$("fb").textContent="";$("fb").className="feedback";
+ $("mob").classList.remove("hit","attack");
+ $("stage").classList.remove("flash-ok","flash-bad");
+ const w=DEMO[i];
+ $("mob").textContent=w.mob;$("mobname").textContent=w.mname;$("mobline").textContent=w.mline;
+ $("qword").textContent=w.en;$("phon").textContent=w.phon;
+ $("prog").textContent="第 "+(i+1)+" / "+DEMO.length+" 词（模板）";
+ const opts=$("opts");opts.innerHTML="";
+ const arr=w.opts.map((t,k)=>({t,k:k===0})).sort(()=>Math.random()-.5);
+ arr.forEach(o=>{const b=document.createElement("button");b.className="opt";b.textContent=o.t;b.onclick=()=>choose(b,o.k);opts.appendChild(b);});
+}
+function choose(btn,isCorrect){
+ if(answered)return;answered=true;
+ const all=[...document.querySelectorAll(".opt")];
+ if(isCorrect){
+   btn.classList.add("correct");const m=document.createElement("span");m.className="mark ok";m.textContent="✓";btn.appendChild(m);
+   all.forEach(b=>{if(b!==btn)b.classList.add("dim");});
+   $("mob").classList.add("hit");$("stage").classList.add("flash-ok");
+   combo++;bumpCombo();
+   $("fb").textContent=combo>=3?("击退！🔥 连击 x"+combo):"击退！";$("fb").className="feedback ok";
+   blip(660,.12,"triangle");setTimeout(()=>blip(880,.12,"triangle"),90);
+ }else{
+   btn.classList.add("wrong");const m=document.createElement("span");m.className="mark no";m.textContent="✗";btn.appendChild(m);
+   all.forEach(b=>{if(b.textContent===DEMO[i].ans){b.classList.add("correct");const c=document.createElement("span");c.className="mark ok";c.textContent="✓";b.appendChild(c);}});
+   $("mob").classList.add("attack");$("stage").classList.add("flash-bad");
+   $("fb").textContent="怪反击了！正确答案已标出";$("fb").className="feedback bad";
+   combo=0;setCombo();blip(150,.2,"sawtooth");
+ }
+ $("next").disabled=false;
+}
+function bumpCombo(){const c=$("combo");c.textContent=combo>=2?("🔥 连击 x"+combo):"";c.classList.add("pop");setTimeout(()=>c.classList.remove("pop"),150);}
+function setCombo(){const c=$("combo");c.textContent=combo>=2?("🔥 连击 x"+combo):"";}
+$("speak").onclick=()=>speak(DEMO[i].en);
+$("next").onclick=()=>{if(i<DEMO.length-1){i++;render();}else{$("stage").innerHTML='<div style="text-align:center;padding:40px 0"><div style="font-size:48px">🏆</div><div style="margin-top:10px;font-size:18px;font-weight:700">模板演示结束</div><div style="color:#a89fc0;font-size:13px;margin-top:6px">这是「词=怪」战斗反馈的概念验证，原始游戏未改动。</div></div>';}};
+render();
+</script>
+</body>
+</html>

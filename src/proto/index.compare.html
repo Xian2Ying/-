@@ -1,0 +1,52 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>词勇者 · 原型版本标签总览（v0 / 对照组 / v2）</title>
+<style>
+:root{--bg:#15121f;--panel:#262038;--gold:#f4c75b;--txt:#f3eefb;--dim:#a89fc0;}
+*{box-sizing:border-box;} body{margin:0;background:radial-gradient(circle at 50% 0%,#241d39,#15121f 70%);color:var(--txt);font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;padding:18px;}
+h1{font-size:20px;text-align:center;margin:6px 0 2px;}
+.sub{text-align:center;color:var(--dim);font-size:13px;margin-bottom:16px;}
+.legend{max-width:780px;margin:0 auto 18px;display:flex;flex-wrap:wrap;gap:10px;justify-content:center;}
+.legend .li{display:flex;align-items:center;gap:8px;background:var(--panel);border:1px solid #3a3358;border-radius:10px;padding:8px 12px;font-size:12.5px;}
+.badge{display:inline-block;font-size:11px;font-weight:800;padding:3px 9px;border-radius:20px;white-space:nowrap;}
+.b-v0{background:#3a2a55;color:#c9b6ff;}
+.b-ctl{background:#1d3a5a;color:#9fd0ff;}
+.b-v2{background:#1d4a2e;color:#9ff0bf;}
+table{width:100%;max-width:780px;margin:0 auto;border-collapse:collapse;}
+th,td{border:1px solid #3a3358;padding:10px 12px;font-size:13.5px;vertical-align:top;}
+th{background:var(--panel);color:var(--gold);} tr:nth-child(even) td{background:rgba(255,255,255,.03);}
+a{color:var(--gold);text-decoration:none;} a:hover{text-decoration:underline;}
+.role{font-size:11px;color:var(--dim);margin-top:3px;}
+.note{text-align:center;color:var(--dim);font-size:12px;margin-top:16px;max-width:780px;margin-left:auto;margin-right:auto;line-height:1.7;}
+code{background:#322a4a;padding:1px 5px;border-radius:4px;font-size:12px;color:#e8dffb;}
+</style></head><body>
+<h1>⚔️ 词勇者 · 原型版本标签总览</h1>
+<div class="sub">从开始到现在的每个版本，都已贴好标签：<b>v0 初始演示</b> / <b>对照组·冻结基线</b> / <b>v2 实验组</b></div>
+
+<div class="legend">
+  <div class="li"><span class="badge b-v0">v0 初始演示</span> 项目最开始的战斗模板（仅 3 个写死单词）</div>
+  <div class="li"><span class="badge b-ctl">对照组·冻结</span> 当前部署现状，A/B 基准，全程未改</div>
+  <div class="li"><span class="badge b-v2">v2 实验组</span> 本轮体检修复版（接真实词库 + 发音修复）</div>
+</div>
+
+<table>
+<tr><th>玩法</th><th>版本标签</th><th>文件（点击体验）</th><th>角色定位 · 一句话</th></tr>
+
+<tr><td rowspan="2">📋 平铺基线</td><td><span class="badge b-ctl">对照组·冻结</span></td><td><a href="control-group.html">control-group.html</a></td><td>对照组（平铺做题）<div class="role">真实四六级词库 + 四档难度，A/B 的「无游戏化」基准</div></td></tr>
+<tr><td><span class="badge b-v2">v2 实验组</span></td><td><a href="control-group.v2.html">control-group.v2.html</a></td><td>对照组（平铺做题）<div class="role">同上 + 发音三级回退，修复手机无声</div></td></tr>
+
+<tr><td rowspan="2">🎲 单词肉鸽</td><td><span class="badge b-ctl">对照组·冻结</span></td><td><a href="roguelike.html">roguelike.html</a></td><td>创新组（背词×肉鸽）<div class="role">永久死亡 + 三选一天赋 + 记忆碎片 + 应援角色</div></td></tr>
+<tr><td><span class="badge b-v2">v2 实验组</span></td><td><a href="roguelike.v2.html">roguelike.v2.html</a></td><td>创新组（背词×肉鸽）<div class="role">同上 + 发音三级回退，修复手机无声</div></td></tr>
+
+<tr><td rowspan="2">🗡️ 词怪战斗</td><td><span class="badge b-v0">v0 初始演示</span></td><td><a href="battle-template.html">battle-template.html</a></td><td>治疗组（战斗反馈）<div class="role">仅 3 个写死单词的演示 —— A/B 的「开始」起点</div></td></tr>
+<tr><td><span class="badge b-v2">v2 实验组</span></td><td><a href="battle-template.v2.html">battle-template.v2.html</a></td><td>治疗组（战斗反馈）<div class="role">接真实词库 + 四档难度 + 词=怪皮肤，A/B 正式成立</div></td></tr>
+
+<tr><td rowspan="2">🏠 实验站入口</td><td><span class="badge b-ctl">对照组·冻结</span></td><td><a href="index.html">index.html</a></td><td>首页入口<div class="role">三玩法切换首页（当前部署版）</div></td></tr>
+<tr><td><span class="badge b-v2">v2 实验组</span></td><td><a href="index.compare.html">index.compare.html</a></td><td>对比入口<div class="role">对照组 vs 实验组 同屏标签总览（本页）</div></td></tr>
+</table>
+
+<div class="note">
+<b>标签说明：</b><code>v0</code> = 最开始的战斗演示（起点）；<code>对照组·冻结</code> = 原始文件，全程未修改，作 A/B 基准；<code>v2 实验组</code> = 本轮体检新增独立文件。<br>
+所有版本共存于 <code>src/proto/</code>，可逐项点开对比，演进即「游戏是壳、AI 是核」。
+</div>
+</body></html>

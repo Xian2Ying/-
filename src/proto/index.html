@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>词勇者 · 原型实验站</title>
+<style>
+  :root{
+    --bg:#1a1430; --panel:#2a2150; --gold:#ffd166; --purple:#a78bfa;
+    --text:#ede9fe; --muted:#9b8fc7;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    font-family:"Courier New",ui-monospace,monospace;
+    background:radial-gradient(circle at 50% 0%, #2a2150, #1a1430 70%);
+    color:var(--text);
+    min-height:100vh;
+    padding:24px 16px 48px;
+    -webkit-text-size-adjust:100%;
+  }
+  .wrap{max-width:880px;margin:0 auto;}
+  header{text-align:center;margin-bottom:28px;}
+  h1{font-size:clamp(22px,6vw,34px);color:var(--gold);text-shadow:2px 2px 0 #000;letter-spacing:1px;}
+  .sub{color:var(--muted);font-size:14px;margin-top:10px;line-height:1.7;}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;}
+  .card{
+    background:var(--panel);
+    border:2px solid var(--purple);
+    border-radius:12px;
+    padding:18px;
+    display:flex;flex-direction:column;gap:10px;
+    text-decoration:none;color:inherit;
+    transition:transform .12s ease, box-shadow .12s ease;
+  }
+  .card:hover,.card:active{transform:translateY(-4px);box-shadow:0 8px 24px rgba(167,139,250,.35);}
+  .card .emoji{font-size:34px;line-height:1;}
+  .card h2{font-size:18px;color:var(--gold);}
+  .card .tag{font-size:11px;color:var(--muted);word-break:break-all;}
+  .card p{font-size:13px;line-height:1.65;color:var(--text);}
+  .badge{align-self:flex-start;font-size:11px;padding:3px 9px;border-radius:999px;background:rgba(167,139,250,.2);color:var(--purple);}
+  .diff{margin-top:34px;text-align:center;color:var(--muted);font-size:13px;line-height:1.9;}
+  footer{margin-top:38px;text-align:center;color:var(--muted);font-size:12px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>⚔️ 词勇者 · 原型实验站</h1>
+    <div class="sub">「游戏是壳、AI 是核」机制验证 · 同一套词库，三种玩法对照<br>电脑 / 手机均可打开，自适应布局</div>
+  </header>
+
+  <div class="cards">
+    <a class="card" href="battle-template.html">
+      <span class="emoji">🗡️</span>
+      <span class="badge">治疗组</span>
+      <h2>词怪战斗</h2>
+      <span class="tag">battle-template.html</span>
+      <p>答题时单词化作像素怪被击退，带连击与反馈动画。验证「战斗反馈」对爽感 / 记忆的帮助。</p>
+    </a>
+
+    <a class="card" href="control-group.html">
+      <span class="emoji">📋</span>
+      <span class="badge">对照组</span>
+      <h2>平铺基线</h2>
+      <span class="tag">control-group.html</span>
+      <p>无战斗动画、无连击、无音效，只平铺做题。与词怪战斗做单变量 A/B 对照。</p>
+    </a>
+
+    <a class="card" href="roguelike.html">
+      <span class="emoji">🎲</span>
+      <span class="badge">创新组</span>
+      <h2>单词肉鸽</h2>
+      <span class="tag">roguelike.html</span>
+      <p>run 制 + 随机遭遇 + 永久死亡 + 开局天赋 + 每档 Boss。验证「背词 × 肉鸽」机制杂交。</p>
+    </a>
+  </div>
+
+  <div class="diff">
+    🌅 简单 10 关 · 🎸 普通 25 关 · 🎤 困难 40 关<br>
+    通关一档自动进阶下一档，含轻量二次元主题（校园 / 少女乐队 / 演唱会）
+  </div>
+
+  <footer>原型实验 · 仅用于内部讨论与赛前验证</footer>
+</div>
+</body>
+</html>
