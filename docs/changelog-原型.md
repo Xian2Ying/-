@@ -6,6 +6,31 @@
 
 ---
 
+## 2026-11-03 23:xx · 版本标签（Git 里程碑）
+
+- 新建 `src\proto\index.compare.html`（升级为「版本标签总览」，v0/对照组/v2 三色徽章 + 角色定位）
+- 更新 `docs\16-版本比对-对照组vs实验组.md`：新增「一-B 版本标签矩阵」「八 Git 版本标签」
+- 提交 `5011c22`，打三个本地标签：`v0-initial-demo` / `v1-control-baseline` / `v2-experimental`（未推送远程）
+- 清理 `src\proto\*.test.html` 测试垃圾文件
+
+---
+
+## 2026-11-04 20:xx · 全版本测试站（找人测试交付）
+
+- 新建独立目录 `C:\Users\XIAN&YING\WorkBuddy\2026-10-31-22-18-46\word-quest-lab\`（**不进 git**，独立部署）
+  - `index.html`：全版本标签总览入口，覆盖 9 个可玩页，四组分区 + 建议测试顺序 + sharecode 透传
+  - `game.html`（复制 `src\index.html`，原件未改）+ `audio\*.mp3`（100 个）
+  - 6 个原型副本 + `hub.html`（复制 `src\proto\index.html` 并改名）
+  - 8 个游戏页注入 `WQ_SHARE_PATCH` 幂等脚本（防平台把子页面拦成占位页）
+- 新建 `tools\inject_sharecode.py`（幂等注入工具，可复现）
+- 新建 `docs\17-全版本测试站交付.md`（链接 / 9 版本标签 / 修改记录 / 线上验证）
+- 部署：`https://word-quest-60356.app.workbuddy.host/?sharecode=YMRKAOKJ7P`
+  - ⚠️ 平台将其并入**原正式版同一应用**，旧链接落地页由「直接进游戏」变为「全版本总览」；正式版仍可经 `game.html` 访问；旧 `wordquest-proto` 实验站未受影响
+- 验证：9 页 HTTP 200 均为真实内容；`audio/abandon.mp3` 200/11757B；8/8 链接透传 sharecode；9 页零 JS 报错
+- **对照组原件 `src\index.html`、`src\proto\*.html`、`src\audio\*` 全部零改动**
+
+---
+
 ## 2026-11-02 20:27 · 创建战斗原型模板
 
 - 新建 `C:\Users\XIAN&YING\WorkBuddy\2026-10-31-22-18-46\word-quest\src\proto\battle-template.html`
