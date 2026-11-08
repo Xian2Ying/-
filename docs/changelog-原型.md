@@ -31,6 +31,23 @@
 
 ---
 
+## 2026-11-08 17:xx · v3 最小上场包（P0 四项落地）
+
+- **修复 v2 发音链路**（`tools\build_v2.py` 重写 `AUDIO_JS`，重新生成三个 `.v2.html`）
+  - 根因：`voiceFor()` 的 `onerror` 换源到在线 TTS 后只 `a.src=nx; return;`，没有重新 `play()` → 在线音「只加载不播放」、第一击无声
+  - 修法：换源后补 `play()`；新增 `noLocal{}` 记忆本地缺失词；stage≥2 直接合成音
+  - 验证（headless）：点击 🔊 后 stage 0→1、`play()` 调用 2 次、网络出现 youdao 请求
+- **修复 battle-v2 串台文案**：标题/横幅/难度菜单从「对照组·平铺基线」改为「词怪战斗」；DOM 内「对照组」字样 0 次
+- **新增 `src\proto\game.v3.html`**（由 `tools\build_v3.py` 从冻结的 `src\index.html` 生成）
+  - 例句卡（100 词 `example`/`exampleZh` 现成数据）、答错停留 850→2600ms + 提示、T1 看词选义补 🔊、发音换源修复
+  - 验证（headless 真实点击 10 题）：10/10 弹例句卡，T1 `spk1=true`，答对答错都有卡，正常到结算
+- **对外入口收敛**（`tools\build_lab.py`）：`word-quest-lab\index.html` 改为单一正式版入口 → `game.v3.html`；
+  旧 8 版本总览改为 `index.internal.html`（内部/答辩用，`&internal=1` 显示入口）
+- 新增 `docs\19-执行记录-v3最小上场包.md`（改动清单 / 验证证据 / 发布步骤 / 回滚）
+- **对照组 `src\index.html`、`game.html` 全程零改动**
+
+---
+
 ## 2026-11-02 20:27 · 创建战斗原型模板
 
 - 新建 `C:\Users\XIAN&YING\WorkBuddy\2026-10-31-22-18-46\word-quest\src\proto\battle-template.html`
