@@ -72,3 +72,16 @@
 - [ ] 若采用：把怪物机制与 Juice 并入 `src\index.html`（保留原件为对照，新版本另存或加版本号）
 - [ ] 替换内联演示词为 words.json 真实抽题 + 干扰项
 - [ ] 发音改为本地 mp3（沿用主游戏已验证方案，避免手机无声旧坑）
+
+## 2026-11-08 · 评委专用版 / 普通版双入口（ADR-006，队长拍板「精编演示版」）
+
+- **决策**：普通版 `index.html` 保持零改动、沿用原分享链接；评委版另起独立入口 `judge.html`，两者共用同一套游戏文件（不复制本体）。评委版不做成 8 版本陈列，遵循 DSH「对外只留一条主路径」建议。
+- **新增文件**：`C:/Users/XIAN&YING/WorkBuddy/2026-10-31-22-18-46/word-quest-lab/judge.html`
+  三张卡（正式版 v1.1 / 💀 地狱模式一键直进 / A-B 方法论答辩页）+ 3 分钟与 8 分钟演示话术 + sharecode 透传脚本。
+- **修改文件**：`C:/Users/XIAN&YING/WorkBuddy/2026-10-31-22-18-46/word-quest/tools/build_lab.py`
+  新增 `JUDGE_HTML`、`build_judge()`、`inject_demo()`、`--judge-only` 开关；完整构建路径末尾也会生成评委版，保证可复现。
+- **注入（仅部署副本）**：`C:/Users/XIAN&YING/WorkBuddy/2026-10-31-22-18-46/word-quest-lab/roguelike.v2.html`
+  追加 `WQ_DEMO_PATCH`：`?demo=hell` 时 `META.unlocked=3` + `S.tierIdx=3` + `startRun('tank')`，跳过「通关 75 关才解锁」直进地狱档；幂等。仓库 `src/proto/roguelike.v2.html` 对照原件**不注入**。
+- **零改动证明**：`word-quest-lab/index.html` 执行前后 sha256 均为 `01a0ba708369ba472e5d6fb493eec18b0ca6b868d9e5e9719db0f76e135d78c6`；`src/index.html`、`src/proto/*`、`src/audio/*` 全程未动。
+- **本地验证（无头浏览器 4 场景全绿，零 JS 报错）**：评委版 4 个链接均拼上 sharecode；`?demo=hell` 直达「💀 地狱 难度 · 层 1/60 · 地狱I」第 1 层战斗且难度按钮数 0；不带 demo 仍是四档菜单（4 个按钮）；评委版截图排版无重叠。
+- **线上状态**：改动尚未发布。重新部署后普通版仍为 `https://word-quest-60356.app.workbuddy.host/?sharecode=YMRKAOKJ7P`，评委版为 `https://word-quest-60356.app.workbuddy.host/judge.html?sharecode=YMRKAOKJ7P`。

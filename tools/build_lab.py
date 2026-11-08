@@ -7,11 +7,13 @@
 
 幂等：index.internal.html 只在不存在时生成（避免覆盖人工改动）。
 """
-import io, os
+import io, os, sys
 
 LAB = "C:/Users/XIAN&YING/WorkBuddy/2026-10-31-22-18-46/word-quest-lab"
 INDEX = os.path.join(LAB, "index.html")
 INTERNAL = os.path.join(LAB, "index.internal.html")
+JUDGE = os.path.join(LAB, "judge.html")
+ROGUE = os.path.join(LAB, "roguelike.v2.html")
 
 PUBLIC = """<!doctype html><html lang="zh-CN"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -96,7 +98,133 @@ BANNER = ('<div class="tips" style="border-left-color:#9ff0bf"><b>🔒 内部实
           '本页保留 8 个版本与 A/B 对照，供答辩与内部复盘使用。</div>')
 
 
+# ---------------------------------------------------------------------------
+# 评委专用版（ADR-006）：judge.html + 地狱模式演示直进
+#   - 普通版 index.html 保持零改动，沿用原分享链接
+#   - 评委版独立入口 judge.html，共用同一套游戏文件（不复制本体）
+#   - ?demo=hell 仅注入部署副本，仓库 src/proto 对照原件不注入
+# ---------------------------------------------------------------------------
+
+JUDGE_HTML = """<!doctype html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>词勇者 · 评委演示版</title>
+<style>
+:root{--bg:#15121f;--panel:#262038;--gold:#f4c75b;--txt:#f3eefb;--dim:#a89fc0;--line:#3a3358;--hell:#a83232;}
+*{box-sizing:border-box;}
+body{margin:0;background:radial-gradient(circle at 50% 0%,#2a1d3d,#15121f 70%);color:var(--txt);
+ font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;min-height:100vh;padding:24px 16px 48px;}
+.wrap{max-width:600px;margin:0 auto;}
+.kicker{display:inline-block;font-size:11px;font-weight:800;letter-spacing:1px;color:#241f0b;
+ background:var(--gold);padding:4px 10px;border-radius:20px;margin-bottom:14px;}
+h1{font-size:30px;margin:0 0 8px;letter-spacing:2px;}
+.sub{color:var(--dim);font-size:13px;line-height:1.9;margin-bottom:22px;}
+.card{display:block;background:var(--panel);border:1px solid var(--line);border-radius:14px;
+ padding:16px 18px;margin:12px 0;text-decoration:none;color:var(--txt);transition:transform .12s;}
+.card:active{transform:translateY(2px);}
+.card.main{border-color:var(--gold);}
+.card.hell{border-color:var(--hell);background:#2a1620;}
+.card .t{font-size:18px;font-weight:800;margin-bottom:6px;}
+.card .d{font-size:13px;line-height:1.85;color:var(--dim);}
+.card .go{display:inline-block;margin-top:10px;font-size:14px;font-weight:800;color:var(--gold);}
+.card.hell .go{color:#ff9a9a;}
+.card .step{float:right;font-size:11px;color:var(--dim);font-weight:700;}
+.tips{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--gold);
+ border-radius:10px;padding:14px 16px;margin-top:24px;font-size:13px;line-height:2;text-align:left;}
+.tips b{color:var(--gold);}
+.tips ol{margin:8px 0 0;padding-left:20px;}
+.tips li{margin:4px 0;}
+.foot{margin-top:24px;font-size:12px;color:var(--dim);line-height:2;text-align:center;}
+.foot a{color:var(--dim);}
+</style></head><body>
+<div class="wrap">
+  <div class="kicker">评委演示专用 · 含演示直进参数</div>
+  <h1>⚔️ 词勇者 · Word Quest</h1>
+  <div class="sub">背词 × 闯关 × 肉鸽 · 校园 AI 智能体创新应用大赛（AI+教学科研方向）<br>
+  一句话定位：<b style="color:var(--gold)">游戏是壳、AI 是核</b></div>
+
+  <a class="card main" href="game.v3.html">
+    <div class="t">🏆 正式版 v1.1 · 完整体验 <span class="step">STEP 1</span></div>
+    <div class="d">3 关线性地图 · 100 个四级高频词真实词库 · 每道题答完弹出「释义 + 中英例句」例句卡 ·
+    错题本「答对 2 次毕业」 · 本地真人发音 mp3。这是产品主形态，请先答两题。</div>
+    <span class="go">▶ 打开正式版</span>
+  </a>
+
+  <a class="card hell" href="roguelike.v2.html?demo=hell">
+    <div class="t">💀 地狱模式 · 一键直进 <span class="step">STEP 2 · 记忆点</span></div>
+    <div class="d">跳过「通关 75 关才解锁」的门槛，直接进地狱档：60 层、每 10 层 Boss、四幕 I~IV；
+    HP / 永久死亡 / 三选一天赋 / 记忆碎片 / 应援角色反馈。<b>「背词 × 肉鸽」是本作品最大亮点。</b></div>
+    <span class="go">💀 直进地狱档</span>
+  </a>
+
+  <a class="card ab" href="index.internal.html">
+    <div class="t">🧪 A/B 方法论与版本演进 <span class="step">STEP 3 · 答辩投屏</span></div>
+    <div class="d">8 个版本贴好标签（v0 初始演示 / 对照组·冻结 / v2 实验组 / 正式版 v1.1）。
+    讲「原文件冻结作对照、改动另起新文件」的可控演进方法，以及治疗组 / 对照组 / 创新组三组对照。</div>
+    <span class="go">🧪 打开版本总览</span>
+  </a>
+
+  <div class="tips">
+    <b>建议演示顺序</b>
+    <ol>
+      <li><b>3 分钟版</b>：正式版答 2 题（看例句卡与答错停留）→ 地狱模式看 60 层 / Boss / 永久死亡 → 投屏 A/B 页讲方法论。</li>
+      <li><b>完整版（约 8 分钟）</b>：再加错题本「答对 2 次毕业」、🔊 发音与设置页声音自检、v1.0 冻结版对照。</li>
+      <li><b>收尾一句话</b>：错题本把「答对 2 次」变成毕业条件，肉鸽把「背词」变成有代价的闯关——学习动机由玩法承担。</li>
+    </ol>
+  </div>
+
+  <div class="foot">
+    本页仅供评委演示：地狱模式链接带 <code>demo=hell</code> 演示参数，常态试玩请用
+    <a href="index.html">普通版入口</a>。<br>进度存在本机浏览器 · 手机 / 电脑浏览器打开即玩
+  </div>
+</div>
+<script>
+(function(){
+  var q=(location.search||"").match(/[?&]sharecode=[^&]*/);
+  if(!q) return;
+  var v=q[0].replace(/^[?&]/,"");
+  Array.prototype.forEach.call(document.querySelectorAll("a[href]"),function(a){
+    var h=a.getAttribute("href")||"";
+    if(!h||/^(https?:|#|mailto:|javascript:|data:)/.test(h)) return;
+    if(h.indexOf("sharecode=")!==-1) return;
+    a.setAttribute("href", h+(h.indexOf("?")===-1?"?":"&")+v);
+  });
+})();
+</script>
+</body></html>
+"""
+
+DEMO_MARK = "WQ_DEMO_PATCH"
+DEMO_ANCHOR = "tierSelect();\n</script>"
+DEMO_CODE = """/* WQ_DEMO_PATCH: 评委演示直进地狱档（幂等，仅作用于部署副本；仓库 src/proto 对照原件不注入） */
+if(/(^|[?&])demo=hell(&|$)/.test(location.search)){
+  META.unlocked=3; S.tierIdx=3; applyTheme(TIERS[3]); showBanner(TIERS[3]); startRun('tank');
+}else{ tierSelect(); }
+</script>"""
+
+
+def build_judge():
+    io.open(JUDGE, "w", encoding="utf-8", newline="\n").write(JUDGE_HTML)
+    print("WROTE judge:", JUDGE)
+
+
+def inject_demo():
+    s = io.open(ROGUE, encoding="utf-8").read()
+    if DEMO_MARK in s:
+        print("SKIP demo (already injected):", ROGUE)
+        return
+    if DEMO_ANCHOR not in s:
+        raise SystemExit("ANCHOR NOT FOUND: " + repr(DEMO_ANCHOR))
+    io.open(ROGUE, "w", encoding="utf-8", newline="\n").write(
+        s.replace(DEMO_ANCHOR, DEMO_CODE, 1))
+    print("INJECT demo:", ROGUE)
+
+
 def main():
+    # --judge-only：只生成评委版 + 注入演示参数，绝不重写普通版 index.html
+    if "--judge-only" in sys.argv:
+        build_judge()
+        inject_demo()
+        return
     s = io.open(INDEX, encoding="utf-8").read()
 
     if not os.path.exists(INTERNAL):
@@ -121,6 +249,9 @@ def main():
 
     io.open(INDEX, "w", encoding="utf-8", newline="\n").write(PUBLIC)
     print("WROTE public index:", INDEX)
+
+    build_judge()
+    inject_demo()
 
 
 if __name__ == "__main__":
