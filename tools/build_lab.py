@@ -104,6 +104,8 @@ def main():
         for old, new, label in [
             (CARD_OLD, CARD_NEW, "正式版卡片"),
             (LEGEND_OLD, LEGEND_NEW, "图例"),
+            ('最后开 <b>🏆 正式版 v1.0</b>', '最后开 <b>🏆 正式版 v1.1</b>', "建议顺序"),
+            ('<code>正式版 v1.0</code> = 当前主游戏', '<code>正式版 v1.1</code> = 当前主游戏', "图例脚注"),
             ('<h1>⚔️ 词勇者 · 全版本标签总览</h1>', '<h1>⚔️ 词勇者 · 全版本标签总览</h1>\n' + BANNER, "横幅"),
             ('<div class="sec">🏆 A. 正式版（当前主游戏）</div>', '<div class="sec">🏆 A. 正式版（当前主游戏 · 对外入口 game.v3.html）</div>', "小节标题"),
         ]:
