@@ -13,16 +13,17 @@ ROOT = "C:/Users/XIAN&YING/WorkBuddy/2026-10-31-22-18-46/word-quest/src/proto"
 
 # ---- 三级发音回退（复刻主游戏 src/index.html 的 voiceSrc/voiceFor/speak，去掉 save 依赖）----
 AUDIO_JS = r'''/* ===== 三级发音回退：本地mp3 → 在线TTS(有道) → 设备合成 =====
-   原型词库词汇无本地mp3，故手机实际路径走在线TTS；本地文件若存在也优先 */
+   v2.1 修复：换源后必须重新 play()，否则在线音「只加载不播放」（第一次点喇叭无声的根因）；
+   并记住本地缺失的词，后续直接用在线源，减少 404 与首击静默 */
 var SHARE_Q=(function(){var m=(location.search||"").match(/[?&]sharecode=[^&]*/);return m?m[0].replace(/^&/,"?"):"";})();
-var voiceCache={},voiceFail=0,voiceResult="",sharedAudio=null,audioUnlocked=false;
+var voiceCache={},voiceFail=0,voiceResult="",sharedAudio=null,audioUnlocked=false,noLocal={};
 function ensureAudio(){try{if(!sharedAudio)sharedAudio=new Audio();}catch(e){}}
 function unlockVoice(){if(audioUnlocked)return;audioUnlocked=true;try{if(!sharedAudio)sharedAudio=new Audio();sharedAudio.onplaying=function(){voiceFail=0;voiceResult="ok";};sharedAudio.src="data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAgD4AAAB9AAACABAAZGF0YQAAAAA=";var p=sharedAudio.play();if(p&&p.catch)p.catch(function(){});}catch(e){}}
 function voiceSrc(text,stage){if(stage===0)return "audio/"+encodeURIComponent(text)+".mp3"+SHARE_Q;if(stage===1)return "https://dict.youdao.com/dictvoice?audio="+encodeURIComponent(text)+"&type=2";return "";}
-function voiceFor(text){var a=voiceCache[text];if(a)return a;a=new Audio();a.preload="auto";a.dataset.stage="0";a.onplaying=function(){voiceFail=0;voiceResult="ok";};a.onerror=function(){var st=parseInt(a.dataset.stage||"0",10);if(st<2){var nx=voiceSrc(text,st+1);a.dataset.stage=String(st+1);if(nx){a.src=nx;return;}}voiceFail++;voiceResult="fail";speakNative(text);};a.src=voiceSrc(text,0);voiceCache[text]=a;return a;}
+function voiceFor(text){var a=voiceCache[text];if(a)return a;a=new Audio();a.preload="auto";var st0=noLocal[text]?1:0;a.dataset.stage=String(st0);a.onplaying=function(){voiceFail=0;voiceResult="ok";};a.onerror=function(){var st=parseInt(a.dataset.stage||"0",10);if(st===0)noLocal[text]=1;if(st<2){var nx=voiceSrc(text,st+1);a.dataset.stage=String(st+1);if(nx){try{a.src=nx;}catch(e){}var p=a.play();if(p&&p.catch)p.catch(function(){});return;}}voiceFail++;voiceResult="fail";speakNative(text);};a.src=voiceSrc(text,st0);voiceCache[text]=a;return a;}
 function speakNative(text){if(!window.speechSynthesis)return false;try{window.speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(text);u.lang="en-US";u.rate=1;u.volume=1;window.speechSynthesis.speak(u);return true;}catch(e){return false;}}
-function playShared(text){try{if(!sharedAudio)return false;sharedAudio.src=voiceSrc(text,0);var p=sharedAudio.play();if(p&&p.catch)p.catch(function(){voiceResult="fail";speakNative(text);});return true;}catch(e){return false;}}
-function speak(text){if(!text)return;unlockVoice();if(voiceFail<3){var a;try{a=voiceFor(text);}catch(e){a=null;}if(a){for(var k in voiceCache){if(k!==text){try{voiceCache[k].pause();voiceCache[k].currentTime=0;}catch(e){}}}try{window.speechSynthesis&&window.speechSynthesis.cancel();}catch(e){}try{a.pause();a.currentTime=0;}catch(e){}var p=a.play();if(p&&p.catch){p.catch(function(err){if(err&&err.name==="AbortError")return;if(playShared(text))return;voiceFail++;voiceResult="fail";speakNative(text);});}return;}}speakNative(text);}
+function playShared(text){try{if(!sharedAudio)return false;var a=voiceCache[text];var st=a?parseInt(a.dataset.stage||"0",10):0;if(st>=2)return false;sharedAudio.src=voiceSrc(text,st);var p=sharedAudio.play();if(p&&p.catch)p.catch(function(){voiceResult="fail";});return true;}catch(e){return false;}}
+function speak(text){if(!text)return;unlockVoice();if(voiceFail<3){var a;try{a=voiceFor(text);}catch(e){a=null;}if(a){var st=parseInt(a.dataset.stage||"0",10);if(st>=2){voiceFail++;voiceResult="fail";speakNative(text);return;}for(var k in voiceCache){if(k!==text){try{voiceCache[k].pause();voiceCache[k].currentTime=0;}catch(e){}}}try{window.speechSynthesis&&window.speechSynthesis.cancel();}catch(e){}try{a.pause();a.currentTime=0;}catch(e){}var p=a.play();if(p&&p.catch){p.catch(function(err){if(err&&err.name==="AbortError")return;if(parseInt(a.dataset.stage||"0",10)<2)return;voiceFail++;voiceResult="fail";speakNative(text);});}return;}}speakNative(text);}
 ["pointerdown","touchstart","click"].forEach(function(ev){document.addEventListener(ev,function(){unlockVoice();ensureAudio();},{once:true,passive:true});});'''
 
 BATTLE_CSS = r'''
@@ -76,7 +77,17 @@ io.open(os.path.join(ROOT,"roguelike.v2.html"),"w",encoding="utf-8").write(r)
 # ---- battle-template.v2 : control engine + combat skin + audio ----
 b = io.open(os.path.join(ROOT,"control-group.html"),encoding="utf-8").read()
 b = repl(b, '<title>词勇者 · 对照组（四级+六级 真实词库 · 四难度基线）</title>',
-            '<title>词勇者 · 词怪战斗 v2（真实词库 · 三级发音 · 对照组升级版）</title>', "battle title")
+            '<title>词勇者 · 词怪战斗 v2（真实词库 · 三级发音 · 四档难度）</title>', "battle title")
+# 串台文案修复：battle 版不能顶着「对照组/平铺基线」的身份
+b = repl(b, "showBanner({emoji:'📋',name:'对照组',sub:'平铺基线'});",
+            "showBanner({emoji:'⚔️',name:'词怪战斗',sub:'答对击退 · 连击加成'});", "battle banner")
+b = repl(b, '（对照组：平铺做题，无战斗机制）',
+            '（战斗模式：答对击退词怪，连击越高越猛）', "battle menu")
+b = repl(b, '>📋</div><h2>选择难度</h2>', '>⚔️</div><h2>选择难度</h2>', "battle overlay emoji")
+b = repl(b, '/* 对照组：刻意无怪动画/连击/音效/HP —— 仅平铺做题，作为 roguelike 的对照（同四难度同词库，单变量=有无肉鸽机制） */',
+            '/* v2 战斗皮肤：同一套词库与四档难度，单变量=有无战斗反馈 */', "battle css comment")
+b = repl(b, '/* ===== 四难度阶梯：简单10 → 普通25 → 困难40 → 地狱60（对照组：平铺基线，无肉鸽机制） ===== */',
+            '/* ===== 四难度阶梯：简单10 → 普通25 → 困难40 → 地狱60（战斗版） ===== */', "battle tier comment")
 b = repl(b, '</style>', BATTLE_CSS + '\n</style>', "battle css")
 b = repl(b, '  <div class="topbar"><div id="prog"></div><div id="tiername"></div></div>',
             '  <div class="topbar"><div id="prog"></div><div id="tiername"></div><div id="combo" class="combo"></div></div>', "battle topbar")
