@@ -85,3 +85,19 @@
 - **零改动证明**：`word-quest-lab/index.html` 执行前后 sha256 均为 `01a0ba708369ba472e5d6fb493eec18b0ca6b868d9e5e9719db0f76e135d78c6`；`src/index.html`、`src/proto/*`、`src/audio/*` 全程未动。
 - **本地验证（无头浏览器 4 场景全绿，零 JS 报错）**：评委版 4 个链接均拼上 sharecode；`?demo=hell` 直达「💀 地狱 难度 · 层 1/60 · 地狱I」第 1 层战斗且难度按钮数 0；不带 demo 仍是四档菜单（4 个按钮）；评委版截图排版无重叠。
 - **线上状态**：改动尚未发布。重新部署后普通版仍为 `https://word-quest-60356.app.workbuddy.host/?sharecode=YMRKAOKJ7P`，评委版为 `https://word-quest-60356.app.workbuddy.host/judge.html?sharecode=YMRKAOKJ7P`。
+
+## 2026-11-11 22:45 · 评委版发布上线（ADR-006 收尾）
+
+- **授权**：队长「评委版也发来给我拿去测」→ 按需要公网可转发链接理解为发布授权。
+- **动作**：重新发布 `C:/Users/XIAN&YING/WorkBuddy/2026-10-31-22-18-46/word-quest-lab`（静态站，entry `index.html`），沿用原应用与分享码，**普通版链接完全不变**。
+- **线上前后对比**：
+  - `judge.html`：404 / 335B → **200 / 5,015B**
+  - `roguelike.v2.html`：121,302B 无注入 → **121,586B，`WQ_DEMO_PATCH` 在位**
+  - 根 `index.html`：发布前后线上 sha256 = 本地 sha256 = `01a0ba708369ba472e5d…`（零改动）
+- **线上实测（无头浏览器，剥离 script 后判定可见渲染）**：
+  - 评委版 4 个子链接全部自动拼上 `sharecode`（含 `?demo=hell&sharecode=…`）
+  - `?demo=hell` 真实渲染「💀 地狱 难度 終幕·最終公演 ❤❤❤❤❤ 层 1/60 · 地狱I」，**直接进第 1 层战斗、无难度菜单**
+  - 不带 `demo` 仍是正常四档菜单（简单/普通/困难/地狱，后三档锁定），常态未被破坏
+  - `audio/abandon.mp3` 200 / 11,757B；其余 8 个版本页保持 200
+- **文档状态更新**：`docs/20-交付检查清单.md` 阻断项改为「已解决」、风险表移除「评委版未上线」；`docs/22-体验测试指引-可转发.md` 补评委版链接与 STEP 2 测试项。
+- **仍未验证**：手机真机 🔊 发音（沙箱无声，需队长真机点一次）。
