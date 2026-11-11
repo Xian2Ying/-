@@ -101,3 +101,23 @@
   - `audio/abandon.mp3` 200 / 11,757B；其余 8 个版本页保持 200
 - **文档状态更新**：`docs/20-交付检查清单.md` 阻断项改为「已解决」、风险表移除「评委版未上线」；`docs/22-体验测试指引-可转发.md` 补评委版链接与 STEP 2 测试项。
 - **仍未验证**：手机真机 🔊 发音（沙箱无声，需队长真机点一次）。
+
+## 2026-11-12 00:20 · ADR-007 普通版地狱模式 + 通关三档解锁（队长拍板）
+
+- **需求原文**：「普通版的地狱模式你要加上去，是先打过前三个模式再开启地狱模式……不一定要把前面的词组全部做完才可以解锁，只需要通关三个模式即可解锁地狱难度」。按「线上普通版链接要生效」理解为含发布授权，沿用原应用与分享码重新部署。
+- **架构决策**：不把地狱玩法复制进正式版 `game.v3.html`（3 关线性地图，两套结构会分裂产品），而是在普通版入口加一张卡片指向现有肉鸽；**解锁规则改为数据层判定**，不打乱原有「打满 10/25/40 层 = 公演通关」的终局逻辑。评委版 `?demo=hell` 直进保留为答辩旁路。
+- **修改文件（绝对路径）**：
+  - `C:/Users/XIAN&YING/WorkBuddy/2026-10-31-22-18-46/word-quest/tools/build_lab.py`
+    新增 `ADR-007` 段：`UNLOCK_HELPERS`（`META.cleared`、`WQ_CLEAR_AT=[3,5,8]`、`wqClearCount/wqHellUnlocked/wqSyncUnlock/wqMarkClear/wqToast`）、`UNLOCK_PATCHES`（8 处精确替换 + 唯一性校验）、`PUBLIC_HELL_CSS/CARD`、`snapshot_public()`、`inject_public_hell()`、`inject_unlock()`、`--unlock-only` 幂等开关；`PUBLIC` 模板同步加地狱卡片；`JUDGE_HTML` 文案由「跳过 75 关」改为「跳过通关前三档」。
+  - `C:/Users/XIAN&YING/WorkBuddy/2026-10-31-22-18-46/word-quest-lab/index.html`
+    幂等插入「💀 挑战地狱模式」卡片（`WQ_PUBLIC_HELL`），保留平台写入的 `data-page-node-id`。改前 sha256 `01a0ba708369ba472e5d6fb493eec18b0ca6b868d9e5e9719db0f76e135d78c6`，改后 `3326fdcc…`。
+  - `C:/Users/XIAN&YING/WorkBuddy/2026-10-31-22-18-46/word-quest-lab/index.pre-hell.html`（**新增**）
+    改前普通版入口的冻结对照快照，sha256 `01a0ba70…`（与线上旧版一致）。
+  - `C:/Users/XIAN&YING/WorkBuddy/2026-10-31-22-18-46/word-quest-lab/roguelike.v2.html`
+    注入 `WQ_UNLOCK_PATCH`（仅部署副本）：前三档默认全开、地狱按 `wqClearCount()>=3` 解锁、菜单显示 `x/3`、推进层数时打卡、`talentPick(3)` 守卫、`tierClear` 不越级解锁。改后 123,455B。
+  - `C:/Users/XIAN&YING/WorkBuddy/2026-10-31-22-18-46/word-quest-lab/judge.html` — 由 `build_judge()` 重新生成，仅文案更新（5,134B）。
+  - `docs\20-交付检查清单.md`、`docs\22-体验测试指引-可转发.md` — 状态与解锁规则同步。
+- **零改动证明**：`word-quest\src\index.html`、`src\proto\*.html`、`src\audio\*` 全程未动；仓库 `src\proto\roguelike.v2.html` 对照原件**不注入**。`index.pre-hell.html` 与改前线上入口哈希一致。
+- **验证（无头浏览器真实点击答题，零 JS 报错）**：初始 4 档 → 前三档 enabled / 地狱 disabled / 进度 0/3；未解锁强跳 `talentPick(3)` 被挡回菜单；简单 3 层、普通 5 层、困难 8 层后 `cleared=true,true,true`、进度 3/3、`hellUnlocked=true`、地狱按钮解锁且可真正进档；故意答错致死 HP=0 后进度仍 3/3；`node --check` 主脚本语法 OK；构建脚本幂等复跑全 SKIP。
+- **线上实测（发布后）**：根入口 200/4,124B 含 `WQ_PUBLIC_HELL`；肉鸽 200/123,455B 含 `WQ_UNLOCK_PATCH` + `WQ_DEMO_PATCH`；评委版 200/5,134B；`index.pre-hell.html` 200/3,490B；`audio/abandon.mp3` 200/11,757B。线上与本地逐文件 sha256 一致（入口 `3326fdcc…`、肉鸽 `3e244efa…`、评委版 `b58eb5ea…`）。线上常态菜单显示「三档自由挑战 · 各到 3/5/8 层即算通关 · 进度 0/3」；`?demo=hell` 仍直达「层 1/60 · 地狱I」；普通版与评委版所有站内链接自动拼分享码。
+- **仍未验证**：手机真机 🔊 发音（沙箱无声，需队长真机点一次）。
