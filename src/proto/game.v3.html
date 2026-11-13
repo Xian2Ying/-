@@ -25,6 +25,9 @@
   #app{width:100%;max-width:430px;min-height:100vh;padding:14px 14px 28px;position:relative}
   .screen{display:none;animation:fade .18s ease-out}
   .screen.on{display:block}
+  /* 结算页：内容垂直居中，避免下半屏大片空白 */
+  #s-result.on{display:flex;flex-direction:column;justify-content:center;min-height:calc(100vh - 56px);min-height:calc(100dvh - 56px)}
+  @media (min-width:1024px){ #s-result.on{min-height:0;justify-content:flex-start} }
   @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 
   /* 像素外框 */
@@ -1002,6 +1005,8 @@ function judge(ok, chosen, btn){
     setTimeout(function(){ if(fl.parentNode) fl.parentNode.removeChild(fl); }, 380);
   }
   renderMonster();
+  /* 拼写题提交后移开焦点，让第二次 Enter 可以进入下一题 */
+  try{ var _sp = $("sp"); if(_sp) _sp.blur(); }catch(e){}
 
   // v3.1：用户控制节奏 —— 不自动跳题，例句卡下方给「下一题」按钮，想读多久读多久
   var nb = document.createElement("button");
@@ -1450,6 +1455,9 @@ document.addEventListener("keydown", function(e){
       if(b) b.click();
     }
     if(e.key === "Enter"){ var ok = $("ok"); if(ok) ok.click(); }
+    /* 答完一题后：Enter / 空格 也能进入下一题（PC 端手感） */
+    var nx = document.getElementById("q-next");
+    if(nx && !nx.disabled && e.target.tagName !== "INPUT" && (e.key === "Enter" || e.key === " ")){ e.preventDefault(); nx.click(); }
     if(e.key === "Escape"){ renderMap(); show("map"); }
   } else if(e.key === "Escape" && sc !== "home"){ renderMap(); show("map"); }
 });
@@ -1657,7 +1665,7 @@ async function runAnalysis(){
   out.classList.add("loading"); out.textContent = "AI 正在分析你的学习数据…";
   try{
     var ok = await AI.ensure();
-    if(!ok){ out.innerHTML = aiOffline("AI 服务未连接"); }
+    if(!ok){ out.innerHTML = aiOffline("AI 服务未连接"); btn.textContent = "重试"; }
     else{
       var full = await AI.askStream([
         {role:"system", content: AI_SYS_ANALYSIS},
@@ -1689,7 +1697,7 @@ async function runPlan(){
   out.classList.add("loading"); out.textContent = "AI 正在为你制定学习计划…";
   try{
     var ok = await AI.ensure();
-    if(!ok){ out.innerHTML = aiOffline("AI 服务未连接"); }
+    if(!ok){ out.innerHTML = aiOffline("AI 服务未连接"); btn.textContent = "重试"; }
     else{
       var full = await AI.askStream([
         {role:"system", content: AI_SYS_PLAN},

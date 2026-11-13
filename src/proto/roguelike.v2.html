@@ -263,7 +263,7 @@ function renderHud(){
 function nextEncounter(){
   const t=TIERS[S.tierIdx];
   if(S.floor>=t.levels){tierClear();return;}
-  S.floor++; S.answered=false; wqMarkClear();
+  S.floor++; S.answered=false;
   const isBoss=(t.bossEvery>0 && S.floor%t.bossEvery===0);
   const pool=poolForFloor(t,S.floor);
   const avail=pool.filter(x=>!S.used.has(x.en));
@@ -324,6 +324,7 @@ function choose(btn){
   if(isCorrect&&gain>0) floatFrag('+'+gain+' 碎片');
   renderHud();
   if(S.hp<=0){setTimeout(gameOver,500);return;}
+  wqMarkClear();            /* 答完当前层、且没死，才算到达该层（P2-13） */
   $("next").disabled=false;
 }
 function showChar(isCorrect){
