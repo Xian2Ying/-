@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>词勇者 Word Quest · 初赛作品大纲</title>
+<style>
+  body { font-family: "SimSun", "宋体", serif; }
+  h1 { font-family: "SimHei", "黑体", sans-serif; font-size: 18pt; text-align: center; margin: 0 0 6pt 0; }
+  p.subtitle { font-family: "SimHei", "黑体", sans-serif; font-size: 11pt; text-align: center; color: #555555; margin: 0 0 14pt 0; }
+  h2 { font-family: "SimHei", "黑体", sans-serif; font-size: 14pt; margin: 12pt 0 6pt 0; }
+  p { font-size: 11pt; line-height: 1.5; margin: 3pt 0; }
+  li { font-size: 10.5pt; line-height: 1.4; margin: 1.5pt 0; }
+  ol { margin: 4pt 0 4pt 0; padding-left: 22pt; }
+  p.prompt { font-size: 10.5pt; color: #333333; margin: 6pt 0 3pt 0; }
+  p.prompt b { color: #1a1a1a; }
+  p.imgcap { font-size: 10pt; color: #666666; text-align: center; margin: 2pt 0 8pt 0; }
+  img { display: block; margin: 0 auto; }
+  p.link { font-size: 11pt; word-break: break-all; }
+  p.term { font-size: 8pt; color: #444444; line-height: 1.3; margin: 1.5pt 0; }
+  p.term b { color: #1a1a1a; }
+</style>
+</head>
+<body>
+
+<h1>词勇者 Word Quest · 初赛作品大纲</h1>
+<p class="subtitle">校园 AI 智能体创新应用大赛 · 初赛提交材料</p>
+
+<h2>一、作品名称与所选赛道</h2>
+<p>作品名称：<b>词勇者 Word Quest</b></p>
+<p>所选赛道：<b>AI+教学科研</b></p>
+
+<h2>二、解决的核心问题</h2>
+<p>传统背词应用「反馈只有对错、缺乏情绪激励、效果难以量化」。本作品用「闯关 + 肉鸽」机制驱动记忆，并由 AI 智能体打通两条闭环：<b>内容生产闭环</b>（词库构建、发音校验、题目例句生成、自动化验证）与<b>效果量化闭环</b>（答题数据埋点 → 学习看板 / 正确率折线图 → LLM 智能分析薄弱项与进度 → 动态调整学习计划）。让背单词可玩、可量化、可复盘。</p>
+
+<h2>三、智能体功能模块说明</h2>
+<p><b>知识库来源</b>：大学英语四 / 六级考试高频词表（100 词），按难度分三级——遗忘森林 35 词、回声洞穴 33 词、静默雪山 32 词，含音标、词性、释义、例句、中译、干扰项，100/100 校验通过。</p>
+<p><b>功能模块</b>（分「内容生产」与「智能应用」两层）：</p>
+<ol>
+  <li><b>内容生产</b>：构建质检词库、收录校验 100 个词典发音（本地 mp3 → 有道在线 → 设备合成三级回退）、生成题目例句、无头浏览器自动化验证主循环；</li>
+  <li><b>LLM 智能学习分析</b>：应用内置 AI 学习助手，读取本机真实答题数据，实时生成「薄弱环节 + 正确率趋势 + 下一步建议」的个性化分析报告；</li>
+  <li><b>LLM 动态学习计划</b>：依据学习进度与薄弱词，生成每日学习计划（今日目标、重点复习词、建议方法、预计时长），并支持「一键重练重点词」；</li>
+  <li><b>LLM 对话式学习</b>：输入任意单词或句子，AI 老师实时讲解音标、词性、释义、例句、记忆技巧与易混词辨析；</li>
+  <li><b>学习效果量化</b>：答题埋点记录（对错 / 单词 / 时间）→ 本地学习看板（已学词数、综合正确率、通关进度、薄弱词 Top5）+ 正确率折线图，数据实时喂给 LLM 分析。</li>
+</ol>
+<p><b>核心交互流程</b>：用户答题 → 数据埋点入本机存档 → 学习看板实时更新（折线图 / 薄弱词）→ LLM 读取数据生成分析报告与学习计划 → 对话式 AI 讲解单词 / 句子 → 反馈回流调整计划。</p>
+
+<h2>四、WorkBuddy 平台智能体访问链接</h2>
+<p class="link">https://word-quest-60356.app.workbuddy.host/?sharecode=YMRKAOKJ7P</p>
+
+<h2>五、场景化提示词示例及对应输出截图</h2>
+
+<p class="prompt"><b>场景 1 · 词库构建</b>：提示词「帮我构建一份 100 词的四级高频词库，含音标、词性、释义、例句、中译、难度分级与干扰项」</p>
+<img src="C:/Users/XIAN&amp;YING/WorkBuddy/2026-10-31-22-18-46/word-quest/output/brief-compose/scenario1-wordbank.png" style="width:340pt">
+<p class="imgcap">输出：100 词词库（含音标 / 词性 / 释义 / 例句 / 中译 / 难度分级）</p>
+
+<table>
+<tr>
+<td style="width:50%; vertical-align:top;">
+<p class="prompt"><b>场景 2 · 游戏生成</b>：提示词「把这些词做成一个可玩的背单词闯关游戏，答错停留并展示例句」</p>
+<img src="C:/Users/XIAN&amp;YING/WorkBuddy/2026-10-31-22-18-46/word-quest/output/brief-compose/scenario2-game.png">
+<p class="imgcap">输出：可玩的背单词闯关游戏主界面</p>
+</td>
+<td style="width:50%; vertical-align:top;">
+<p class="prompt"><b>场景 3 · 背词 × 肉鸽</b>：提示词「再做一个背词 × 肉鸽模式，永久死亡、每 10 层 Boss，并自动验证主循环零报错」</p>
+<img src="C:/Users/XIAN&amp;YING/WorkBuddy/2026-10-31-22-18-46/word-quest/output/brief-compose/scenario3-hell.png">
+<p class="imgcap">输出：背词 × 肉鸽地狱模式战斗界面（60 层 / Boss / 永久死亡）</p>
+</td>
+</tr>
+</table>
+
+<p class="prompt"><b>场景 4 · 学习效果量化</b>：提示词「记录我的答题数据，生成学习看板、正确率折线图，并用 AI 分析薄弱项、调整学习计划」</p>
+<img src="C:/Users/XIAN&amp;YING/WorkBuddy/2026-10-31-22-18-46/word-quest/output/brief-compose/scenario4-dashboard.png" style="width:85pt">
+<p class="imgcap">输出：AI 学习助手——学习看板（已学词 / 正确率 / 通关 / 错题）+ 正确率折线图 + 薄弱词 Top5，并可按需生成 AI 分析报告与学习计划</p>
+
+<h2>六、术语说明</h2>
+<p class="term"><b>肉鸽（Roguelike）</b>：以「随机生成 + 永久死亡 + 单局重开」为核心的游戏类型，本作品借它给背词增加重复可玩性与压力感。</p>
+<p class="term"><b>地狱模式</b>：最高难度肉鸽玩法，60 层、每 10 层 Boss、3 点生命（答错扣血、血尽本局重开，即「永久死亡」机制），需先通关前三关解锁，用于高压力下的记忆强化。</p>
+<p class="term"><b>闯关玩法</b>：把背词包装成「念对单词 → 攻击词怪」，答对掉血、全对击杀通关；答错被反噬并自动记入错题本。</p>
+
+<h2>七、实现口径说明（诚实交付）</h2>
+<p>为避免误解，特说明三类实现状态：<b>已实现</b>（真实可当场验证）、<b>脚本演示</b>（演示版，页面已如实标注）、<b>路线图</b>（未实现，明确标注）。详见附页《功能实现口径三分表与 AI 实证》。</p>
+<p>其中「口语镇」NPC（引导师 Ella）为<b>脚本对话演示</b>（5 场景固定台词 + 预设选项 + 重点词逐词发音，页面底部已标注「脚本演示」），<b>AI 实时对话是路线图下一站</b>；作品真正接真实大模型的是「AI 学习助手」三项能力——智能分析、动态学习计划、对话式学词，读取本机真实答题数据实时生成，均有原始输出截图可复核。</p>
+
+</body>
+</html>
