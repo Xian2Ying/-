@@ -189,7 +189,7 @@
 
   /* PC 端 */
   @media (min-width:1024px){
-    #app{max-width:900px;padding:22px}
+    #app{max-width:900px;padding:22px;min-height:0;margin:auto}
     .panel{padding:20px}
     .opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
     .opts .opt{margin-bottom:0}
@@ -240,7 +240,7 @@
   @keyframes aiBlink{50%{opacity:.3}}
   .ai-off{background:#2a1620;border:2px solid #a83232;color:#ff9a9a;border-radius:8px;padding:12px;font-size:12px;line-height:1.7}
 </style>
-<script src="https://cdn.jsdelivr.net/npm/@tencent-ai/workbuddy-cloud-sdk@dev/lib/index.global.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/@tencent-ai/workbuddy-cloud-sdk@0.1.4/lib/index.global.js" onerror="window.__WQ_SDK_FAIL=1"></script>
 </head>
 <body>
 <div id="app">
@@ -658,6 +658,26 @@ function renderMap(){
   });
   var total = Object.keys(save.words).length;
   $("map-tip").textContent = "已接触 " + total + " / 100 词 · 错题 " + save.mistakes.length + " 个";
+  updateHellState();
+}
+function updateHellState(){
+  var el = document.getElementById("hell-state");
+  if(!el) return;
+  try{
+    var clear = 0;
+    for(var i=1;i<=3;i++){ var p = save.progress[i]; if(p && p.stars>=1) clear++; }
+    var open = clear >= 3;
+    if(!open){
+      try{
+        var r = JSON.parse(localStorage.getItem("wq_rogue4")||"{}");
+        if((r.unlocked||0)>=3 || (Array.isArray(r.cleared)&&r.cleared.filter(Boolean).length>=3)) open = true;
+      }catch(e){}
+    }
+    el.textContent = open
+      ? "已解锁 💀 · 60 层 / 每 10 层 Boss / 永久死亡"
+      : "通关 遗忘森林 / 回声洞穴 / 静默雪山 三关后解锁 · 进度 " + clear + "/3";
+    el.setAttribute("data-open", open ? "1" : "0");
+  }catch(e){}
 }
 
 /* ============ 出题 ============ */
@@ -671,18 +691,20 @@ function buildQuestions(level){
   var pool = poolOf(level).slice();
   var now = Date.now();
 
-  // 复习题优先：按 dueAt 最早到期排序（答错的词 dueAt=0 永远最优先，其次按到期时间）
-  var due = pool.filter(function(w){
+  // 复习题优先：从「全部词」里按 dueAt 最早到期排序（跨关；答错的词 dueAt=0 永远最优先，其次按到期时间）
+  var due = WORDS.filter(function(w){
     var r = save.words[w.id];
-    return r && r.dueAt && r.dueAt <= now;
+    return r && r.dueAt != null && r.dueAt <= now;
   }).sort(function(a,b){
     var ra = save.words[a.id] || {dueAt:0};
     var rb = save.words[b.id] || {dueAt:0};
     return (ra.dueAt||0) - (rb.dueAt||0);
   });
 
-  var picked = due.slice(0, 3);              // 最多 3 个到期复习词优先
-  var rest = shuffle(pool.filter(function(x){ return picked.indexOf(x) < 0; }));
+  var picked = due.slice(0, 6);              // 到期复习词取满 6 个（错词/到期词优先）
+  var fresh = shuffle(pool.filter(function(x){ return picked.indexOf(x) < 0 && !save.words[x.id]; }));  // 本关未学过的
+  var rest  = shuffle(pool.filter(function(x){ return picked.indexOf(x) < 0 && save.words[x.id]; }));   // 本关已学过未到期
+  while(picked.length < QSIZE && fresh.length) picked.push(fresh.pop());
   while(picked.length < QSIZE && rest.length) picked.push(rest.pop());
 
   var pattern = ["T1","T2","T3","T1","T2","T3","T1","T2","T3"];
@@ -883,11 +905,22 @@ function judge(ok, chosen, btn){
   }
   renderMonster();
 
-  setTimeout(function(){
-    run.i++;
-    if(run.i >= run.qs.length) finish();
-    else renderQ();
-  }, ok ? (q.type === "T3" ? 1600 : 1500) : 2600);
+  // v3.1：用户控制节奏 —— 不自动跳题，例句卡下方给「下一题」按钮，想读多久读多久
+  var nb = document.createElement("button");
+  nb.className = "btn gold";
+  nb.id = "q-next";
+  nb.style.margin = "12px 0 4px";
+  nb.textContent = (run.i + 1 >= run.qs.length) ? "📊 查看结算 →" : "下一题 →";
+  nb.onclick = function(){ advance(); };
+  $("q-body").appendChild(nb);
+  try{ nb.scrollIntoView({block:"nearest", behavior:"smooth"}); }catch(e){}
+}
+function advance(){
+  var nb = document.getElementById("q-next");
+  if(nb) nb.disabled = true;
+  run.i++;
+  if(run.i >= run.qs.length) finish();
+  else renderQ();
 }
 function finish(){
   var n = run.qs.length, rate = Math.round(run.right / n * 100);
@@ -982,6 +1015,21 @@ $("btn-go-set").onclick = function(){ renderSet(); show("set"); };
 $("btn-mistake").onclick = $("btn-mistake2").onclick = function(){ SFX.tap(); renderMistake(); show("mistake"); };
 $("btn-set").onclick = function(){ renderSet(); show("set"); };
 $("btn-npc").onclick = function(){ ensureAudio(); SFX.tap(); openNPC(); };
+(function(){
+  var _hellBtn = document.getElementById("btn-hell");
+  if(!_hellBtn) return;
+  _hellBtn.addEventListener("click", function(e){
+    var el = document.getElementById("hell-state");
+    var open = el && el.getAttribute("data-open") === "1";
+    if(!open){
+      e.preventDefault();
+      SFX.wrong();
+      var tip = document.getElementById("map-tip");
+      if(tip) tip.textContent = "先通关 遗忘森林 / 回声洞穴 / 静默雪山 三关，才能挑战地狱模式";
+      return false;
+    }
+  });
+})();
 
 /* ============ 口语镇：脚本对话演示（AI 实时对话是路线图下一站） ============ */
 /* v2：平铺台词 → 聊天式多轮对话：NPC 气泡 + 玩家选项分支 + 重点词逐词发音 + 完成鼓励 */
@@ -1320,6 +1368,19 @@ var AI = {
       var top = s.weak.slice(0,8).map(function(w){ return w.en + "(错" + w.wrong + "次)"; }).join("、");
       lines.push("薄弱词：" + top);
     }
+    if(s.history && s.history.length){
+      var recent = s.history.slice(-20);
+      var byDay = {};
+      recent.forEach(function(h){
+        var d = new Date(h.t).toISOString().slice(0,10);
+        if(!byDay[d]) byDay[d] = {r:0, n:0};
+        byDay[d].n++; if(h.ok) byDay[d].r++;
+      });
+      var trend = Object.keys(byDay).map(function(d){
+        return d.slice(5) + ":" + Math.round(byDay[d].r / byDay[d].n * 100) + "%(" + byDay[d].n + "题)";
+      }).join("，");
+      lines.push("最近答题趋势（按天）：" + trend);
+    }
     return lines.join("；");
   },
   ensure: async function(){
@@ -1327,7 +1388,10 @@ var AI = {
     this.init();
     if(!this.cloud) return false;
     try{
-      var models = await this.cloud.llm.models.list();
+      var models = await Promise.race([
+        this.cloud.llm.models.list(),
+        new Promise(function(_, rej){ setTimeout(function(){ rej(new Error("timeout")); }, 15000); })
+      ]);
       if(!models || !models.length) return false;
       this.model = models.filter(function(x){ return x.disabled !== true; })[0] || models[0];
       this.ready = true;
@@ -1336,13 +1400,20 @@ var AI = {
   },
   askStream: async function(messages, onDelta){
     var full = "";
-    for await (var chunk of this.cloud.llm.chat.completions.create({
-      model: this.model.id,
-      messages: messages,
-      stream: true
-    })){
-      var d = chunk.choices && chunk.choices[0] && chunk.choices[0].delta;
-      if(d && d.content){ full += d.content; if(onDelta) onDelta(d.content); }
+    var sig = (typeof AbortSignal !== "undefined" && AbortSignal.timeout) ? AbortSignal.timeout(15000) : undefined;
+    try{
+      for await (var chunk of this.cloud.llm.chat.completions.create({
+        model: this.model.id,
+        messages: messages,
+        stream: true,
+        signal: sig
+      })){
+        var d = chunk.choices && chunk.choices[0] && chunk.choices[0].delta;
+        if(d && d.content){ full += d.content; if(onDelta) onDelta(d.content); }
+      }
+    }catch(e){
+      if(e && (e.name === "TimeoutError" || e.name === "AbortError")) throw new Error("网络较慢，响应超时，请重试");
+      throw e;
     }
     return full;
   }
@@ -1481,6 +1552,7 @@ async function runPlan(){
       out.classList.remove("loading");
       out.innerHTML = mdToHtml(full || "(无内容)");
       btn.textContent = "重新生成";
+      appendPlanActions(out, full);
     }
   }catch(e){
     out.classList.remove("loading");
@@ -1489,6 +1561,25 @@ async function runPlan(){
   }finally{
     btn.disabled = false;
   }
+}
+function appendPlanActions(out, full){
+  // 从计划文本里提取与词库匹配的英文词，加「一键开始重练」
+  var words = (full || "").match(/[a-zA-Z]{3,}/g) || [];
+  var seen = {}, targets = [];
+  words.forEach(function(w){
+    var lw = w.toLowerCase();
+    if(seen[lw]) return;
+    seen[lw] = 1;
+    var hit = WORDS.filter(function(x){ return x.en.toLowerCase() === lw; })[0];
+    if(hit && targets.indexOf(hit) < 0) targets.push(hit);
+  });
+  if(!targets.length) return;
+  var pb = document.createElement("button");
+  pb.className = "btn gold";
+  pb.style.marginTop = "10px";
+  pb.textContent = "🎯 开始重练这 " + targets.length + " 个重点词";
+  pb.onclick = function(){ SFX.tap(); startCustom(targets.slice(0,15), "计划重练", "mix"); };
+  out.appendChild(pb);
 }
 var aiChatMsgs = [];
 function renderAIChat(){
@@ -1531,6 +1622,7 @@ async function sendAIChat(){
       var c = $("ai-chat-box"); c.scrollTop = c.scrollHeight;
     });
     if(!full) bubble.textContent = "(空回复)";
+    else bubble.innerHTML = mdToHtml(full);   // 流式结束后渲染 Markdown（**加粗**、# 标题）
     aiChatMsgs.push({role:"assistant", content: full});
     if(aiChatMsgs.length > 10) aiChatMsgs = aiChatMsgs.slice(-8);
   }catch(e){

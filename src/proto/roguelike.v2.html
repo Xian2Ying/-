@@ -10,6 +10,10 @@
 body{margin:0;background:radial-gradient(circle at 50% 0%,#241d39,#15121f 70%);color:var(--txt);font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;min-height:100vh;display:flex;justify-content:center;transition:background .4s;}
 #app{width:100%;max-width:430px;padding:16px;overflow:hidden;}
 .banner{display:flex;align-items:center;flex-wrap:wrap;gap:4px 8px;background:var(--tint);border-radius:12px;padding:10px 14px;margin-bottom:8px;font-weight:700;}
+.back{display:inline-block;margin-bottom:8px;color:var(--txt);font-size:13px;font-weight:700;text-decoration:none;opacity:.85}
+.back:active{opacity:.6}
+.giveup{display:block;width:100%;margin-top:8px;padding:11px;border-radius:10px;border:1px solid #a83232;background:#2a1620;color:#ff9a9a;font-size:13px;font-weight:700}
+.giveup:active{transform:translateY(2px)}
 .banner .e{font-size:22px;}
 .banner .sub{font-weight:400;color:#fff;opacity:.85;font-size:12px;margin-left:0;flex-basis:100%;white-space:nowrap;}
 .hud{display:flex;justify-content:space-between;align-items:center;font-size:13px;margin-bottom:8px;gap:8px;flex-wrap:wrap;}
@@ -67,6 +71,7 @@ body{margin:0;background:radial-gradient(circle at 50% 0%,#241d39,#15121f 70%);c
 </head>
 <body>
 <div id="app">
+  <a class="back" href="game.v3.html">← 返回词勇者</a>
   <div class="banner" id="banner"></div>
   <div id="hud"></div>
   <div id="stage"></div>
@@ -144,7 +149,7 @@ function playShared(text){try{if(!sharedAudio)return false;var a=voiceCache[text
 function speak(text){if(!text)return;unlockVoice();if(voiceFail<3){var a;try{a=voiceFor(text);}catch(e){a=null;}if(a){var st=parseInt(a.dataset.stage||"0",10);if(st>=2){voiceFail++;voiceResult="fail";speakNative(text);return;}for(var k in voiceCache){if(k!==text){try{voiceCache[k].pause();voiceCache[k].currentTime=0;}catch(e){}}}try{window.speechSynthesis&&window.speechSynthesis.cancel();}catch(e){}try{a.pause();a.currentTime=0;}catch(e){}var p=a.play();if(p&&p.catch){p.catch(function(err){if(err&&err.name==="AbortError")return;if(parseInt(a.dataset.stage||"0",10)<2)return;voiceFail++;voiceResult="fail";speakNative(text);});}return;}}speakNative(text);}
 ["pointerdown","touchstart","click"].forEach(function(ev){document.addEventListener(ev,function(){unlockVoice();ensureAudio();},{once:true,passive:true});});
 let META=loadMeta();
-function loadMeta(){try{return JSON.parse(localStorage.getItem("wq_rogue4")||"{}")}catch(e){return{}}}
+function loadMeta(){try{return JSON.parse(localStorage.getItem(WQ_DEMO?"wq_rogue4_demo":"wq_rogue4")||"{}")}catch(e){return{}}}
 if(!META.unlocked&&META.unlocked!==0)META={unlocked:0,best:[0,0,0,0],fragments:0};
 if(!Array.isArray(META.best)||META.best.length<4)META.best=[0,0,0,0];
 if(typeof META.unlocked!=="number")META.unlocked=0;
@@ -184,7 +189,7 @@ function wqMarkClear(){
   }
 }
 
-function saveMeta(){if(WQ_DEMO)return;try{localStorage.setItem("wq_rogue4",JSON.stringify(META))}catch(e){}}
+function saveMeta(){try{localStorage.setItem(WQ_DEMO?"wq_rogue4_demo":"wq_rogue4",JSON.stringify(META))}catch(e){}}
 
 let S={};
 function applyTheme(t){document.documentElement.style.setProperty('--tint',t.tint);}
@@ -245,11 +250,13 @@ function nextEncounter(){
     '<div class="opts" id="opts"></div>'+
     '<div class="charpop" id="charpop" style="display:none"></div>'+
     '<div class="feedback" id="fb"></div>'+
-    '<button class="next" id="next" disabled>继续深入 →</button>';
+    '<button class="next" id="next" disabled>继续深入 →</button>'+
+    '<button class="giveup" id="giveup">🏳 放弃本局</button>';
   const optsBox=$("opts");
   opts.forEach(tt=>{const b=document.createElement("button");b.className="opt";b.textContent=tt;b.onclick=()=>choose(b);optsBox.appendChild(b);});
   $("speak").onclick=()=>speak(w.en);
   $("next").onclick=nextEncounter;
+  $("giveup").onclick=function(){ if(confirm("确定放弃本局吗？本局进度不会保存。")) tierSelect(); };
   if(S.tid==="ear")speak(w.en);
   renderHud();
 }
