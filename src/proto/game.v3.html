@@ -42,6 +42,7 @@
   .btn:active{transform:translateY(4px);box-shadow:0 0 0 var(--line)}
   .btn.gold{background:var(--gold);color:#241f0b}
   .btn.ghost{background:transparent;color:var(--dim);border-color:rgba(244,241,232,.25);box-shadow:none;font-weight:normal}
+  .btn.ai{background:rgba(96,165,250,.14);color:#bfdbfe;border-color:#60a5fa;font-weight:bold}
   .btn.sm{display:inline-block;width:auto;padding:8px 12px;font-size:13px;margin:0 6px 0 0}
   .row{display:flex;gap:8px}
   .row .btn{margin-bottom:0}
@@ -111,6 +112,56 @@
   .spk-inline{margin-left:8px;font-size:15px;background:none;border:2px solid var(--edge);color:var(--ink);padding:2px 9px;cursor:pointer;font-family:inherit;vertical-align:middle}
   .spk-inline:active{transform:translateY(1px)}
 
+  /* 战斗：词怪血条 + 受击/击杀反馈 */
+  .monster-box{margin-bottom:14px}
+  .monster-head{display:flex;align-items:center;gap:10px}
+  .monster-ava{width:48px;height:48px;flex:0 0 48px;display:flex;align-items:center;justify-content:center;font-size:28px;border:3px solid var(--edge);background:var(--bg2)}
+  .monster-info{flex:1;min-width:0}
+  .monster-name{font-size:14px;font-weight:bold;margin-bottom:4px}
+  .monster-hp{position:relative;height:14px;background:#3a1a1a;border:2px solid var(--edge)}
+  .monster-hp i{display:block;height:100%;background:linear-gradient(90deg,#f87171,#f5c542);width:100%;transition:width .35s}
+  .monster-hp b{position:absolute;right:4px;top:0;font-size:10px;color:#fff;line-height:14px}
+  .monster-box.shake{animation:monShake .4s}
+  .monster-box.hit .monster-ava{animation:monHurt .3s}
+  @keyframes monShake{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}60%{transform:translateX(6px)}}
+  @keyframes monHurt{0%,100%{transform:scale(1)}40%{transform:scale(1.25) rotate(8deg)}}
+  .monster-box.killed .monster-ava{filter:grayscale(.9);opacity:.55}
+  .hitflash{position:fixed;inset:0;background:rgba(248,113,113,.22);pointer-events:none;z-index:200;animation:ff .35s forwards}
+  @keyframes ff{from{opacity:1}to{opacity:0}}
+
+  /* 口语镇：NPC 对话面板 */
+  .npc-modal{position:fixed;inset:0;background:rgba(10,8,16,.74);z-index:300;display:none;align-items:flex-end;justify-content:center}
+  .npc-modal.on{display:flex}
+  .npc-panel{width:100%;max-width:430px;background:var(--bg2);border:3px solid var(--edge);border-bottom:none;padding:16px 14px 22px;animation:slideup .25s ease-out;max-height:86vh;overflow:auto}
+  @keyframes slideup{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
+  .npc-top{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+  .npc-ava{width:46px;height:46px;flex:0 0 46px;display:flex;align-items:center;justify-content:center;font-size:24px;border:3px solid var(--edge);background:#3b2f5e}
+  .npc-name{font-size:15px;font-weight:bold}
+  .npc-sub{font-size:12px;color:var(--dim)}
+  .npc-close{margin-left:auto;cursor:pointer;font-size:18px;color:var(--dim);background:none;border:none;font-family:inherit;padding:0}
+  .npc-scenes{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+  .npc-scenes .chip{font-size:12px;background:var(--panel);border:2px solid var(--edge);padding:6px 10px;cursor:pointer}
+  .npc-scenes .chip.on{background:var(--purple);color:#fff;border-color:var(--purple)}
+  .npc-chat{display:flex;flex-direction:column;gap:10px;min-height:120px;max-height:42vh;overflow:auto}
+  .msg-row{display:flex;align-items:flex-end;gap:8px;animation:msgIn .28s ease-out}
+  .msg-row.me{flex-direction:row-reverse}
+  @keyframes msgIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  .msg-row .ava{width:30px;height:30px;flex:0 0 30px;border-radius:9px;border:2px solid var(--edge);background:#3b2f5e;display:flex;align-items:center;justify-content:center;font-size:15px}
+  .msg-row.me .ava{background:#5a3d2e}
+  .bubble{max-width:78%;padding:9px 12px;border:2px solid var(--edge);background:var(--panel);cursor:pointer;border-radius:4px}
+  .msg-row.me .bubble{background:#2e2547;border-color:var(--gold)}
+  .bubble .en{font-size:14px;color:var(--ink);line-height:1.55}
+  .bubble .zh{font-size:12px;color:var(--dim);margin-top:3px}
+  .bubble .hint{margin-top:5px;font-size:10px;color:var(--dim)}
+  .kw{font-weight:bold;color:var(--gold);border-bottom:1px dotted var(--gold);cursor:pointer}
+  .npc-replies{display:flex;flex-direction:column;gap:8px;margin-top:12px}
+  .npc-reply{text-align:left;background:var(--bg2);border:2px solid var(--edge);border-left:4px solid var(--gold);padding:10px 12px;font-size:13px;color:var(--ink);cursor:pointer;font-family:inherit;line-height:1.5}
+  .npc-reply:active{transform:translateY(1px)}
+  .npc-reply .zh{display:block;font-size:11px;color:var(--dim);margin-top:2px;font-weight:400}
+  .npc-done{text-align:center;padding:14px;background:var(--panel);border:2px solid var(--gold);margin-top:12px;font-size:13px;line-height:1.6}
+  .npc-done .zh{color:var(--dim);font-size:12px}
+  .npc-foot{margin-top:8px}
+
 
   /* 结算 */
   .stars{font-size:40px;letter-spacing:8px;margin:10px 0 4px}
@@ -127,6 +178,13 @@
   .mw .l b{display:block;font-size:15px}
   .mw .l span{font-size:12px;color:var(--dim)}
   .mw .r{display:flex;gap:6px;align-items:center}
+  .mw .ck{width:18px;height:18px;flex:0 0 18px;accent-color:#60a5fa;cursor:pointer}
+  .sel-bar{display:flex;align-items:center;gap:12px;margin:10px 0;font-size:12px;color:var(--dim)}
+  .sel-bar a{color:#60a5fa;cursor:pointer;text-decoration:none}
+  .sel-bar a:active{opacity:.7}
+  .mode-bar{display:flex;gap:6px;margin:8px 0;flex-wrap:nowrap}
+  .mode-btn{font-size:12px;padding:7px 9px;border-radius:6px;border:2px solid var(--edge);background:var(--panel);color:var(--ink);cursor:pointer}
+  .mode-btn.on{background:rgba(96,165,250,.18);border-color:#60a5fa;color:#bfdbfe;font-weight:bold}
   .chip{font-size:11px;background:#4a1f24;color:#ffd4d4;border:2px solid var(--edge);padding:1px 6px}
 
   /* PC 端 */
@@ -140,7 +198,49 @@
     .word{font-size:38px}
     .btn{font-size:16px}
   }
+  /* WQ_GAME_HELL */
+  .hellbtn{display:block;margin-top:12px;border:2px solid #a83232;background:#2a1620;color:#ff9a9a;
+   border-radius:10px;padding:11px 12px;font-size:14px;font-weight:800;text-decoration:none;line-height:1.7}
+  .hellbtn:active{transform:translateY(2px)}
+  .hellbtn span{display:block;margin-top:2px;font-size:11px;font-weight:400;color:#c99}
+
+  /* ============ AI 学习助手 ============ */
+  .ai-panel{max-height:92vh}
+  .ai-tabs{display:flex;flex-wrap:nowrap;gap:5px;margin-bottom:12px}
+  .ai-tab{font-size:11px;background:var(--panel);border:2px solid var(--edge);padding:7px 7px;cursor:pointer;border-radius:6px;color:var(--ink)}
+  .ai-tab.on{background:var(--blue);color:#08121f;border-color:var(--blue);font-weight:bold}
+  .ai-tab-body{display:none}
+  .ai-tab-body.on{display:block}
+  .ai-stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:12px}
+  .ai-stat{background:var(--bg2);border:2px solid var(--edge);padding:10px 6px;text-align:center;border-radius:8px}
+  .ai-stat b{display:block;font-size:20px;color:var(--gold)}
+  .ai-stat span{font-size:11px;color:var(--dim)}
+  .ai-chart{background:var(--bg2);border:2px solid var(--edge);border-radius:8px;padding:10px;margin-bottom:12px}
+  .ai-chart svg{width:100%;height:auto;display:block}
+  .ai-chart-title{font-size:12px;color:var(--dim);margin-bottom:6px}
+  .ai-section-title{font-size:13px;font-weight:bold;margin:12px 0 6px;color:var(--gold)}
+  .ai-weak{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px dotted rgba(244,241,232,.15);font-size:13px}
+  .ai-weak:last-child{border-bottom:none}
+  .ai-weak .bar{flex:1;height:6px;background:var(--line);margin:0 10px;border-radius:3px;overflow:hidden}
+  .ai-weak .bar i{display:block;height:100%;background:var(--red)}
+  .ai-out{background:var(--bg2);border:2px solid var(--edge);border-radius:8px;padding:12px;font-size:13px;line-height:1.8;white-space:pre-wrap;min-height:60px;color:var(--ink)}
+  .ai-out.loading{color:var(--dim)}
+  .ai-empty{color:var(--dim);font-size:12px;text-align:center;padding:14px 0}
+  .ai-hint{font-size:11px;color:var(--dim);margin:8px 0;line-height:1.6}
+  .md-h{font-size:14px;font-weight:bold;color:var(--ink);margin:8px 0 4px}
+  .md-li{margin:3px 0;padding-left:2px}
+  .md-li b{color:#bfdbfe}
+  .md-gap{height:6px}
+  .md code{background:var(--panel);border:1px solid var(--edge);padding:0 4px;border-radius:4px;font-family:ui-monospace,monospace}
+  .ai-chat-box{display:flex;flex-direction:column;gap:8px;min-height:110px;max-height:36vh;overflow:auto;margin-bottom:10px}
+  .ai-chat-input{display:flex;gap:8px}
+  .ai-chat-input input{flex:1;min-width:0;background:var(--bg2);border:2px solid var(--edge);border-radius:8px;padding:10px 12px;color:var(--ink);font-family:inherit;font-size:14px;outline:none}
+  .ai-chat-input input:focus{border-color:var(--blue)}
+  .ai-typing{color:var(--dim);font-size:12px;animation:aiBlink 1s infinite}
+  @keyframes aiBlink{50%{opacity:.3}}
+  .ai-off{background:#2a1620;border:2px solid #a83232;color:#ff9a9a;border-radius:8px;padding:12px;font-size:12px;line-height:1.7}
 </style>
+<script src="https://cdn.jsdelivr.net/npm/@tencent-ai/workbuddy-cloud-sdk@dev/lib/index.global.js"></script>
 </head>
 <body>
 <div id="app">
@@ -158,7 +258,8 @@
       <button class="btn gold" id="btn-start">开始冒险</button>
       <button class="btn ghost" id="btn-go-mistake">我的错题本</button>
       <button class="btn ghost" id="btn-go-set">设置</button>
-      <div class="tiny dim" style="margin-top:16px">进度存在本机 · 断网也能玩</div>
+      <button class="btn ai" id="btn-go-ai">🤖 AI 学习助手 · 智能分析</button>
+      <div class="tiny dim" style="margin-top:16px">进度存在本机 · 断网也能玩 · AI 功能需联网</div>
     </div>
   </section>
 
@@ -174,7 +275,11 @@
       <h2>其他地方</h2>
       <button class="btn ghost sm" id="btn-mistake">📕 错题本</button>
       <button class="btn ghost sm" id="btn-npc">💬 口语镇</button>
+      <button class="btn ai sm" id="btn-ai">🤖 AI 学习助手</button>
       <button class="btn ghost sm" id="btn-set">⚙️ 设置</button>
+      <!-- WQ_GAME_HELL: 地图内地狱模式直达入口（仅部署副本） -->
+      <a class="hellbtn" id="btn-hell" href="roguelike.v2.html">💀 地狱模式
+        <span id="hell-state">通关 遗忘森林 / 回声洞穴 / 静默雪山 三关后解锁</span></a>
     </div>
     <div class="tiny dim center" id="map-tip"></div>
   </section>
@@ -187,6 +292,17 @@
     </div>
     <div class="prog"><i id="q-prog"></i></div>
     <div class="qmeta"><span id="q-idx">第 1/10 题</span><span id="q-type"></span></div>
+    <div class="monster-box" id="monster-box">
+      <div class="panel" style="margin-bottom:0;padding:10px 12px">
+        <div class="monster-head">
+          <div class="monster-ava" id="monster-ava">👹</div>
+          <div class="monster-info">
+            <div class="monster-name" id="monster-name">单词怪</div>
+            <div class="monster-hp"><i id="monster-hp"></i><b id="monster-hptxt">10/10</b></div>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="panel" id="q-body"></div>
   </section>
 
@@ -218,8 +334,18 @@
       <div id="m-count">错题 0</div>
     </div>
     <div class="panel" id="m-list"></div>
-    <button class="btn gold" id="btn-practice-all">一键重练（最多 10 个）</button>
-    <div class="tiny dim center" style="margin-top:8px">连续答对 2 次，这个词就毕业啦</div>
+    <div class="sel-bar">
+      <a id="btn-sel-all">全选</a><a id="btn-sel-none">清空</a>
+      <span id="sel-info"></span>
+    </div>
+    <div class="mode-bar">
+      <span class="mode-btn on" data-mode="mix">🎲 混合</span>
+      <span class="mode-btn" data-mode="T1">🔤 看词选义</span>
+      <span class="mode-btn" data-mode="T2">🎧 听音选词</span>
+      <span class="mode-btn" data-mode="T3">✍️ 拼写填空</span>
+    </div>
+    <button class="btn gold" id="btn-practice-all">开始复习</button>
+    <div class="tiny dim center" style="margin-top:8px">勾选想练的词 · 自选题型 · 连续答对 2 次毕业</div>
   </section>
 
   <!-- 设置 -->
@@ -239,9 +365,52 @@
       <h2 style="margin-top:16px">数据</h2>
       <button class="btn ghost" id="btn-clear">清空全部进度</button>
     </div>
-    <div class="tiny dim center">词勇者 v1.1 · 例句卡版 · 词库 100 词</div>
+    <div class="tiny dim center">词勇者 v1.3 · 战斗版 · 口语对话 · 词库 100 词</div>
   </section>
 
+</div>
+
+<!-- 口语镇 NPC 对话面板 -->
+<div class="npc-modal" id="npc-modal">
+  <div class="npc-panel">
+    <div class="npc-top">
+      <div class="npc-ava">🧙</div>
+      <div>
+        <div class="npc-name">口语镇 · 引导师 Ella</div>
+        <div class="npc-sub">跟她聊几句，练「敢开口」</div>
+      </div>
+      <button class="npc-close" id="npc-close">✕</button>
+    </div>
+    <div class="npc-scenes" id="npc-scenes"></div>
+    <div class="npc-chat" id="npc-chat"></div>
+    <div class="npc-replies" id="npc-replies"></div>
+    <div class="npc-foot tiny dim">本版为「脚本演示」：NPC 按预设对话陪你开口，点气泡或金色重点词可跟读；AI 实时对话是路线图下一站。</div>
+  </div>
+</div>
+
+<!-- AI 学习助手面板（WorkBuddy 云服务免密钥 LLM） -->
+<div class="npc-modal" id="ai-modal">
+  <div class="npc-panel ai-panel">
+    <div class="npc-top">
+      <div class="npc-ava">🤖</div>
+      <div>
+        <div class="npc-name">AI 学习助手</div>
+        <div class="npc-sub">智能分析 · 动态计划 · 对话学词</div>
+      </div>
+      <button class="npc-close" id="ai-close">✕</button>
+    </div>
+    <div class="ai-tabs">
+      <span class="ai-tab on" data-tab="stats">📊学习数据</span>
+      <span class="ai-tab" data-tab="analysis">🧠智能分析</span>
+      <span class="ai-tab" data-tab="plan">🗓学习计划</span>
+      <span class="ai-tab" data-tab="chat">💬对话学词</span>
+    </div>
+    <div class="ai-tab-body on" id="ai-stats"></div>
+    <div class="ai-tab-body" id="ai-analysis"></div>
+    <div class="ai-tab-body" id="ai-plan"></div>
+    <div class="ai-tab-body" id="ai-chat"></div>
+    <div class="ai-hint" id="ai-foot"></div>
+  </div>
 </div>
 
 <script id="diag-audio" type="text/plain">SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjU5LjI3LjEwMAAAAAAAAAAAAAAA//tUwAAAAAAAAAAAAAAAAAAAAAAASW5mbwAAAA8AAAA8AAAtwAAIDAwQFBQZGR0hISUlKS4uMjI2Ojo+PkNHR0tLT1NTWFhcYGBkZGhtbXFxdXl5fX2ChoaKio6SkpeXm5+fo6OnrKywsLS4uLy8wcXFycnN0dHW1tre3uLi5uvr7+/z9/f7+/8AAAAATGF2YzU5LjM3AAAAAAAAAAAAAAAAJAOQAAAAAAAALcCfInzzAAAAAAAAAAAAAAAAAAAA//tUxAADwAABpAAAACAAADSAAAAETEFMQU1FMy4xMDBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//tUxFWDwAABpAAAACAAADSAAAAEVVVMQU1FMy4xMDBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//tUxKoDwAABpAAAACAAADSAAAAEVVVMQU1FMy4xMDBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//tUxKoDwAABpAAAACAAADSAAAAEVVVMQU1FMy4xMDBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//tUxKoDwAABpAAAACAAADSAAAAEVVVMQU1FMy4xMDBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//tUxKoDwAABpAAAACAAADSAAAAEVVVMQU1FMy4xMDBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//tUxKoDwAABpAAAACAAADSAAAAEVVVMQU1FMy4xMDBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//tUxKoDwAABpAAAACAAADSAAAAEVVVMQU1FMy4xMDBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//tUxKoDwAABpAAAACAAADSAAAAEVVVMQU1F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VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//tUxOKBB9QPEs3pgAFlLaDEkIz5VVVMQU1FMy4xMDBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//tUxOwACx15AAGEaokjLRpkEAuBVVVMQU1FMy4xMDBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//tUxKoDwAABpAAAACAAADSAAAAEVVVMQU1FMy4xMDBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//tUxKoDwAABpAAAACAAADSAAAAEVVVMQU1FMy4xMDBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//tUxKoDwAABpAAAACAAADSAAAAEVVVMQU1FMy4xMDBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//tUxKoDwAABpAAAACAAADSAAAAEVVVMQU1FMy4xMDBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//tUxKoDwAABpAAAACAAADSAAAAEVVVMQU1FMy4xMDBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//tUxKoDwAABpAAAACAAADSAAAAEVVVMQU1FMy4xMDBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//tUxKoDwAABpAAAACAAADSAAAAEVVVMQU1FMy4xMDBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//tUxKoDwAABpAAAACAAADSAAAAEVVVMQU1FMy4xMDBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//tUxKoDwAABpAAAACAAADSAAAAEVVVMQU1FMy4xMDBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//tUxKoDwAABpAAAACAAADSAAAAEVVVMQU1FMy4xMDBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//tUxKoDwAABpAAAACAAADSAAAAEVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//tUxKoDwAABpAAAACAAADSAAAAEVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV</script>
@@ -272,7 +441,7 @@ var Store = {
       v:1,
       profile:{level:1,xp:0,coins:0,lastPlayDate:""},
       progress:{1:{stars:0,bestRate:0},2:{stars:0,bestRate:0},3:{stars:0,bestRate:0}},
-      words:{}, mistakes:[], settings:{sfx:true,ttsRate:1}
+      words:{}, history:[], mistakes:[], settings:{sfx:true,ttsRate:1}
     };
   },
   save: function(){
@@ -289,6 +458,11 @@ var WORDS = DATA.words || [];
 var LEVEL_NAME = {1:"遗忘森林",2:"回声洞穴",3:"静默雪山"};
 var LEVEL_ICON = {1:"🌲",2:"🕳️",3:"🏔️"};
 var QSIZE = 10;
+/* 战斗：每关一只词怪；答对扣血，全对即击杀 */
+var MONSTER_NAME = {1:"遗忘树妖",2:"回声巨蝠",3:"雪岭冰魔",0:"单词小妖"};
+var MONSTER_AVA  = {1:"🌳",2:"🦇",3:"🧊",0:"👾"};
+/* 简版间隔复现：答对后按记忆阶段(0-4)推迟到期时间（毫秒） */
+var REVIEW_INTERVAL = [0, 86400000, 3*86400000, 7*86400000, 15*86400000];
 
 /* ============ 音效（Web Audio 合成，无需素材文件） ============ */
 var actx = null;
@@ -495,16 +669,19 @@ function poolOf(level){ return WORDS.filter(function(w){ return w.level === leve
 
 function buildQuestions(level){
   var pool = poolOf(level).slice();
-  var wrongIds = save.mistakes.filter(function(m){
-    return pool.some(function(w){ return w.id === m.wordId; });
-  }).map(function(m){ return m.wordId; });
+  var now = Date.now();
 
-  var picked = [];
-  if(wrongIds.length){                       // 复习题优先：错过的词先来
-    var wid = wrongIds[0];
-    var w = pool.filter(function(x){ return x.id === wid; })[0];
-    if(w) picked.push(w);
-  }
+  // 复习题优先：按 dueAt 最早到期排序（答错的词 dueAt=0 永远最优先，其次按到期时间）
+  var due = pool.filter(function(w){
+    var r = save.words[w.id];
+    return r && r.dueAt && r.dueAt <= now;
+  }).sort(function(a,b){
+    var ra = save.words[a.id] || {dueAt:0};
+    var rb = save.words[b.id] || {dueAt:0};
+    return (ra.dueAt||0) - (rb.dueAt||0);
+  });
+
+  var picked = due.slice(0, 3);              // 最多 3 个到期复习词优先
   var rest = shuffle(pool.filter(function(x){ return picked.indexOf(x) < 0; }));
   while(picked.length < QSIZE && rest.length) picked.push(rest.pop());
 
@@ -521,7 +698,11 @@ function makeQ(w, type, level){
     q.answer = w.zh;
   } else if(type === "T2"){                   // 听音选词：干扰项
     var ds = (w.distractors || []).slice(0,3);
-    while(ds.length < 3){ ds.push("—"); }
+    if(ds.length < 3){
+      var filler = shuffle(poolOf(level).filter(function(x){ return x.id !== w.id && ds.indexOf(x.en) < 0; }));
+      for(var k=0; ds.length < 3 && k < filler.length; k++) ds.push(filler[k].en);
+    }
+    while(ds.length < 3){ ds.push("—"); }     // 兜底：词库不足时占位
     q.options = shuffle([w.en].concat(ds));
     q.answer = w.en;
   } else {                                    // 拼写填空
@@ -533,28 +714,43 @@ function makeQ(w, type, level){
 /* ============ 答题流程 ============ */
 var run = null;
 function startLevel(level){
+  var qs = buildQuestions(level);
   run = {
-    level: level, qs: buildQuestions(level), i: 0, right: 0, combo: 0, gained: 0,
-    startAt: Date.now(), wrongIds: [], locked: false
+    level: level, qs: qs, i: 0, right: 0, combo: 0, gained: 0,
+    startAt: Date.now(), wrongIds: [], locked: false,
+    monster: { name: MONSTER_NAME[level] || MONSTER_NAME[0], ava: MONSTER_AVA[level] || MONSTER_AVA[0], hp: qs.length, max: qs.length, dead: false }
   };
   show("quiz"); renderQ();
 }
-function startCustom(list, title){            // 错题重练
+function startCustom(list, title, mode){            // 错题重练
   if(!list.length) return;
-  var qs = shuffle(list.slice(0,10)).map(function(w,i){
-    return makeQ(w, ["T1","T2","T3"][i % 3], w.level);
+  mode = mode || "mix";
+  var qs = shuffle(list.slice(0,30)).map(function(w,i){
+    var type = mode === "mix" ? ["T1","T2","T3"][i % 3] : mode;
+    return makeQ(w, type, w.level);
   });
   run = {level:0, title:title||"错题重练", qs:qs, i:0, right:0, combo:0, gained:0,
-         startAt:Date.now(), wrongIds:[], locked:false};
+         startAt:Date.now(), wrongIds:[], locked:false,
+         monster:{ name:MONSTER_NAME[0], ava:MONSTER_AVA[0], hp:qs.length, max:qs.length, dead:false }};
   show("quiz"); renderQ();
+}
+/* 词怪血条渲染（每题刷新；死亡后置灰） */
+function renderMonster(){
+  var m = run.monster;
+  $("monster-ava").textContent = m.ava;
+  $("monster-name").textContent = m.name;
+  $("monster-hp").style.width = Math.max(0, Math.round(m.hp / m.max * 100)) + "%";
+  $("monster-hptxt").textContent = m.hp + "/" + m.max;
+  $("monster-box").className = "monster-box" + (m.dead ? " killed" : "");
 }
 function renderQ(){
   var q = run.qs[run.i];
   $("q-idx").textContent = "第 " + (run.i+1) + "/" + run.qs.length + " 题";
   $("q-type").textContent = q.type === "T1" ? "看词选义" : (q.type === "T2" ? "听音选词" : "拼写填空");
-  $("q-prog").style.width = (run.i / run.qs.length * 100) + "%";
+  $("q-prog").style.width = ((run.i+1) / run.qs.length * 100) + "%";
   $("q-coin").textContent = save.profile.coins;
   $("q-combo").textContent = run.combo >= 2 ? "🔥 " + run.combo + " 连对" : "";
+  renderMonster();
   var body = $("q-body");
   run.locked = false;
   preloadVoice(q.word.en);   // 提前拉音频，点喇叭立即出声
@@ -625,6 +821,7 @@ function judge(ok, chosen, btn){
     run.gained += gain; save.profile.coins += gain;
     save.profile.xp += 5;
     rec.right++; rec.stage = Math.min(4, rec.stage + 1);
+    rec.dueAt = Date.now() + REVIEW_INTERVAL[rec.stage];   // 简版间隔复现：答对后按记忆阶段推迟到期
     SFX.right();
     var mi = save.mistakes.findIndex(function(m){ return m.wordId === w.id; });
     if(mi >= 0){
@@ -633,7 +830,7 @@ function judge(ok, chosen, btn){
     }
   } else {
     run.combo = 0; run.wrongIds.push(w.id);
-    rec.wrong++; rec.stage = 0;
+    rec.wrong++; rec.stage = 0; rec.dueAt = 0;   // 答错立即到期，进入复习队列
     SFX.wrong();
     var m = save.mistakes.find(function(x){ return x.wordId === w.id; });
     if(m){ m.wrongCount++; m.streakRight = 0; m.lastWrongAt = Date.now(); }
@@ -647,6 +844,9 @@ function judge(ok, chosen, btn){
     }
   }
   save.words[w.id] = rec;
+  if(!save.history) save.history = [];
+  save.history.push({t:Date.now(), w:w.id, ok:ok, lv:run.level});
+  if(save.history.length > 200) save.history = save.history.slice(-200);
   var lvl = Math.floor(save.profile.xp / 100) + 1;
   if(lvl > save.profile.level){ save.profile.level = lvl; }
   Store.save();
@@ -665,6 +865,23 @@ function judge(ok, chosen, btn){
 
   // v3：答对答错都弹例句卡，把「做题」变成「学词」
   appendExampleCard(q, w, ok);
+
+  // 战斗反馈：答对词怪掉血抖动，答错被反噬（屏幕红闪）
+  var mbox = $("monster-box");
+  if(ok){
+    run.monster.hp = Math.max(0, run.monster.hp - 1);
+    if(run.monster.hp <= 0) run.monster.dead = true;
+    mbox.classList.remove("shake","hit");
+    void mbox.offsetWidth;                 // 强制重排以重启动画
+    mbox.classList.add("shake");
+    setTimeout(function(){ mbox.classList.remove("shake"); }, 420);
+  } else {
+    var fl = document.createElement("div");
+    fl.className = "hitflash";
+    document.body.appendChild(fl);
+    setTimeout(function(){ if(fl.parentNode) fl.parentNode.removeChild(fl); }, 380);
+  }
+  renderMonster();
 
   setTimeout(function(){
     run.i++;
@@ -697,10 +914,11 @@ function finish(){
   $("r-rate").textContent = rate + "%";
   $("r-coin").textContent = "+" + run.gained;
   $("r-time").textContent = Math.floor(sec/60) + ":" + ("0" + (sec%60)).slice(-2);
-  $("r-say").textContent = stars === 3 ? "漂亮！这一关的单词怪全被你收服了。"
-    : stars === 2 ? "不错嘛，再来一次就满分了。"
-    : stars === 1 ? "过关了！错的那几个我帮你记下来了。"
-    : "差一点点～ 先去错题本热个身吧。";
+  var mname = (run.monster && run.monster.name) || "单词怪";
+  $("r-say").textContent = stars === 3 ? "漂亮！你击杀了「" + mname + "」，这一关全被你收服了。"
+    : stars === 2 ? "不错嘛，「" + mname + "」差点被你打倒，再来一次就满分了。"
+    : stars === 1 ? "过关了！「" + mname + "」负伤逃走了，错的那几个我帮你记下来了。"
+    : "差一点点～「" + mname + "」太强了，先去错题本热个身吧。";
   $("r-wrong").textContent = run.wrongIds.length
     ? "本次错了 " + run.wrongIds.length + " 个词，已放进错题本"
     : "全对！一个错词都没有 🎉";
@@ -709,31 +927,46 @@ function finish(){
 }
 
 /* ============ 错题本 ============ */
+var selMode = "mix", selSet = {};
 function renderMistake(){
   $("m-count").textContent = "错题 " + save.mistakes.length;
   var box = $("m-list");
+  var bars = document.querySelectorAll(".sel-bar, .mode-bar");
   if(!save.mistakes.length){
     box.innerHTML = '<div class="center dim">还没有错题，去闯关吧 👊</div>';
     $("btn-practice-all").style.display = "none";
+    bars.forEach(function(e){ e.style.display = "none"; });
     return;
   }
   $("btn-practice-all").style.display = "block";
+  bars.forEach(function(e){ e.style.display = ""; });
   box.innerHTML = "";
   save.mistakes.slice(0,30).forEach(function(m){
     var w = WORDS.filter(function(x){ return x.id === m.wordId; })[0];
     if(!w) return;
+    if(!(m.wordId in selSet)) selSet[m.wordId] = true;
     var d = document.createElement("div");
     d.className = "mw";
-    d.innerHTML = '<div class="l"><b>' + w.en + ' <span class="dim tiny">' + w.phonetic + '</span></b>' +
+    d.innerHTML = '<input type="checkbox" class="ck"' + (selSet[m.wordId] ? ' checked' : '') + '>' +
+                  '<div class="l" style="flex:1;margin:0 8px"><b>' + w.en + ' <span class="dim tiny">' + w.phonetic + '</span></b>' +
                   '<span>' + w.zh + '</span></div>' +
                   '<div class="r">' + (m.wrongCount > 1 ? '<span class="chip">错 ' + m.wrongCount + ' 次</span>' : '') +
                   '<button class="btn sm ghost">练</button>' +
                   '<button class="btn sm ghost">🔊</button></div>';
+    var ck = d.querySelector(".ck");
+    ck.onchange = function(){ selSet[m.wordId] = ck.checked; updateSel(); };
     var bs = d.querySelectorAll("button");
-    bs[0].onclick = function(){ SFX.tap(); startCustom([w], "单练 · " + w.en); };
+    bs[0].onclick = function(){ SFX.tap(); startCustom([w], "单练 · " + w.en, selMode); };
     bs[1].onclick = function(){ speak(w.en); };
     box.appendChild(d);
   });
+  updateSel();
+}
+function updateSel(){
+  var total = save.mistakes.length, n = 0;
+  save.mistakes.forEach(function(m){ if(selSet[m.wordId]) n++; });
+  $("sel-info").textContent = "已选 " + n + " / " + total;
+  $("btn-practice-all").textContent = "开始复习（已选 " + n + " 个）";
 }
 
 /* ============ 设置 ============ */
@@ -748,7 +981,163 @@ $("btn-go-mistake").onclick = function(){ renderMistake(); show("mistake"); };
 $("btn-go-set").onclick = function(){ renderSet(); show("set"); };
 $("btn-mistake").onclick = $("btn-mistake2").onclick = function(){ SFX.tap(); renderMistake(); show("mistake"); };
 $("btn-set").onclick = function(){ renderSet(); show("set"); };
-$("btn-npc").onclick = function(){ alert("🏗️ 口语镇正在建造中\n它是路线图里的下一站：跟 NPC 用英语随便聊，AI 不打分只陪你练。\n本版先打磨「例句卡 + 发音反馈」。"); };
+$("btn-npc").onclick = function(){ ensureAudio(); SFX.tap(); openNPC(); };
+
+/* ============ 口语镇：脚本对话演示（AI 实时对话是路线图下一站） ============ */
+/* v2：平铺台词 → 聊天式多轮对话：NPC 气泡 + 玩家选项分支 + 重点词逐词发音 + 完成鼓励 */
+var NPC_SCENES = [
+  { name:"👋 自我介绍", rounds:[
+    { npc:{en:"Hi! I'm Ella, your guide in Word Town. What's your name?", zh:"你好！我是 Ella，口语镇的引导员，你叫什么名字？"}, replies:[
+      {en:"My name is Li Ming.", zh:"我叫李明。"},
+      {en:"I'm Alex. Nice to meet you.", zh:"我是 Alex，很高兴认识你。"},
+      {en:"Just call me Xiaohua.", zh:"叫我小华就行。"}
+    ]},
+    { npc:{en:"Welcome! Do you want to improve your spoken English?", zh:"欢迎！你想提升英语口语吗？", kw:["improve"]}, replies:[
+      {en:"Yes, I want to speak more confidently.", zh:"想，我想说得更自信。"},
+      {en:"Yes, I need to pass an exam.", zh:"想，我要通过一场考试。"}
+    ]},
+    { npc:{en:"Great! With confident practice every day, you'll speak better and better.", zh:"太棒了！每天自信地练习，你会说得越来越好。", kw:["confident"]} }
+  ]},
+  { name:"🍔 餐厅点餐", rounds:[
+    { npc:{en:"Welcome! What would you like to order?", zh:"欢迎光临！你想点些什么？"}, replies:[
+      {en:"I'd like a burger and a cola, please.", zh:"我想要一个汉堡和一杯可乐。"},
+      {en:"A salad, please.", zh:"一份沙拉，谢谢。"},
+      {en:"What do you recommend?", zh:"你推荐什么？"}
+    ]},
+    { npc:{en:"Good choice! We can also provide some water for free.", zh:"好选择！我们还可以免费提供水。", kw:["provide"]}, replies:[
+      {en:"Water is fine, thanks.", zh:"水就好，谢谢。"},
+      {en:"No, that's all. Thank you.", zh:"不用了，就这些，谢谢。"}
+    ]},
+    { npc:{en:"Here you are. Enjoy your meal and have a nice day!", zh:"给您，请慢用，祝您愉快！"} }
+  ]},
+  { name:"🧭 校园问路", rounds:[
+    { npc:{en:"Excuse me, could you indicate the way to the library?", zh:"打扰一下，能告诉我图书馆怎么走吗？", kw:["indicate"]}, replies:[
+      {en:"Go straight and turn left at the corner.", zh:"直走，在拐角处左转。"},
+      {en:"Follow me, I'll show you.", zh:"跟我来，我带你去。"},
+      {en:"Sorry, I'm new here too.", zh:"抱歉，我也是新来的。"}
+    ]},
+    { npc:{en:"Thanks a lot! Are you familiar with this campus?", zh:"太感谢了！你对这个校园熟悉吗？", kw:["familiar"]}, replies:[
+      {en:"Yes, I study here every day.", zh:"熟悉，我每天在这上学。"},
+      {en:"A little, I just arrived.", zh:"一点点，我刚来。"}
+    ]},
+    { npc:{en:"No problem! Good luck with your studies. Bye!", zh:"没关系！祝你学习顺利，再见！"} }
+  ]},
+  { name:"🛍️ 商店购物", rounds:[
+    { npc:{en:"Hello! Can I help you find something?", zh:"你好！需要我帮您找点什么吗？"}, replies:[
+      {en:"I'm looking for a gift for my friend.", zh:"我在给朋友挑礼物。"},
+      {en:"Just browsing, thanks.", zh:"随便看看，谢谢。"}
+    ]},
+    { npc:{en:"This notebook is available and very popular. It's on sale today.", zh:"这个笔记本有货，而且很受欢迎，今天正好打折。", kw:["available"]}, replies:[
+      {en:"How much is it?", zh:"多少钱？"},
+      {en:"Great, I'll take it.", zh:"太好了，我要了。"}
+    ]},
+    { npc:{en:"It's a reasonable price. Here's your bag, enjoy!", zh:"价格很合理。给您包好了，祝您愉快！"} }
+  ]},
+  { name:"✈️ 机场值机", rounds:[
+    { npc:{en:"Good morning! May I see your ticket and passport?", zh:"早上好！请出示您的机票和护照。"}, replies:[
+      {en:"Here you are.", zh:"给你。"},
+      {en:"Sure, one moment.", zh:"好的，稍等。"}
+    ]},
+    { npc:{en:"Thank you. We can guarantee you a window seat.", zh:"谢谢。我们可以保证给您一个靠窗的座位。", kw:["guarantee"]}, replies:[
+      {en:"A window seat, please.", zh:"靠窗的座位，谢谢。"},
+      {en:"An aisle seat, please.", zh:"靠过道的座位，谢谢。"}
+    ]},
+    { npc:{en:"Here's your boarding pass. Have a safe flight!", zh:"这是您的登机牌，祝您旅途平安！"} }
+  ]}
+];
+
+var npcFlow = null;
+
+function openNPC(){
+  var sc = $("npc-scenes"); sc.innerHTML = "";
+  NPC_SCENES.forEach(function(s, idx){
+    var c = document.createElement("span");
+    c.className = "chip" + (idx === 0 ? " on" : "");
+    c.textContent = s.name;
+    c.onclick = function(){
+      Array.prototype.forEach.call(sc.querySelectorAll(".chip"), function(x){ x.classList.remove("on"); });
+      c.classList.add("on");
+      startNPCScene(s);
+    };
+    sc.appendChild(c);
+  });
+  startNPCScene(NPC_SCENES[0]);
+  $("npc-modal").classList.add("on");
+}
+
+function startNPCScene(scene){
+  npcFlow = { scene: scene, round: 0, messages: [] };
+  pushNPC(scene.rounds[0].npc);
+  renderNPCFlow();
+}
+
+function pushNPC(n){ npcFlow.messages.push({ who:"npc", en:n.en, zh:n.zh, kw:n.kw || [] }); }
+
+function escKw(w){ return w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); }
+
+function renderNPCFlow(){
+  var box = $("npc-chat"); box.innerHTML = "";
+  npcFlow.messages.forEach(function(m){
+    var row = document.createElement("div");
+    row.className = "msg-row " + (m.who === "npc" ? "npc" : "me");
+    var ava = document.createElement("div");
+    ava.className = "ava";
+    ava.textContent = m.who === "npc" ? "🧙" : "🙋";
+    var b = document.createElement("div");
+    b.className = "bubble";
+    var en = document.createElement("div");
+    en.className = "en";
+    en.innerHTML = (m.kw || []).reduce(function(s, w){
+      var re = new RegExp("\\b" + escKw(w) + "\\b", "gi");
+      return s.replace(re, '<em class="kw" data-w="' + w.toLowerCase() + '">$&</em>');
+    }, m.en);
+    var zh = document.createElement("div");
+    zh.className = "zh";
+    zh.textContent = m.zh || "";
+    var hint = document.createElement("div");
+    hint.className = "hint";
+    hint.textContent = m.who === "npc" ? "🔊 点我整句跟读" : "🔊 跟读你的回答";
+    b.appendChild(en); b.appendChild(zh); b.appendChild(hint);
+    b.onclick = function(){ speak(m.en); };
+    row.appendChild(ava); row.appendChild(b);
+    box.appendChild(row);
+    Array.prototype.forEach.call(en.querySelectorAll(".kw"), function(el){
+      el.onclick = function(ev){
+        ev.stopPropagation();
+        speak(el.getAttribute("data-w"));
+      };
+    });
+  });
+  box.scrollTop = box.scrollHeight;
+  renderNPCReplies();
+}
+
+function renderNPCReplies(){
+  var box = $("npc-replies"); box.innerHTML = "";
+  var r = npcFlow.scene.rounds[npcFlow.round];
+  if(npcFlow.done || !r || !r.replies || !r.replies.length){
+    var d = document.createElement("div");
+    d.className = "npc-done";
+    d.innerHTML = "🎉 这段对话你走完了！<span class=\"zh\">点上方每句话再跟读一遍，开口就赢了。</span>";
+    box.appendChild(d);
+    return;
+  }
+  r.replies.forEach(function(rp){
+    var btn = document.createElement("button");
+    btn.className = "npc-reply";
+    btn.innerHTML = rp.en + '<span class="zh">' + (rp.zh || "") + '</span>';
+    btn.onclick = function(){
+      npcFlow.messages.push({ who:"me", en:rp.en, zh:rp.zh || "", kw:[] });
+      npcFlow.round++;
+      var nxt = npcFlow.scene.rounds[npcFlow.round];
+      if(nxt && nxt.npc) pushNPC(nxt.npc);
+      else npcFlow.done = true;
+      renderNPCFlow();
+    };
+    box.appendChild(btn);
+  });
+}
+$("npc-close").onclick = function(){ $("npc-modal").classList.remove("on"); };
 $("btn-quit").onclick = function(){
   if(confirm("退出本关？已答的题会记进错题本，但本关进度不保留。")){ renderMap(); show("map"); }
 };
@@ -763,10 +1152,21 @@ $("btn-back1").onclick = function(){ renderMap(); show("map"); };
 $("btn-back2").onclick = function(){ renderMap(); show("map"); };
 $("btn-practice-all").onclick = function(){
   SFX.tap();
-  startCustom(save.mistakes.map(function(m){
+  var picks = save.mistakes.map(function(m){
     return WORDS.filter(function(w){ return w.id === m.wordId; })[0];
-  }).filter(Boolean), "错题重练");
+  }).filter(function(w){ return w && selSet[w.id]; });
+  if(!picks.length){ alert("先勾选想练的词哦"); return; }
+  startCustom(picks, "错题复习", selMode);
 };
+$("btn-sel-all").onclick = function(){ save.mistakes.forEach(function(m){ selSet[m.wordId] = true; }); renderMistake(); };
+$("btn-sel-none").onclick = function(){ save.mistakes.forEach(function(m){ selSet[m.wordId] = false; }); renderMistake(); };
+document.querySelectorAll(".mode-btn").forEach(function(b){
+  b.onclick = function(){
+    document.querySelectorAll(".mode-btn").forEach(function(x){ x.classList.remove("on"); });
+    b.classList.add("on");
+    selMode = b.getAttribute("data-mode");
+  };
+});
 $("btn-sfx").onclick = function(){ save.settings.sfx = !save.settings.sfx; Store.save(); renderSet(); if(save.settings.sfx) SFX.tap(); };
 /* ---------- 声音自检：点一次，直接看出是哪一层断了 ---------- */
 var DIAG_B64 = (function(){
@@ -860,15 +1260,353 @@ document.addEventListener("keydown", function(e){
   } else if(e.key === "Escape" && sc !== "home"){ renderMap(); show("map"); }
 });
 
+/* ============ AI 学习助手（WorkBuddy 云服务 · 免密钥 LLM） ============ */
+/* ADR-008：静态游戏植入 LLM 智能体。CDN 加载 SDK，初始化后用 cloud.llm 流式调用。
+   三大能力：①智能学习分析 ②动态学习计划 ③对话式实时学单词/句子。
+   数据来源：本机 localStorage 存档（save.words / mistakes / history / progress）。 */
+var WQ_AI_CFG = {
+  endpoint: "https://word-quest-60356.app.workbuddy.host",
+  oauthRelayBaseUrl: "https://www.workbuddy.cn/v2/as/genie-baas/oauth",
+  publishableKey: "wbpk_lsmSjqqihbObpmmdGai5tk_9wDMNe8WhQC6XPCQ4ajERfEefRQvVX7a"
+};
+var AI_SYS_ANALYSIS = "你是「词勇者」背单词游戏里的 AI 学习导师。用户会给你一份他的真实学习数据，请给出个性化、鼓励性、可操作的分析。必须包含：1) 薄弱环节在哪 2) 正确率趋势 3) 具体下一步建议。用中文口语化回答，可用 2-3 个小标题分点，总字数 220 字以内。不要编造数据之外的信息。";
+var AI_SYS_PLAN = "你是「词勇者」的 AI 学习规划师。根据用户的学习数据和薄弱词，制定一份动态学习计划。必须包含：今日目标、重点复习词（具体列出来）、建议复习方法、预计时长。用中文分点回答，简洁，总字数 250 字以内。不要编造数据之外的信息。";
+var AI_SYS_CHAT = "你是「词勇者」背单词游戏里的 AI 英语老师。用户会输入一个英语单词或句子，请讲解：单词→音标、词性、中文释义、例句、记忆技巧、易混词辨析；句子→翻译、重点词讲解。用中文为主，英语单词和例句保留原文。回答简洁清晰，可用小标题分点，总字数 250 字以内。";
+var AI = {
+  cloud: null, model: null, ready: false,
+  init: function(){
+    if(this.cloud) return;
+    try{
+      if(!window.WorkBuddyCloud) return;
+      this.cloud = window.WorkBuddyCloud.createWorkBuddyCloud({
+        endpoint: WQ_AI_CFG.endpoint,
+        oauthRelayBaseUrl: WQ_AI_CFG.oauthRelayBaseUrl,
+        publishableKey: WQ_AI_CFG.publishableKey
+      });
+    }catch(e){ this.cloud = null; }
+  },
+  stats: function(){
+    var right=0, wrong=0, weak=[];
+    Object.keys(save.words || {}).forEach(function(id){
+      var r = save.words[id]; right += (r.right||0); wrong += (r.wrong||0);
+      var w = WORDS.filter(function(x){ return x.id===id; })[0];
+      if(w && (r.wrong||0) > 0) weak.push({en:w.en, zh:w.zh, level:w.level, right:r.right||0, wrong:r.wrong||0});
+    });
+    weak.sort(function(a,b){ return (b.wrong-a.wrong) || (a.right-a.right); });
+    var cleared = 0;
+    for(var i=1;i<=3;i++){ if(save.progress[i] && save.progress[i].stars>=1) cleared++; }
+    var total = WORDS.length;
+    var touched = Object.keys(save.words || {}).length;
+    return {
+      total: total, touched: touched,
+      right: right, wrong: wrong,
+      rate: (right+wrong) ? Math.round(right/(right+wrong)*100) : 0,
+      mistakes: (save.mistakes||[]).length,
+      cleared: cleared,
+      weak: weak,
+      history: save.history || [],
+      progress: save.progress
+    };
+  },
+  summary: function(){
+    var s = this.stats();
+    var lines = [];
+    lines.push("词库共 " + s.total + " 词，已接触 " + s.touched + " 词");
+    lines.push("累计答对 " + s.right + " 次、答错 " + s.wrong + " 次，综合正确率 " + s.rate + "%");
+    lines.push("三关通关 " + s.cleared + "/3（遗忘森林/回声洞穴/静默雪山），各关星级：" +
+      [1,2,3].map(function(i){ var p=s.progress[i]||{}; return p.stars||0; }).join("/"));
+    lines.push("当前错题本 " + s.mistakes + " 个");
+    if(s.weak.length){
+      var top = s.weak.slice(0,8).map(function(w){ return w.en + "(错" + w.wrong + "次)"; }).join("、");
+      lines.push("薄弱词：" + top);
+    }
+    return lines.join("；");
+  },
+  ensure: async function(){
+    if(this.ready && this.model) return true;
+    this.init();
+    if(!this.cloud) return false;
+    try{
+      var models = await this.cloud.llm.models.list();
+      if(!models || !models.length) return false;
+      this.model = models.filter(function(x){ return x.disabled !== true; })[0] || models[0];
+      this.ready = true;
+      return true;
+    }catch(e){ return false; }
+  },
+  askStream: async function(messages, onDelta){
+    var full = "";
+    for await (var chunk of this.cloud.llm.chat.completions.create({
+      model: this.model.id,
+      messages: messages,
+      stream: true
+    })){
+      var d = chunk.choices && chunk.choices[0] && chunk.choices[0].delta;
+      if(d && d.content){ full += d.content; if(onDelta) onDelta(d.content); }
+    }
+    return full;
+  }
+};
+function aiOffline(msg){
+  return '<div class="ai-off">🤖 ' + (msg || "AI 服务未连接") + '<br>请确认已联网后重试（游戏本体不受影响，可正常闯关）。</div>';
+}
+function escapeHtml(s){
+  return String(s).replace(/[&<>"]/g, function(c){
+    return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];
+  });
+}
+function mdToHtml(s){
+  s = escapeHtml(s || "");
+  s = s.replace(/\*\*([^*]+)\*\*/g, "<b>$1</b>");
+  s = s.replace(/`([^`]+)`/g, "<code>$1</code>");
+  var lines = s.split("\n"), out = [];
+  for(var i=0;i<lines.length;i++){
+    var L = lines[i], m;
+    if((m = L.match(/^#{1,3}\s+(.+)$/))){ out.push('<div class="md-h">' + m[1] + '</div>'); }
+    else if((m = L.match(/^[-*•]\s+(.+)$/))){ out.push('<div class="md-li">• ' + m[1] + '</div>'); }
+    else if((m = L.match(/^(\d+)[.)、:]\s*(.+)$/))){ out.push('<div class="md-li"><b>' + m[1] + '.</b> ' + m[2] + '</div>'); }
+    else if(L.trim() === ""){ out.push('<div class="md-gap"></div>'); }
+    else { out.push('<div>' + L + '</div>'); }
+  }
+  return out.join("");
+}
+function chartSVG(history){
+  var recent = (history||[]).slice(-20);
+  if(recent.length < 3){
+    return '<div class="ai-empty">答题数据还不够，先去闯几关吧 👊（至少 3 题才出图）</div>';
+  }
+  var W=360, H=90, P=10;
+  var pts=[];
+  for(var i=2;i<recent.length;i++){
+    var win = recent.slice(i-2, i+1);
+    var ok=0; win.forEach(function(x){ if(x.ok) ok++; });
+    pts.push(ok/win.length*100);
+  }
+  var n=pts.length;
+  var stepX = n>1 ? (W-P*2)/(n-1) : 0;
+  var coords = pts.map(function(v,i){
+    return [P + i*stepX, P + (100-v)/100*(H-P*2)];
+  });
+  var line = coords.map(function(c){ return c[0].toFixed(1)+","+c[1].toFixed(1); }).join(" ");
+  var y50 = P + (100-50)/100*(H-P*2);
+  var dots = coords.map(function(c){
+    return '<circle cx="'+c[0].toFixed(1)+'" cy="'+c[1].toFixed(1)+'" r="3" fill="#f5c542"/>';
+  }).join("");
+  var area = "M"+coords[0][0].toFixed(1)+","+(H-P)+" L"+line+" L"+coords[n-1][0].toFixed(1)+","+(H-P)+" Z";
+  return '<svg viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none">' +
+    '<line x1="'+P+'" y1="'+y50.toFixed(1)+'" x2="'+(W-P)+'" y2="'+y50.toFixed(1)+'" stroke="#3a3358" stroke-dasharray="3 3"/>' +
+    '<path d="'+area+'" fill="rgba(245,197,66,.12)"/>' +
+    '<polyline points="'+line+'" fill="none" stroke="#f5c542" stroke-width="2" stroke-linejoin="round"/>' +
+    dots +
+    '<text x="'+P+'" y="'+(H-3)+'" fill="#a49bb8" font-size="9">'+pts[0].toFixed(0)+'%</text>' +
+    '<text x="'+(W-P-34)+'" y="'+(H-3)+'" fill="#a49bb8" font-size="9">'+pts[n-1].toFixed(0)+'%</text>' +
+    '</svg>';
+}
+function renderAIStats(){
+  var s = AI.stats();
+  var weakHtml = "";
+  if(s.weak.length){
+    var top = s.weak.slice(0,5);
+    weakHtml = '<div class="ai-section-title">🔴 薄弱词 Top '+top.length+'</div>' +
+      top.map(function(w){
+        var pct = (w.right+w.wrong) ? Math.round(w.wrong/(w.right+w.wrong)*100) : 0;
+        return '<div class="ai-weak"><span>'+escapeHtml(w.en)+' <span class="tiny dim">'+escapeHtml(w.zh)+'</span></span>' +
+          '<span class="bar"><i style="width:'+Math.max(pct,4)+'%"></i></span>' +
+          '<span class="tiny dim">错'+w.wrong+'</span></div>';
+      }).join("");
+  }
+  $("ai-stats").innerHTML =
+    '<div class="ai-stats-grid">' +
+      '<div class="ai-stat"><b>'+s.touched+'/'+s.total+'</b><span>已学单词</span></div>' +
+      '<div class="ai-stat"><b>'+s.rate+'%</b><span>综合正确率</span></div>' +
+      '<div class="ai-stat"><b>'+s.cleared+'/3</b><span>通关关卡</span></div>' +
+      '<div class="ai-stat"><b>'+s.mistakes+'</b><span>待复习错题</span></div>' +
+    '</div>' +
+    '<div class="ai-chart"><div class="ai-chart-title">📈 近 20 次答题正确率（每 3 题一组）</div>' + chartSVG(s.history) + '</div>' +
+    weakHtml +
+    '<div class="ai-hint">以上是你本机的真实学习记录。点「🧠 智能分析」让 AI 导师帮你解读，或「🗓 学习计划」生成专属计划。</div>';
+}
+function renderAIAnalysis(){
+  var box = $("ai-analysis");
+  box.innerHTML =
+    '<div class="ai-hint">AI 会读取你的学习数据，生成个性化分析报告（薄弱环节 / 正确率趋势 / 下一步建议）。</div>' +
+    '<div class="ai-out" id="ai-analysis-out"><div class="ai-empty">点下方按钮，让 AI 导师帮你看看 👇</div></div>' +
+    '<button class="btn gold ai-btn" id="ai-analysis-go">🧠 生成智能分析</button>';
+  $("ai-analysis-go").onclick = runAnalysis;
+}
+async function runAnalysis(){
+  var out = $("ai-analysis-out"), btn = $("ai-analysis-go");
+  btn.disabled = true; btn.textContent = "分析中…";
+  out.classList.add("loading"); out.textContent = "AI 正在分析你的学习数据…";
+  try{
+    var ok = await AI.ensure();
+    if(!ok){ out.innerHTML = aiOffline("AI 服务未连接"); }
+    else{
+      var full = await AI.askStream([
+        {role:"system", content: AI_SYS_ANALYSIS},
+        {role:"user", content: AI.summary()}
+      ], null);
+      out.classList.remove("loading");
+      out.innerHTML = mdToHtml(full || "(无内容)");
+      btn.textContent = "重新生成";
+    }
+  }catch(e){
+    out.classList.remove("loading");
+    out.textContent = "❌ 生成失败：" + ((e && e.error && e.error.message) || (e && e.message) || e) + "。稍后重试。";
+    btn.textContent = "重试";
+  }finally{
+    btn.disabled = false;
+  }
+}
+function renderAIPlan(){
+  var box = $("ai-plan");
+  box.innerHTML =
+    '<div class="ai-hint">根据你的进度和薄弱词，AI 生成一份动态学习计划（今日目标 / 重点复习词 / 方法 / 时长）。</div>' +
+    '<div class="ai-out" id="ai-plan-out"><div class="ai-empty">点下方按钮，生成你的专属计划 👇</div></div>' +
+    '<button class="btn gold ai-btn" id="ai-plan-go">🗓 生成学习计划</button>';
+  $("ai-plan-go").onclick = runPlan;
+}
+async function runPlan(){
+  var out = $("ai-plan-out"), btn = $("ai-plan-go");
+  btn.disabled = true; btn.textContent = "规划中…";
+  out.classList.add("loading"); out.textContent = "AI 正在为你制定学习计划…";
+  try{
+    var ok = await AI.ensure();
+    if(!ok){ out.innerHTML = aiOffline("AI 服务未连接"); }
+    else{
+      var full = await AI.askStream([
+        {role:"system", content: AI_SYS_PLAN},
+        {role:"user", content: AI.summary()}
+      ], null);
+      out.classList.remove("loading");
+      out.innerHTML = mdToHtml(full || "(无内容)");
+      btn.textContent = "重新生成";
+    }
+  }catch(e){
+    out.classList.remove("loading");
+    out.textContent = "❌ 生成失败：" + ((e && e.error && e.error.message) || (e && e.message) || e) + "。稍后重试。";
+    btn.textContent = "重试";
+  }finally{
+    btn.disabled = false;
+  }
+}
+var aiChatMsgs = [];
+function renderAIChat(){
+  var box = $("ai-chat");
+  aiChatMsgs = [];
+  box.innerHTML =
+    '<div class="ai-hint">输入一个单词或句子，AI 老师实时讲解。例：abandon ／ "I appreciate your help."</div>' +
+    '<div class="ai-chat-box" id="ai-chat-box"></div>' +
+    '<div class="ai-chat-input"><input id="ai-chat-in" placeholder="输入单词或句子…"><button class="btn sm" id="ai-chat-send">发送</button></div>';
+  $("ai-chat-send").onclick = sendAIChat;
+  $("ai-chat-in").onkeydown = function(e){ if(e.key === "Enter") sendAIChat(); };
+}
+function appendAIMsg(who, text){
+  var cbox = $("ai-chat-box");
+  var row = document.createElement("div");
+  row.className = "msg-row " + (who === "me" ? "me" : "npc");
+  row.innerHTML = '<div class="ava">' + (who === "me" ? "🙋" : "🤖") + '</div>' +
+    '<div class="bubble" style="cursor:default"><div class="en" style="white-space:pre-wrap">' + escapeHtml(text) + '</div></div>';
+  cbox.appendChild(row);
+  cbox.scrollTop = cbox.scrollHeight;
+  return row;
+}
+async function sendAIChat(){
+  var input = $("ai-chat-in");
+  var text = (input.value || "").trim();
+  if(!text) return;
+  input.value = "";
+  appendAIMsg("me", text);
+  aiChatMsgs.push({role:"user", content: text});
+  var typing = appendAIMsg("ai", "…");
+  var bubble = typing.querySelector(".en");
+  try{
+    var ok = await AI.ensure();
+    if(!ok) throw new Error("AI 服务未连接");
+    var msgs = [{role:"system", content: AI_SYS_CHAT}].concat(aiChatMsgs.slice(-6));
+    var full = "";
+    await AI.askStream(msgs, function(delta){
+      full += delta;
+      bubble.textContent = full;
+      var c = $("ai-chat-box"); c.scrollTop = c.scrollHeight;
+    });
+    if(!full) bubble.textContent = "(空回复)";
+    aiChatMsgs.push({role:"assistant", content: full});
+    if(aiChatMsgs.length > 10) aiChatMsgs = aiChatMsgs.slice(-8);
+  }catch(e){
+    bubble.textContent = "❌ " + ((e && e.error && e.error.message) || (e && e.message) || e);
+  }
+}
+function openAI(){
+  ensureAudio(); SFX.tap();
+  AI.init();
+  $("ai-modal").classList.add("on");
+  switchAITab("stats");
+}
+function switchAITab(name){
+  Array.prototype.forEach.call(document.querySelectorAll("#ai-modal .ai-tab"), function(t){
+    t.classList.toggle("on", t.getAttribute("data-tab") === name);
+  });
+  Array.prototype.forEach.call(document.querySelectorAll("#ai-modal .ai-tab-body"), function(b){
+    b.classList.toggle("on", b.id === "ai-" + name);
+  });
+  if(name === "stats") renderAIStats();
+  else if(name === "analysis") renderAIAnalysis();
+  else if(name === "plan") renderAIPlan();
+  else if(name === "chat") renderAIChat();
+}
+$("ai-close").onclick = function(){ $("ai-modal").classList.remove("on"); };
+$("btn-go-ai").onclick = function(){ openAI(); };
+$("btn-ai").onclick = function(){ openAI(); };
+Array.prototype.forEach.call(document.querySelectorAll("#ai-modal .ai-tab"), function(t){
+  t.onclick = function(){ switchAITab(t.getAttribute("data-tab")); };
+});
+
 /* 首屏：按 hash 直达（方便快速验收） */
 (function(){
   var h = (location.hash || "").slice(1);
   if(h === "map"){ renderMap(); show("map"); }
   else if(h === "mistake"){ renderMistake(); show("mistake"); }
   else if(h === "set"){ renderSet(); show("set"); }
+  if((location.search||"").match(/[?&]ai=1(?:&|$)/)){ openAI(); }
 })();
 
 })();
 </script>
 </body>
 </html>
+
+<script>/* WQ_SHARE_PATCH: 部署平台分享口令透传（幂等，仅作用于测试站副本） */
+(function(){
+  var m=(location.search||"").match(/[?&]sharecode=[^&]*/);
+  if(!m) return;
+  var q=m[0].replace(/^[?&]/,"");
+  Array.prototype.forEach.call(document.querySelectorAll("a[href]"),function(a){
+    var h=a.getAttribute("href")||"";
+    if(!h||/^(https?:|#|mailto:|javascript:|data:)/.test(h)) return;
+    if(h.indexOf("sharecode=")!==-1) return;
+    a.setAttribute("href", h+(h.indexOf("?")===-1?"?":"&")+q);
+  });
+})();
+</script>
+
+<script>/* WQ_GAME_HELL: 读取主游戏三关通关状态显示解锁进度（幂等，仅部署副本） */
+(function(){
+  var el=document.getElementById("hell-state"); if(!el) return;
+  try{
+    var s=JSON.parse(localStorage.getItem("wordquest.save.v1")||"{}");
+    var p=(s&&s.progress)||{}; var clear=0;
+    for(var i=1;i<=3;i++){ var t=p[i]; if(t&&t.stars>=1) clear++; }
+    var open=(clear>=3);
+    if(!open){
+      try{
+        var r=JSON.parse(localStorage.getItem("wq_rogue4")||"{}");
+        if((r.unlocked||0)>=3||(Array.isArray(r.cleared)&&r.cleared.filter(Boolean).length>=3)) open=true;
+      }catch(e2){}
+    }
+    el.textContent = open
+      ? "已解锁 💀 · 60 层 / 每 10 层 Boss / 永久死亡"
+      : "通关 遗忘森林 / 回声洞穴 / 静默雪山 三关后解锁 · 进度 "+clear+"/3";
+  }catch(e){}
+})();
+</script>

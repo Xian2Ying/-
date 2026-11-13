@@ -21,7 +21,9 @@ INDEX = os.path.join(LAB, "index.html")
 INTERNAL = os.path.join(LAB, "index.internal.html")
 JUDGE = os.path.join(LAB, "judge.html")
 ROGUE = os.path.join(LAB, "roguelike.v2.html")
+GAME = os.path.join(LAB, "game.v3.html")
 SNAPSHOT = os.path.join(LAB, "index.pre-hell.html")
+GAME_SNAPSHOT = os.path.join(LAB, "game.v3.pre-hell.html")
 
 PUBLIC = """<!doctype html><html lang="zh-CN"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -149,6 +151,11 @@ h1{font-size:30px;margin:0 0 8px;letter-spacing:2px;}
 .tips b{color:var(--gold);}
 .tips ol{margin:8px 0 0;padding-left:20px;}
 .tips li{margin:4px 0;}
+.ai{background:var(--panel);border:1px solid var(--line);border-left:3px solid #7F77DD;
+ border-radius:10px;padding:14px 16px;margin-top:24px;font-size:13px;line-height:2;text-align:left;}
+.ai b{color:#CECBF6;}
+.ai ul{margin:8px 0 0;padding-left:20px;}
+.ai li{margin:4px 0;}
 .foot{margin-top:24px;font-size:12px;color:var(--dim);line-height:2;text-align:center;}
 .foot a{color:var(--dim);}
 </style></head><body>
@@ -179,6 +186,17 @@ h1{font-size:30px;margin:0 0 8px;letter-spacing:2px;}
     讲「原文件冻结作对照、改动另起新文件」的可控演进方法，以及治疗组 / 对照组 / 创新组三组对照。</div>
     <span class="go">🧪 打开版本总览</span>
   </a>
+
+  <div class="ai">
+    <b>AI 智能体做了什么（本作核心）</b>
+    <ul>
+      <li>构建并质检 100 词词库：音标 / 词性 / 释义 / 例句 / 中译 / 难度分级 / 干扰项，全部校验通过</li>
+      <li>批量获取并校验收录 100 个真人发音音频</li>
+      <li>生成题目、干扰项与例句，按简单 / 普通 / 困难 / 地狱四档组织题库</li>
+      <li>快速产出多个可玩原型，用无头浏览器自动跑通主循环、验证零报错</li>
+      <li>汇总两方体验反馈，逐条代码取证裁定、排定优先级，形成可追踪的改进闭环</li>
+    </ul>
+  </div>
 
   <div class="tips">
     <b>建议演示顺序</b>
@@ -227,7 +245,15 @@ if(!Array.isArray(META.cleared)||META.cleared.length<3) META.cleared=[false,fals
 if(META.unlocked>=3 && !META.cleared.some(Boolean)) META.cleared=[true,true,true];
 var WQ_CLEAR_AT=[3,5,8];
 function wqClearCount(){return META.cleared.filter(Boolean).length;}
-function wqHellUnlocked(){return META.unlocked>=3 || wqClearCount()>=3;}
+function wqMainClearCount(){
+  try{
+    var _ms=JSON.parse(localStorage.getItem("wordquest.save.v1")||"{}");
+    var _mp=(_ms&&_ms.progress)||{}; var _mc=0;
+    for(var _mi=1;_mi<=3;_mi++){ var _mt=_mp[_mi]; if(_mt&&_mt.stars>=1) _mc++; }
+    return _mc;
+  }catch(e){return 0;}
+}
+function wqHellUnlocked(){return META.unlocked>=3 || wqClearCount()>=3 || wqMainClearCount()>=3;}
 function wqSyncUnlock(){META.unlocked=wqHellUnlocked()?3:2; saveMeta();}
 function wqToast(msg){
   var d=document.createElement('div'); d.textContent=msg;
@@ -294,6 +320,74 @@ PUBLIC_HELL_CARD = """  <!-- WQ_PUBLIC_HELL -->
     <small>进阶玩法：背词 × 肉鸽 · 60 层 / 每 10 层 Boss / 永久死亡<br>通关「简单 · 普通 · 困难」三档后解锁（各到 3 / 5 / 8 层即可，不用刷完全部关卡）</small>
   </a>
 """
+
+
+# ---------------------------------------------------------------------------
+# ADR-007b：主游戏地图内补「地狱模式」直达入口
+#   问题：普通版地狱入口只在首页 index.html；玩家点「▶ 开始游戏」进入 game.v3.html 后，
+#   地图页「其他地方」只有错题本 / 口语镇 / 设置，从游戏内看不到也到不了地狱模式。
+#   处理：只给部署副本 game.v3.html 注入一个链接按钮 + 解锁进度提示，不改游戏逻辑；
+#   改前另存 game.v3.pre-hell.html 作冻结对照；sharecode 由既有 WQ_SHARE_PATCH 透传。
+# ---------------------------------------------------------------------------
+
+GAME_HELL_MARK = "WQ_GAME_HELL"
+GAME_HELL_CSS = """  /* WQ_GAME_HELL */
+  .hellbtn{display:block;margin-top:12px;border:2px solid #a83232;background:#2a1620;color:#ff9a9a;
+   border-radius:10px;padding:11px 12px;font-size:14px;font-weight:800;text-decoration:none;line-height:1.7}
+  .hellbtn:active{transform:translateY(2px)}
+  .hellbtn span{display:block;margin-top:2px;font-size:11px;font-weight:400;color:#c99}
+"""
+GAME_HELL_BTN = """
+      <!-- WQ_GAME_HELL: 地图内地狱模式直达入口（仅部署副本） -->
+      <a class="hellbtn" id="btn-hell" href="roguelike.v2.html">💀 地狱模式
+        <span id="hell-state">通关 遗忘森林 / 回声洞穴 / 静默雪山 三关后解锁</span></a>"""
+GAME_HELL_JS = """<script>/* WQ_GAME_HELL: 读取主游戏三关通关状态显示解锁进度（幂等，仅部署副本） */
+(function(){
+  var el=document.getElementById("hell-state"); if(!el) return;
+  try{
+    var s=JSON.parse(localStorage.getItem("wordquest.save.v1")||"{}");
+    var p=(s&&s.progress)||{}; var clear=0;
+    for(var i=1;i<=3;i++){ var t=p[i]; if(t&&t.stars>=1) clear++; }
+    var open=(clear>=3);
+    if(!open){
+      try{
+        var r=JSON.parse(localStorage.getItem("wq_rogue4")||"{}");
+        if((r.unlocked||0)>=3||(Array.isArray(r.cleared)&&r.cleared.filter(Boolean).length>=3)) open=true;
+      }catch(e2){}
+    }
+    el.textContent = open
+      ? "已解锁 💀 · 60 层 / 每 10 层 Boss / 永久死亡"
+      : "通关 遗忘森林 / 回声洞穴 / 静默雪山 三关后解锁 · 进度 "+clear+"/3";
+  }catch(e){}
+})();
+</script>
+"""
+
+
+def snapshot_game():
+    """改主游戏地图前，另存冻结对照快照。"""
+    if os.path.exists(GAME_SNAPSHOT):
+        print("SKIP game snapshot (exists):", GAME_SNAPSHOT)
+        return
+    shutil.copyfile(GAME, GAME_SNAPSHOT)
+    print("SNAPSHOT frozen:", GAME_SNAPSHOT)
+
+
+def inject_game_hell():
+    """给部署副本主游戏地图注入地狱入口（幂等，锚点唯一性校验）。"""
+    s = io.open(GAME, encoding="utf-8").read()
+    if GAME_HELL_MARK in s:
+        print("SKIP game hell (already injected):", GAME)
+        return
+    a1 = "</style>"
+    a2 = '      <button class="btn ghost sm" id="btn-set">⚙️ 设置</button>'
+    if s.count(a1) != 1 or s.count(a2) != 1:
+        raise SystemExit("ANCHOR NOT UNIQUE in game: %d / %d" % (s.count(a1), s.count(a2)))
+    s = s.replace(a1, GAME_HELL_CSS + a1, 1)
+    s = s.replace(a2, a2 + GAME_HELL_BTN, 1)
+    s = s.rstrip("\n") + "\n\n" + GAME_HELL_JS
+    io.open(GAME, "w", encoding="utf-8", newline="\n").write(s)
+    print("INJECT game hell:", GAME)
 
 
 def snapshot_public():
@@ -363,7 +457,51 @@ def inject_demo():
     print("INJECT demo:", ROGUE)
 
 
+# ---------------------------------------------------------------------------
+# ADR-007c：修复肉鸽顶部 banner 副标题在窄屏被 overflow:hidden 裁切
+#   问题：地狱档 sub="終幕·最終公演"（普通/困难档更长）在 flex 单行里溢出，
+#         #app{overflow:hidden} 把右侧文字裁掉，手机上看"不完整"。
+#   修法：banner 允许 flex-wrap，sub 用 flex-basis:100% 强制独占一行，
+#         缩小字号 + white-space:nowrap，保证任何宽度下副标题都完整显示。
+# ---------------------------------------------------------------------------
+BANNER_FIX_MARK = ".banner .sub{font-weight:400;color:#fff;opacity:.85;font-size:12px;margin-left:0;flex-basis:100%;white-space:nowrap;}"
+BANNER_PATCHES = [
+    ('.banner{display:flex;align-items:center;gap:8px;',
+     '.banner{display:flex;align-items:center;flex-wrap:wrap;gap:4px 8px;',
+     "banner 允许换行"),
+    ('.banner .sub{font-weight:400;color:#fff;opacity:.85;font-size:13px;margin-left:auto;}',
+     '.banner .sub{font-weight:400;color:#fff;opacity:.85;font-size:12px;margin-left:0;flex-basis:100%;white-space:nowrap;}',
+     "banner 副标题换行完整"),
+]
+
+
+def inject_banner_fix():
+    """幂等修复肉鸽顶部 banner 副标题窄屏截断。"""
+    s = io.open(ROGUE, encoding="utf-8").read()
+    if BANNER_FIX_MARK in s:
+        print("SKIP banner fix (already injected):", ROGUE)
+        return
+    for old, new, label in BANNER_PATCHES:
+        n = s.count(old)
+        if n != 1:
+            raise SystemExit("ANCHOR NOT UNIQUE (%d) for %s: %r" % (n, label, old[:70]))
+        s = s.replace(old, new, 1)
+    io.open(ROGUE, "w", encoding="utf-8", newline="\n").write(s)
+    print("INJECT banner fix:", ROGUE)
+
+
 def main():
+    # --banner-only（ADR-007c）：只修肉鸽顶部 banner 副标题窄屏截断，不碰其他文件
+    if "--banner-only" in sys.argv:
+        inject_banner_fix()
+        return
+
+    # --game-hell-only（ADR-007b）：只补主游戏地图内的地狱入口，不碰任何其他文件
+    if "--game-hell-only" in sys.argv:
+        snapshot_game()
+        inject_game_hell()
+        return
+
     # --unlock-only（ADR-007）：留快照 → 给普通版加地狱入口 → 注入解锁规则 → 同步评委版文案
     # 不整体重写 index.html，保留平台写入的 data-page-node-id 属性
     if "--unlock-only" in sys.argv:
@@ -372,6 +510,8 @@ def main():
         inject_unlock()
         build_judge()
         inject_demo()
+        snapshot_game()
+        inject_game_hell()
         return
 
     # --judge-only：只生成评委版 + 注入演示/解锁参数，绝不重写普通版 index.html
@@ -408,6 +548,8 @@ def main():
     inject_unlock()
     build_judge()
     inject_demo()
+    snapshot_game()
+    inject_game_hell()
 
 
 if __name__ == "__main__":

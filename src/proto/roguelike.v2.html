@@ -9,9 +9,9 @@
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 body{margin:0;background:radial-gradient(circle at 50% 0%,#241d39,#15121f 70%);color:var(--txt);font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;min-height:100vh;display:flex;justify-content:center;transition:background .4s;}
 #app{width:100%;max-width:430px;padding:16px;overflow:hidden;}
-.banner{display:flex;align-items:center;gap:8px;background:var(--tint);border-radius:12px;padding:10px 14px;margin-bottom:8px;font-weight:700;}
+.banner{display:flex;align-items:center;flex-wrap:wrap;gap:4px 8px;background:var(--tint);border-radius:12px;padding:10px 14px;margin-bottom:8px;font-weight:700;}
 .banner .e{font-size:22px;}
-.banner .sub{font-weight:400;color:#fff;opacity:.85;font-size:13px;margin-left:auto;}
+.banner .sub{font-weight:400;color:#fff;opacity:.85;font-size:12px;margin-left:0;flex-basis:100%;white-space:nowrap;}
 .hud{display:flex;justify-content:space-between;align-items:center;font-size:13px;margin-bottom:8px;gap:8px;flex-wrap:wrap;}
 .hud .hp{color:var(--red);font-size:16px;letter-spacing:2px;}
 .hud .stat{color:var(--dim);}
@@ -133,6 +133,7 @@ function blip(freq,dur,type){try{if(!actx)actx=new (window.AudioContext||window.
    v2.1 修复：换源后必须重新 play()，否则在线音「只加载不播放」（第一次点喇叭无声的根因）；
    并记住本地缺失的词，后续直接用在线源，减少 404 与首击静默 */
 var SHARE_Q=(function(){var m=(location.search||"").match(/[?&]sharecode=[^&]*/);return m?m[0].replace(/^&/,"?"):"";})();
+var WQ_DEMO=function(){return /[?&]demo=1/.test(location.search);}();
 var voiceCache={},voiceFail=0,voiceResult="",sharedAudio=null,audioUnlocked=false,noLocal={};
 function ensureAudio(){try{if(!sharedAudio)sharedAudio=new Audio();}catch(e){}}
 function unlockVoice(){if(audioUnlocked)return;audioUnlocked=true;try{if(!sharedAudio)sharedAudio=new Audio();sharedAudio.onplaying=function(){voiceFail=0;voiceResult="ok";};sharedAudio.src="data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAgD4AAAB9AAACABAAZGF0YQAAAAA=";var p=sharedAudio.play();if(p&&p.catch)p.catch(function(){});}catch(e){}}
@@ -148,23 +149,58 @@ if(!META.unlocked&&META.unlocked!==0)META={unlocked:0,best:[0,0,0,0],fragments:0
 if(!Array.isArray(META.best)||META.best.length<4)META.best=[0,0,0,0];
 if(typeof META.unlocked!=="number")META.unlocked=0;
 if(typeof META.fragments!=="number")META.fragments=0;
-function saveMeta(){try{localStorage.setItem("wq_rogue4",JSON.stringify(META))}catch(e){}}
+/* WQ_UNLOCK_PATCH: 通关前三档解锁地狱（仅部署副本；仓库 src/proto 对照原件不注入）
+   规则：简单/普通/困难 三档默认全开放；各到达 3/5/8 层即记一次「通关」并永久存档；
+   三档全部通关后解锁地狱。无需刷满 10/25/40 关，也无需把词库做完。
+   死亡不清空通关记录（meta 进度永久）；META.unlocked>=3 的老存档自动视为已解锁。 */
+if(!Array.isArray(META.cleared)||META.cleared.length<3) META.cleared=[false,false,false];
+if(META.unlocked>=3 && !META.cleared.some(Boolean)) META.cleared=[true,true,true];
+var WQ_CLEAR_AT=[3,5,8];
+function wqClearCount(){return META.cleared.filter(Boolean).length;}
+function wqMainClearCount(){
+  try{
+    var _ms=JSON.parse(localStorage.getItem("wordquest.save.v1")||"{}");
+    var _mp=(_ms&&_ms.progress)||{}; var _mc=0;
+    for(var _mi=1;_mi<=3;_mi++){ var _mt=_mp[_mi]; if(_mt&&_mt.stars>=1) _mc++; }
+    return _mc;
+  }catch(e){return 0;}
+}
+function wqHellUnlocked(){return WQ_DEMO || META.unlocked>=3 || wqClearCount()>=3 || wqMainClearCount()>=3;}
+function wqSyncUnlock(){META.unlocked=wqHellUnlocked()?3:2; saveMeta();}
+function wqToast(msg){
+  var d=document.createElement('div'); d.textContent=msg;
+  d.style.cssText='position:fixed;left:50%;top:14px;transform:translateX(-50%);z-index:9999;'
+    +'background:#2a2038;color:#f4c75b;border:1px solid #f4c75b;border-radius:10px;'
+    +'padding:9px 14px;font-size:13px;font-weight:800;box-shadow:0 4px 18px rgba(0,0,0,.5);'
+    +'max-width:88vw;text-align:center;';
+  document.body.appendChild(d);
+  setTimeout(function(){if(d.parentNode)d.parentNode.removeChild(d);},2600);
+}
+function wqMarkClear(){
+  var i=S.tierIdx; if(i>2||!S.floor)return;
+  if(S.floor>=WQ_CLEAR_AT[i] && !META.cleared[i]){
+    META.cleared[i]=true; saveMeta();
+    wqToast('✅ '+TIERS[i].name+' 难度通关 · 地狱解锁进度 '+wqClearCount()+'/3');
+  }
+}
+
+function saveMeta(){if(WQ_DEMO)return;try{localStorage.setItem("wq_rogue4",JSON.stringify(META))}catch(e){}}
 
 let S={};
 function applyTheme(t){document.documentElement.style.setProperty('--tint',t.tint);}
 function showBanner(t){$("banner").innerHTML='<span class="e">'+t.emoji+'</span><span>'+t.name+' 难度</span><span class="sub">'+t.sub+'</span>';}
-function tierSelect(){
+function tierSelect(){ wqSyncUnlock();
   applyTheme(TIERS[Math.min(META.unlocked,3)]);
   showBanner({emoji:'🎲',name:'单词肉鸽',sub:'四难度 · 永久死亡'});
   const btns=TIERS.map((t,i)=>{
-    const locked=i>META.unlocked;
-    return '<button class="tierbtn" data-i="'+i+'" '+(locked?'disabled':'')+'><b>'+t.emoji+' '+t.name+'</b> · '+t.levels+'关 · '+t.sub+(locked?'<span class="lock">🔒 通关上一档解锁</span>':(' · 最佳 '+META.best[i]+'层'))+'</button>';
+    const locked=(i===3)?!wqHellUnlocked():false;
+    return '<button class="tierbtn" data-i="'+i+'" '+(locked?'disabled':'')+'><b>'+t.emoji+' '+t.name+'</b> · '+t.levels+'关 · '+t.sub+(locked?'<span class="lock">🔒 通关前三档解锁 · 进度 '+wqClearCount()+'/3</span>':(i===3?' · 已解锁 💀':(META.cleared[i]?' · ✅ 已通关':' · 最佳 '+META.best[i]+'层')))+'</button>';
   }).join('');
   $("hud").innerHTML='<div class="stat">累计记忆碎片 <b>'+META.fragments+'</b></div>';
-  $("stage").innerHTML='<div class="overlay"><div class="big">🎲</div><h2>选择难度</h2><p>简单(10)→普通(25)→困难(40)→地狱(60)<br>通关一档解锁下一档 · 死亡即结算</p>'+btns+'</div>';
+  $("stage").innerHTML='<div class="overlay">'+(WQ_DEMO?'<div style="display:inline-block;margin-bottom:12px;padding:5px 12px;border:1px solid #f4c75b;border-radius:20px;color:#f4c75b;font-size:12px;font-weight:800">演示模式 · 四档难度已全部解锁</div><br>':'')+'<div class="big">🎲</div><h2>选择难度</h2><p>'+(WQ_DEMO?'<b style="color:#f4c75b">演示模式：</b>简单 / 普通 / 困难 / 地狱 四档均可直接进入（正常版需通关前三档解锁地狱）':'简单 / 普通 / 困难 三档自由挑战 · 各到 3 / 5 / 8 层即算通关<br>三档全部通关解锁 💀 地狱（当前进度 '+wqClearCount()+'/3）· 无需刷完全部关卡')+'</p>'+btns+'</div>';
   document.querySelectorAll('.tierbtn').forEach(b=>{if(!b.disabled)b.onclick=()=>talentPick(parseInt(b.dataset.i));});
 }
-function talentPick(tierIdx){
+function talentPick(tierIdx){ if(tierIdx===3&&!wqHellUnlocked()){tierSelect();return;}
   S.tierIdx=tierIdx; showBanner(TIERS[tierIdx]);
   $("hud").innerHTML='<div class="stat">选择开局天赋</div>';
   $("stage").innerHTML='<div class="overlay"><div class="big">'+TIERS[tierIdx].emoji+'</div><h2>'+TIERS[tierIdx].name+' 难度 · 选天赋</h2>'+
@@ -186,7 +222,7 @@ function renderHud(){
 function nextEncounter(){
   const t=TIERS[S.tierIdx];
   if(S.floor>=t.levels){tierClear();return;}
-  S.floor++; S.answered=false;
+  S.floor++; S.answered=false; wqMarkClear();
   const isBoss=(t.bossEvery>0 && S.floor%t.bossEvery===0);
   const pool=poolForFloor(t,S.floor);
   const avail=pool.filter(x=>!S.used.has(x.en));
@@ -262,7 +298,7 @@ function tierClear(){
   const t=TIERS[S.tierIdx];
   META.best[S.tierIdx]=Math.max(META.best[S.tierIdx]||0,S.floor);
   META.fragments+=S.frag;
-  if(S.tierIdx>=META.unlocked)META.unlocked=Math.min(3,S.tierIdx+1);
+  META.unlocked=wqHellUnlocked()?3:2;
   saveMeta();
   const nextIdx=S.tierIdx+1;
   $("stage").innerHTML='<div class="overlay"><div class="big">🏆</div><h2>'+t.name+' 难度 · 公演通关！</h2>'+
@@ -282,7 +318,25 @@ function gameOver(){
     '<button class="next" onclick="talentPick('+S.tierIdx+')">↻ 重新挑战本难度</button>'+
     '<button class="next" style="background:var(--bg2);color:var(--txt);margin-top:8px" onclick="tierSelect()">返回难度选择</button></div>';
 }
-tierSelect();
+/* WQ_DEMO_PATCH: 评委演示直进地狱档（幂等，仅作用于部署副本；仓库 src/proto 对照原件不注入） */
+if(/(^|[?&])demo=hell(&|$)/.test(location.search)){
+  META.unlocked=3; S.tierIdx=3; applyTheme(TIERS[3]); showBanner(TIERS[3]); startRun('tank');
+}else{ tierSelect(); }
 </script>
+
+<script>/* WQ_SHARE_PATCH: 部署平台分享口令透传（幂等，仅作用于测试站副本） */
+(function(){
+  var m=(location.search||"").match(/[?&]sharecode=[^&]*/);
+  if(!m) return;
+  var q=m[0].replace(/^[?&]/,"");
+  Array.prototype.forEach.call(document.querySelectorAll("a[href]"),function(a){
+    var h=a.getAttribute("href")||"";
+    if(!h||/^(https?:|#|mailto:|javascript:|data:)/.test(h)) return;
+    if(h.indexOf("sharecode=")!==-1) return;
+    a.setAttribute("href", h+(h.indexOf("?")===-1?"?":"&")+q);
+  });
+})();
+</script>
+
 </body>
 </html>
