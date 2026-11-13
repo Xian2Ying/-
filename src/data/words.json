@@ -1,1525 +1,1525 @@
 {
-  "meta": {
-    "version": 1,
-    "name": "四级高频词 100 词",
-    "source": "内容官 A 校对台 · 已校对 100/100",
-    "updated": "2026-10-31",
-    "levels": {
-      "1": {
-        "name": "遗忘森林",
-        "count": 35
-      },
-      "2": {
-        "name": "回声洞穴",
-        "count": 33
-      },
-      "3": {
-        "name": "静默雪山",
-        "count": 32
-      }
-    },
-    "total": 100
+ "meta": {
+  "version": 1,
+  "name": "四级高频词 100 词",
+  "source": "内容官 A 校对台 · 已校对 100/100",
+  "updated": "2026-10-31",
+  "levels": {
+   "1": {
+    "name": "遗忘森林",
+    "count": 35
+   },
+   "2": {
+    "name": "回声洞穴",
+    "count": 33
+   },
+   "3": {
+    "name": "静默雪山",
+    "count": 32
+   }
   },
-  "words": [
-    {
-      "id": "w001",
-      "en": "abandon",
-      "phonetic": "/əˈbændən/",
-      "pos": "v.",
-      "zh": "放弃；抛弃",
-      "example": "They had to abandon the plan because of the storm.",
-      "exampleZh": "由于暴风雨，他们不得不放弃这个计划。",
-      "level": 1,
-      "distractors": [
-        "abdicate",
-        "abduct",
-        "absorb"
-      ]
-    },
-    {
-      "id": "w002",
-      "en": "ability",
-      "phonetic": "/əˈbɪləti/",
-      "pos": "n.",
-      "zh": "能力；才能",
-      "example": "She has the ability to solve difficult problems.",
-      "exampleZh": "她有解决难题的能力。",
-      "level": 1,
-      "distractors": [
-        "agency",
-        "capability",
-        "activity"
-      ]
-    },
-    {
-      "id": "w003",
-      "en": "achieve",
-      "phonetic": "/əˈtʃiːv/",
-      "pos": "v.",
-      "zh": "实现；取得",
-      "example": "He worked hard to achieve his goal.",
-      "exampleZh": "他努力工作以实现目标。",
-      "level": 1,
-      "distractors": [
-        "acquire",
-        "arrive",
-        "approach"
-      ]
-    },
-    {
-      "id": "w004",
-      "en": "ancient",
-      "phonetic": "/ˈeɪnʃənt/",
-      "pos": "adj.",
-      "zh": "古代的；古老的",
-      "example": "We visited an ancient temple in the mountains.",
-      "exampleZh": "我们参观了山中的一座古庙。",
-      "level": 1,
-      "distractors": [
-        "antique",
-        "aged",
-        "annual"
-      ]
-    },
-    {
-      "id": "w005",
-      "en": "annual",
-      "phonetic": "/ˈænjuəl/",
-      "pos": "adj.",
-      "zh": "每年的；年度的",
-      "example": "The annual meeting will be held in May.",
-      "exampleZh": "年度会议将在五月举行。",
-      "level": 1,
-      "distractors": [
-        "manual",
-        "actual",
-        "usual"
-      ]
-    },
-    {
-      "id": "w006",
-      "en": "approach",
-      "phonetic": "/əˈproʊtʃ/",
-      "pos": "n./v.",
-      "zh": "方法；接近",
-      "example": "We need a new approach to this problem.",
-      "exampleZh": "我们需要一种新方法来解决这个问题。",
-      "level": 1,
-      "distractors": [
-        "appear",
-        "approve",
-        "arrange"
-      ]
-    },
-    {
-      "id": "w007",
-      "en": "available",
-      "phonetic": "/əˈveɪləbl/",
-      "pos": "adj.",
-      "zh": "可获得的；有空的",
-      "example": "Tickets are still available at the box office.",
-      "exampleZh": "售票处仍有票可售。",
-      "level": 1,
-      "distractors": [
-        "valuable",
-        "variable",
-        "avoidable"
-      ]
-    },
-    {
-      "id": "w008",
-      "en": "benefit",
-      "phonetic": "/ˈbenɪfɪt/",
-      "pos": "n./v.",
-      "zh": "利益；受益",
-      "example": "Regular exercise will benefit your health.",
-      "exampleZh": "经常锻炼对你的健康有益。",
-      "level": 1,
-      "distractors": [
-        "profit",
-        "budget",
-        "behalf"
-      ]
-    },
-    {
-      "id": "w009",
-      "en": "capable",
-      "phonetic": "/ˈkeɪpəbl/",
-      "pos": "adj.",
-      "zh": "有能力的；能够的",
-      "example": "She is capable of handling the project alone.",
-      "exampleZh": "她有能力独自处理这个项目。",
-      "level": 1,
-      "distractors": [
-        "possible",
-        "probable",
-        "compatible"
-      ]
-    },
-    {
-      "id": "w010",
-      "en": "challenge",
-      "phonetic": "/ˈtʃælɪndʒ/",
-      "pos": "n./v.",
-      "zh": "挑战；质疑",
-      "example": "Learning a language is a real challenge.",
-      "exampleZh": "学一门语言是真正的挑战。",
-      "level": 1,
-      "distractors": [
-        "change",
-        "channel",
-        "chance"
-      ]
-    },
-    {
-      "id": "w011",
-      "en": "community",
-      "phonetic": "/kəˈmjuːnəti/",
-      "pos": "n.",
-      "zh": "社区；团体",
-      "example": "The new library serves the whole community.",
-      "exampleZh": "新图书馆服务于整个社区。",
-      "level": 1,
-      "distractors": [
-        "society",
-        "facility",
-        "communion"
-      ]
-    },
-    {
-      "id": "w012",
-      "en": "concentrate",
-      "phonetic": "/ˈkɑːnsəntreɪt/",
-      "pos": "v.",
-      "zh": "集中；专心",
-      "example": "I can't concentrate with all this noise.",
-      "exampleZh": "这么吵我无法集中注意力。",
-      "level": 1,
-      "distractors": [
-        "contrast",
-        "contribute",
-        "conclude"
-      ]
-    },
-    {
-      "id": "w013",
-      "en": "confident",
-      "phonetic": "/ˈkɑːnfɪdənt/",
-      "pos": "adj.",
-      "zh": "自信的；确信的",
-      "example": "She feels confident about the interview.",
-      "exampleZh": "她对面试很有信心。",
-      "level": 1,
-      "distractors": [
-        "confidential",
-        "consistent",
-        "convenient"
-      ]
-    },
-    {
-      "id": "w014",
-      "en": "consider",
-      "phonetic": "/kənˈsɪdər/",
-      "pos": "v.",
-      "zh": "考虑；认为",
-      "example": "Please consider my suggestion carefully.",
-      "exampleZh": "请仔细考虑我的建议。",
-      "level": 1,
-      "distractors": [
-        "consult",
-        "consist",
-        "conserve"
-      ]
-    },
-    {
-      "id": "w015",
-      "en": "culture",
-      "phonetic": "/ˈkʌltʃər/",
-      "pos": "n.",
-      "zh": "文化",
-      "example": "Chinese culture has a long history.",
-      "exampleZh": "中国文化历史悠久。",
-      "level": 1,
-      "distractors": [
-        "custom",
-        "agriculture",
-        "creature"
-      ]
-    },
-    {
-      "id": "w016",
-      "en": "decide",
-      "phonetic": "/dɪˈsaɪd/",
-      "pos": "v.",
-      "zh": "决定",
-      "example": "They decided to move to another city.",
-      "exampleZh": "他们决定搬到另一个城市。",
-      "level": 1,
-      "distractors": [
-        "derive",
-        "deprive",
-        "desire"
-      ]
-    },
-    {
-      "id": "w017",
-      "en": "develop",
-      "phonetic": "/dɪˈveləp/",
-      "pos": "v.",
-      "zh": "发展；开发",
-      "example": "The company plans to develop a new app.",
-      "exampleZh": "公司计划开发一款新应用。",
-      "level": 1,
-      "distractors": [
-        "deliver",
-        "envelop",
-        "depart"
-      ]
-    },
-    {
-      "id": "w018",
-      "en": "effort",
-      "phonetic": "/ˈefərt/",
-      "pos": "n.",
-      "zh": "努力",
-      "example": "Success comes from constant effort.",
-      "exampleZh": "成功来自持续的努力。",
-      "level": 1,
-      "distractors": [
-        "effect",
-        "afford",
-        "offer"
-      ]
-    },
-    {
-      "id": "w019",
-      "en": "environment",
-      "phonetic": "/ɪnˈvaɪrənmənt/",
-      "pos": "n.",
-      "zh": "环境",
-      "example": "We should protect the environment.",
-      "exampleZh": "我们应该保护环境。",
-      "level": 1,
-      "distractors": [
-        "equipment",
-        "agreement",
-        "enjoyment"
-      ]
-    },
-    {
-      "id": "w020",
-      "en": "experience",
-      "phonetic": "/ɪkˈspɪriəns/",
-      "pos": "n./v.",
-      "zh": "经验；经历",
-      "example": "She has ten years of teaching experience.",
-      "exampleZh": "她有十年教学经验。",
-      "level": 1,
-      "distractors": [
-        "experiment",
-        "expense",
-        "existence"
-      ]
-    },
-    {
-      "id": "w021",
-      "en": "familiar",
-      "phonetic": "/fəˈmɪliər/",
-      "pos": "adj.",
-      "zh": "熟悉的",
-      "example": "His voice sounded familiar to me.",
-      "exampleZh": "他的声音听起来很熟悉。",
-      "level": 1,
-      "distractors": [
-        "similar",
-        "family",
-        "fashionable"
-      ]
-    },
-    {
-      "id": "w022",
-      "en": "generation",
-      "phonetic": "/ˌdʒenəˈreɪʃn/",
-      "pos": "n.",
-      "zh": "一代人",
-      "example": "The younger generation loves online shopping.",
-      "exampleZh": "年轻一代喜爱网购。",
-      "level": 1,
-      "distractors": [
-        "general",
-        "operation",
-        "graduation"
-      ]
-    },
-    {
-      "id": "w023",
-      "en": "improve",
-      "phonetic": "/ɪmˈpruːv/",
-      "pos": "v.",
-      "zh": "改善；提高",
-      "example": "Reading every day will improve your writing.",
-      "exampleZh": "每天阅读会提高你的写作水平。",
-      "level": 1,
-      "distractors": [
-        "approve",
-        "remove",
-        "prove"
-      ]
-    },
-    {
-      "id": "w024",
-      "en": "influence",
-      "phonetic": "/ˈɪnfluəns/",
-      "pos": "n./v.",
-      "zh": "影响",
-      "example": "Parents have a great influence on children.",
-      "exampleZh": "父母对孩子有很大影响。",
-      "level": 1,
-      "distractors": [
-        "affluence",
-        "inflation",
-        "instance"
-      ]
-    },
-    {
-      "id": "w025",
-      "en": "knowledge",
-      "phonetic": "/ˈnɑːlɪdʒ/",
-      "pos": "n.",
-      "zh": "知识",
-      "example": "Knowledge is power.",
-      "exampleZh": "知识就是力量。",
-      "level": 1,
-      "distractors": [
-        "acknowledge",
-        "college",
-        "notice"
-      ]
-    },
-    {
-      "id": "w026",
-      "en": "manage",
-      "phonetic": "/ˈmænɪdʒ/",
-      "pos": "v.",
-      "zh": "管理；设法做到",
-      "example": "She manages a team of twenty people.",
-      "exampleZh": "她管理着一个二十人的团队。",
-      "level": 1,
-      "distractors": [
-        "message",
-        "damage",
-        "image"
-      ]
-    },
-    {
-      "id": "w027",
-      "en": "opportunity",
-      "phonetic": "/ˌɑːpərˈtuːnəti/",
-      "pos": "n.",
-      "zh": "机会",
-      "example": "This job is a great opportunity for you.",
-      "exampleZh": "这份工作对你是很好的机会。",
-      "level": 1,
-      "distractors": [
-        "opposition",
-        "operation",
-        "optimism"
-      ]
-    },
-    {
-      "id": "w028",
-      "en": "personal",
-      "phonetic": "/ˈpɜːrsənl/",
-      "pos": "adj.",
-      "zh": "个人的；私人的",
-      "example": "He never talks about his personal life.",
-      "exampleZh": "他从不谈自己的私生活。",
-      "level": 1,
-      "distractors": [
-        "personnel",
-        "partial",
-        "practical"
-      ]
-    },
-    {
-      "id": "w029",
-      "en": "possible",
-      "phonetic": "/ˈpɑːsəbl/",
-      "pos": "adj.",
-      "zh": "可能的",
-      "example": "It is possible to finish the work today.",
-      "exampleZh": "今天完成这项工作是可能的。",
-      "level": 1,
-      "distractors": [
-        "probable",
-        "portable",
-        "positive"
-      ]
-    },
-    {
-      "id": "w030",
-      "en": "prepare",
-      "phonetic": "/prɪˈper/",
-      "pos": "v.",
-      "zh": "准备",
-      "example": "We must prepare for the exam.",
-      "exampleZh": "我们必须为考试做准备。",
-      "level": 1,
-      "distractors": [
-        "repair",
-        "compare",
-        "declare"
-      ]
-    },
-    {
-      "id": "w031",
-      "en": "provide",
-      "phonetic": "/prəˈvaɪd/",
-      "pos": "v.",
-      "zh": "提供",
-      "example": "The school provides free lunch for students.",
-      "exampleZh": "学校为学生提供免费午餐。",
-      "level": 1,
-      "distractors": [
-        "preside",
-        "propose",
-        "protect"
-      ]
-    },
-    {
-      "id": "w032",
-      "en": "reason",
-      "phonetic": "/ˈriːzn/",
-      "pos": "n.",
-      "zh": "原因；理由",
-      "example": "What is the reason for your absence?",
-      "exampleZh": "你缺席的原因是什么？",
-      "level": 1,
-      "distractors": [
-        "season",
-        "region",
-        "reasoning"
-      ]
-    },
-    {
-      "id": "w033",
-      "en": "reduce",
-      "phonetic": "/rɪˈduːs/",
-      "pos": "v.",
-      "zh": "减少；降低",
-      "example": "We should reduce the use of plastic.",
-      "exampleZh": "我们应该减少塑料的使用。",
-      "level": 1,
-      "distractors": [
-        "deduce",
-        "produce",
-        "introduce"
-      ]
-    },
-    {
-      "id": "w034",
-      "en": "support",
-      "phonetic": "/səˈpɔːrt/",
-      "pos": "n./v.",
-      "zh": "支持",
-      "example": "My family always supports my choices.",
-      "exampleZh": "我的家人总是支持我的选择。",
-      "level": 1,
-      "distractors": [
-        "suppose",
-        "report",
-        "suggest"
-      ]
-    },
-    {
-      "id": "w035",
-      "en": "tradition",
-      "phonetic": "/trəˈdɪʃn/",
-      "pos": "n.",
-      "zh": "传统",
-      "example": "It is a tradition to eat dumplings at Spring Festival.",
-      "exampleZh": "春节吃饺子是一种传统。",
-      "level": 1,
-      "distractors": [
-        "transition",
-        "translation",
-        "trainee"
-      ]
-    },
-    {
-      "id": "w036",
-      "en": "accurate",
-      "phonetic": "/ˈækjərət/",
-      "pos": "adj.",
-      "zh": "准确的；精确的",
-      "example": "The report gives an accurate description of the event.",
-      "exampleZh": "这份报告对事件做了准确的描述。",
-      "level": 2,
-      "distractors": [
-        "curate",
-        "accelerate",
-        "adequate"
-      ]
-    },
-    {
-      "id": "w037",
-      "en": "adapt",
-      "phonetic": "/əˈdæpt/",
-      "pos": "v.",
-      "zh": "适应；改编",
-      "example": "Children adapt to new environments quickly.",
-      "exampleZh": "孩子们能很快适应新环境。",
-      "level": 2,
-      "distractors": [
-        "adopt",
-        "adept",
-        "accept"
-      ]
-    },
-    {
-      "id": "w038",
-      "en": "afford",
-      "phonetic": "/əˈfɔːrd/",
-      "pos": "v.",
-      "zh": "负担得起",
-      "example": "I can't afford such an expensive car.",
-      "exampleZh": "我买不起这么贵的车。",
-      "level": 2,
-      "distractors": [
-        "offer",
-        "affect",
-        "effort"
-      ]
-    },
-    {
-      "id": "w039",
-      "en": "appreciate",
-      "phonetic": "/əˈpriːʃieɪt/",
-      "pos": "v.",
-      "zh": "欣赏；感激",
-      "example": "I really appreciate your help.",
-      "exampleZh": "我非常感激你的帮助。",
-      "level": 2,
-      "distractors": [
-        "associate",
-        "appreciable",
-        "apprehend"
-      ]
-    },
-    {
-      "id": "w040",
-      "en": "assume",
-      "phonetic": "/əˈsuːm/",
-      "pos": "v.",
-      "zh": "假定；承担",
-      "example": "Don't assume that everyone agrees with you.",
-      "exampleZh": "不要假定每个人都赞同你的观点。",
-      "level": 2,
-      "distractors": [
-        "resume",
-        "consume",
-        "presume"
-      ]
-    },
-    {
-      "id": "w041",
-      "en": "attitude",
-      "phonetic": "/ˈætɪtuːd/",
-      "pos": "n.",
-      "zh": "态度",
-      "example": "A positive attitude helps you go further.",
-      "exampleZh": "积极的态度能帮你走得更远。",
-      "level": 2,
-      "distractors": [
-        "altitude",
-        "aptitude",
-        "latitude"
-      ]
-    },
-    {
-      "id": "w042",
-      "en": "aware",
-      "phonetic": "/əˈwer/",
-      "pos": "adj.",
-      "zh": "意识到的；知道的",
-      "example": "Are you aware of the risks involved?",
-      "exampleZh": "你意识到其中的风险了吗？",
-      "level": 2,
-      "distractors": [
-        "award",
-        "awake",
-        "awareness"
-      ]
-    },
-    {
-      "id": "w043",
-      "en": "compete",
-      "phonetic": "/kəmˈpiːt/",
-      "pos": "v.",
-      "zh": "竞争；比赛",
-      "example": "Ten teams will compete for the prize.",
-      "exampleZh": "十支队伍将争夺这个奖项。",
-      "level": 2,
-      "distractors": [
-        "complete",
-        "compute",
-        "compel"
-      ]
-    },
-    {
-      "id": "w044",
-      "en": "complex",
-      "phonetic": "/kəmˈpleks/",
-      "pos": "adj.",
-      "zh": "复杂的",
-      "example": "This is a complex issue with no easy answer.",
-      "exampleZh": "这是一个没有简单答案的复杂问题。",
-      "level": 2,
-      "distractors": [
-        "context",
-        "perplex",
-        "complexity"
-      ]
-    },
-    {
-      "id": "w045",
-      "en": "contribute",
-      "phonetic": "/kənˈtrɪbjuːt/",
-      "pos": "v.",
-      "zh": "贡献；促成",
-      "example": "Everyone contributed to the success of the event.",
-      "exampleZh": "每个人都为活动的成功做出了贡献。",
-      "level": 2,
-      "distractors": [
-        "distribute",
-        "attribute",
-        "constitute"
-      ]
-    },
-    {
-      "id": "w046",
-      "en": "convince",
-      "phonetic": "/kənˈvɪns/",
-      "pos": "v.",
-      "zh": "说服；使确信",
-      "example": "She convinced me to change my mind.",
-      "exampleZh": "她说服我改变了主意。",
-      "level": 2,
-      "distractors": [
-        "convict",
-        "conceive",
-        "consist"
-      ]
-    },
-    {
-      "id": "w047",
-      "en": "declare",
-      "phonetic": "/dɪˈkler/",
-      "pos": "v.",
-      "zh": "宣布；声明",
-      "example": "The government declared a state of emergency.",
-      "exampleZh": "政府宣布进入紧急状态。",
-      "level": 2,
-      "distractors": [
-        "decline",
-        "decorate",
-        "clarify"
-      ]
-    },
-    {
-      "id": "w048",
-      "en": "demand",
-      "phonetic": "/dɪˈmænd/",
-      "pos": "n./v.",
-      "zh": "需求；要求",
-      "example": "The demand for clean energy is growing.",
-      "exampleZh": "对清洁能源的需求在增长。",
-      "level": 2,
-      "distractors": [
-        "command",
-        "remark",
-        "demanding"
-      ]
-    },
-    {
-      "id": "w049",
-      "en": "deposit",
-      "phonetic": "/dɪˈpɑːzɪt/",
-      "pos": "n./v.",
-      "zh": "存款；押金",
-      "example": "You need to pay a deposit before moving in.",
-      "exampleZh": "入住前你需要交押金。",
-      "level": 2,
-      "distractors": [
-        "depose",
-        "depict",
-        "position"
-      ]
-    },
-    {
-      "id": "w050",
-      "en": "deserve",
-      "phonetic": "/dɪˈzɜːrv/",
-      "pos": "v.",
-      "zh": "应得；值得",
-      "example": "You deserve a rest after all that work.",
-      "exampleZh": "做了那么多工作，你应该休息一下。",
-      "level": 2,
-      "distractors": [
-        "reserve",
-        "observe",
-        "presume"
-      ]
-    },
-    {
-      "id": "w051",
-      "en": "distinguish",
-      "phonetic": "/dɪˈstɪŋɡwɪʃ/",
-      "pos": "v.",
-      "zh": "区分；辨别",
-      "example": "Can you distinguish between the two twins?",
-      "exampleZh": "你能区分这对双胞胎吗？",
-      "level": 2,
-      "distractors": [
-        "extinguish",
-        "distinct",
-        "distract"
-      ]
-    },
-    {
-      "id": "w052",
-      "en": "efficient",
-      "phonetic": "/ɪˈfɪʃnt/",
-      "pos": "adj.",
-      "zh": "高效的",
-      "example": "The new system is much more efficient.",
-      "exampleZh": "新系统效率高得多。",
-      "level": 2,
-      "distractors": [
-        "sufficient",
-        "proficient",
-        "affectionate"
-      ]
-    },
-    {
-      "id": "w053",
-      "en": "emphasize",
-      "phonetic": "/ˈemfəsaɪz/",
-      "pos": "v.",
-      "zh": "强调",
-      "example": "The teacher emphasized the importance of practice.",
-      "exampleZh": "老师强调了练习的重要性。",
-      "level": 2,
-      "distractors": [
-        "emphasis",
-        "empathize",
-        "energize"
-      ]
-    },
-    {
-      "id": "w054",
-      "en": "essential",
-      "phonetic": "/ɪˈsenʃl/",
-      "pos": "adj.",
-      "zh": "必要的；本质的",
-      "example": "Water is essential to all living things.",
-      "exampleZh": "水对所有生物都是必不可少的。",
-      "level": 2,
-      "distractors": [
-        "special",
-        "sensible",
-        "sequential"
-      ]
-    },
-    {
-      "id": "w055",
-      "en": "estimate",
-      "phonetic": "/ˈestɪmeɪt/ 动 · /ˈestɪmət/ 名",
-      "pos": "n./v.",
-      "zh": "估计；估算",
-      "example": "Experts estimate the cost at one million dollars.",
-      "exampleZh": "专家估计成本为一百万美元。",
-      "level": 2,
-      "distractors": [
-        "intimate",
-        "ultimate",
-        "esteem"
-      ]
-    },
-    {
-      "id": "w056",
-      "en": "guarantee",
-      "phonetic": "/ˌɡærənˈtiː/",
-      "pos": "n./v.",
-      "zh": "保证；担保",
-      "example": "We guarantee the quality of our products.",
-      "exampleZh": "我们保证产品的质量。",
-      "level": 2,
-      "distractors": [
-        "guarantor",
-        "grantee",
-        "guardian"
-      ]
-    },
-    {
-      "id": "w057",
-      "en": "ignore",
-      "phonetic": "/ɪɡˈnɔːr/",
-      "pos": "v.",
-      "zh": "忽视；不理",
-      "example": "He ignored my advice and failed.",
-      "exampleZh": "他忽视我的建议，结果失败了。",
-      "level": 2,
-      "distractors": [
-        "ignite",
-        "recognize",
-        "ignorance"
-      ]
-    },
-    {
-      "id": "w058",
-      "en": "impress",
-      "phonetic": "/ɪmˈpres/",
-      "pos": "v.",
-      "zh": "给…留下深刻印象",
-      "example": "Her speech impressed everyone in the room.",
-      "exampleZh": "她的演讲给屋里每个人留下深刻印象。",
-      "level": 2,
-      "distractors": [
-        "express",
-        "compress",
-        "suppress"
-      ]
-    },
-    {
-      "id": "w059",
-      "en": "indicate",
-      "phonetic": "/ˈɪndɪkeɪt/",
-      "pos": "v.",
-      "zh": "表明；指示",
-      "example": "The results indicate a clear improvement.",
-      "exampleZh": "结果表明有明显的进步。",
-      "level": 2,
-      "distractors": [
-        "dedicate",
-        "indict",
-        "intimate"
-      ]
-    },
-    {
-      "id": "w060",
-      "en": "maintain",
-      "phonetic": "/meɪnˈteɪn/",
-      "pos": "v.",
-      "zh": "维持；保养",
-      "example": "It is important to maintain a healthy diet.",
-      "exampleZh": "保持健康饮食很重要。",
-      "level": 2,
-      "distractors": [
-        "contain",
-        "retain",
-        "remain"
-      ]
-    },
-    {
-      "id": "w061",
-      "en": "obtain",
-      "phonetic": "/əbˈteɪn/",
-      "pos": "v.",
-      "zh": "获得；取得",
-      "example": "You must obtain permission before entering.",
-      "exampleZh": "进入前你必须获得许可。",
-      "level": 2,
-      "distractors": [
-        "attain",
-        "sustain",
-        "abstain"
-      ]
-    },
-    {
-      "id": "w062",
-      "en": "participate",
-      "phonetic": "/pɑːrˈtɪsɪpeɪt/",
-      "pos": "v.",
-      "zh": "参加；参与",
-      "example": "All students are encouraged to participate.",
-      "exampleZh": "鼓励所有学生参加。",
-      "level": 2,
-      "distractors": [
-        "anticipate",
-        "participant",
-        "participle"
-      ]
-    },
-    {
-      "id": "w063",
-      "en": "persuade",
-      "phonetic": "/pərˈsweɪd/",
-      "pos": "v.",
-      "zh": "劝说；说服",
-      "example": "He persuaded her to try again.",
-      "exampleZh": "他说服她再试一次。",
-      "level": 2,
-      "distractors": [
-        "pervade",
-        "dissuade",
-        "persuasion"
-      ]
-    },
-    {
-      "id": "w064",
-      "en": "potential",
-      "phonetic": "/pəˈtenʃl/",
-      "pos": "n./adj.",
-      "zh": "潜力；潜在的",
-      "example": "The young player has great potential.",
-      "exampleZh": "这位年轻球员潜力巨大。",
-      "level": 2,
-      "distractors": [
-        "potent",
-        "patience",
-        "portal"
-      ]
-    },
-    {
-      "id": "w065",
-      "en": "recognize",
-      "phonetic": "/ˈrekəɡnaɪz/",
-      "pos": "v.",
-      "zh": "认出；承认",
-      "example": "I didn't recognize him with a beard.",
-      "exampleZh": "他留了胡子，我没认出他。",
-      "level": 2,
-      "distractors": [
-        "realize",
-        "organize",
-        "reorganize"
-      ]
-    },
-    {
-      "id": "w066",
-      "en": "reflect",
-      "phonetic": "/rɪˈflekt/",
-      "pos": "v.",
-      "zh": "反映；反思",
-      "example": "The survey reflects public opinion.",
-      "exampleZh": "这项调查反映了公众意见。",
-      "level": 2,
-      "distractors": [
-        "deflect",
-        "neglect",
-        "select"
-      ]
-    },
-    {
-      "id": "w067",
-      "en": "reluctant",
-      "phonetic": "/rɪˈlʌktənt/",
-      "pos": "adj.",
-      "zh": "不情愿的",
-      "example": "She was reluctant to leave her hometown.",
-      "exampleZh": "她不情愿离开家乡。",
-      "level": 2,
-      "distractors": [
-        "redundant",
-        "resistant",
-        "relevant"
-      ]
-    },
-    {
-      "id": "w068",
-      "en": "sufficient",
-      "phonetic": "/səˈfɪʃnt/",
-      "pos": "adj.",
-      "zh": "足够的",
-      "example": "We have sufficient food for a week.",
-      "exampleZh": "我们有够吃一周的食物。",
-      "level": 2,
-      "distractors": [
-        "deficient",
-        "proficient",
-        "efficient"
-      ]
-    },
-    {
-      "id": "w069",
-      "en": "accomplish",
-      "phonetic": "/əˈkɑːmplɪʃ/",
-      "pos": "v.",
-      "zh": "完成；实现",
-      "example": "She accomplished the task ahead of schedule.",
-      "exampleZh": "她提前完成了任务。",
-      "level": 3,
-      "distractors": [
-        "accompany",
-        "polish",
-        "abolish"
-      ]
-    },
-    {
-      "id": "w070",
-      "en": "adequate",
-      "phonetic": "/ˈædɪkwət/",
-      "pos": "adj.",
-      "zh": "足够的；适当的",
-      "example": "The room is adequate for two people.",
-      "exampleZh": "这个房间供两人住是够的。",
-      "level": 3,
-      "distractors": [
-        "accurate",
-        "adoptive",
-        "adherent"
-      ]
-    },
-    {
-      "id": "w071",
-      "en": "anticipate",
-      "phonetic": "/ænˈtɪsɪpeɪt/",
-      "pos": "v.",
-      "zh": "预期；预料",
-      "example": "We anticipate a rise in prices.",
-      "exampleZh": "我们预计价格会上涨。",
-      "level": 3,
-      "distractors": [
-        "participate",
-        "participant",
-        "estimate"
-      ]
-    },
-    {
-      "id": "w072",
-      "en": "arbitrary",
-      "phonetic": "/ˈɑːrbɪtreri/",
-      "pos": "adj.",
-      "zh": "任意的；武断的",
-      "example": "The decision seemed completely arbitrary.",
-      "exampleZh": "这个决定看起来完全是武断的。",
-      "level": 3,
-      "distractors": [
-        "ordinary",
-        "arbitrate",
-        "artificial"
-      ]
-    },
-    {
-      "id": "w073",
-      "en": "assess",
-      "phonetic": "/əˈses/",
-      "pos": "v.",
-      "zh": "评估；评定",
-      "example": "Teachers assess students' progress each term.",
-      "exampleZh": "老师每学期评估学生的进步。",
-      "level": 3,
-      "distractors": [
-        "access",
-        "assert",
-        "assets"
-      ]
-    },
-    {
-      "id": "w074",
-      "en": "comprehensive",
-      "phonetic": "/ˌkɑːmprɪˈhensɪv/",
-      "pos": "adj.",
-      "zh": "全面的；综合的",
-      "example": "The book offers a comprehensive overview of history.",
-      "exampleZh": "这本书提供了对历史的全面概览。",
-      "level": 3,
-      "distractors": [
-        "comprehensible",
-        "comprehend",
-        "compressive"
-      ]
-    },
-    {
-      "id": "w075",
-      "en": "consistent",
-      "phonetic": "/kənˈsɪstənt/",
-      "pos": "adj.",
-      "zh": "一致的；持续的",
-      "example": "His story is consistent with the facts.",
-      "exampleZh": "他的说法与事实一致。",
-      "level": 3,
-      "distractors": [
-        "insistent",
-        "resistant",
-        "constant"
-      ]
-    },
-    {
-      "id": "w076",
-      "en": "contemporary",
-      "phonetic": "/kənˈtempəreri/",
-      "pos": "adj.",
-      "zh": "当代的；同时代的",
-      "example": "She studies contemporary art in college.",
-      "exampleZh": "她在大学学习当代艺术。",
-      "level": 3,
-      "distractors": [
-        "temporary",
-        "contempt",
-        "contemplate"
-      ]
-    },
-    {
-      "id": "w077",
-      "en": "crucial",
-      "phonetic": "/ˈkruːʃl/",
-      "pos": "adj.",
-      "zh": "关键的；至关重要的",
-      "example": "This is a crucial moment for the team.",
-      "exampleZh": "这对球队来说是关键时刻。",
-      "level": 3,
-      "distractors": [
-        "critical",
-        "crude",
-        "cruel"
-      ]
-    },
-    {
-      "id": "w078",
-      "en": "deliberate",
-      "phonetic": "/dɪˈlɪbərət/",
-      "pos": "adj.",
-      "zh": "故意的；深思熟虑的",
-      "example": "The damage was clearly deliberate.",
-      "exampleZh": "这一损坏显然是故意的。",
-      "level": 3,
-      "distractors": [
-        "delicate",
-        "liberate",
-        "celebrate"
-      ]
-    },
-    {
-      "id": "w079",
-      "en": "diminish",
-      "phonetic": "/dɪˈmɪnɪʃ/",
-      "pos": "v.",
-      "zh": "减少；削弱",
-      "example": "His influence has diminished over the years.",
-      "exampleZh": "多年来他的影响力已经减弱。",
-      "level": 3,
-      "distractors": [
-        "demolish",
-        "diminutive",
-        "minister"
-      ]
-    },
-    {
-      "id": "w080",
-      "en": "elaborate",
-      "phonetic": "/ɪˈlæbərət/ 形 · /ɪˈlæbəreɪt/ 动",
-      "pos": "adj./v.",
-      "zh": "详尽的；详细阐述",
-      "example": "Could you elaborate on your plan?",
-      "exampleZh": "你能详细说明一下你的计划吗？",
-      "level": 3,
-      "distractors": [
-        "elaboration",
-        "electorate",
-        "collaborate"
-      ]
-    },
-    {
-      "id": "w081",
-      "en": "enormous",
-      "phonetic": "/ɪˈnɔːrməs/",
-      "pos": "adj.",
-      "zh": "巨大的",
-      "example": "They live in an enormous house in the countryside.",
-      "exampleZh": "他们住在乡下一栋巨大的房子里。",
-      "level": 3,
-      "distractors": [
-        "anonymous",
-        "enormity",
-        "famous"
-      ]
-    },
-    {
-      "id": "w082",
-      "en": "exaggerate",
-      "phonetic": "/ɪɡˈzædʒəreɪt/",
-      "pos": "v.",
-      "zh": "夸大；夸张",
-      "example": "Don't exaggerate; it wasn't that serious.",
-      "exampleZh": "别夸张，没那么严重。",
-      "level": 3,
-      "distractors": [
-        "exaggeration",
-        "exasperate",
-        "aggravate"
-      ]
-    },
-    {
-      "id": "w083",
-      "en": "explicit",
-      "phonetic": "/ɪkˈsplɪsɪt/",
-      "pos": "adj.",
-      "zh": "明确的；直白的",
-      "example": "She gave explicit instructions for the task.",
-      "exampleZh": "她为这项任务给出了明确的指示。",
-      "level": 3,
-      "distractors": [
-        "implicit",
-        "explicate",
-        "explicable"
-      ]
-    },
-    {
-      "id": "w084",
-      "en": "fluctuate",
-      "phonetic": "/ˈflʌktʃueɪt/",
-      "pos": "v.",
-      "zh": "波动；起伏",
-      "example": "Prices fluctuate with market demand.",
-      "exampleZh": "价格随市场需求波动。",
-      "level": 3,
-      "distractors": [
-        "fluctuation",
-        "fabricate",
-        "formulate"
-      ]
-    },
-    {
-      "id": "w085",
-      "en": "fundamental",
-      "phonetic": "/ˌfʌndəˈmentl/",
-      "pos": "adj.",
-      "zh": "根本的；基础的",
-      "example": "Reading is a fundamental skill in education.",
-      "exampleZh": "阅读是教育中的一项基本技能。",
-      "level": 3,
-      "distractors": [
-        "foundation",
-        "fundamentalist",
-        "funeral"
-      ]
-    },
-    {
-      "id": "w086",
-      "en": "hypothesis",
-      "phonetic": "/haɪˈpɑːθəsɪs/",
-      "pos": "n.",
-      "zh": "假设；假说",
-      "example": "The data support the original hypothesis.",
-      "exampleZh": "数据支持最初的假设。",
-      "level": 3,
-      "distractors": [
-        "hypothetical",
-        "hyphen",
-        "hypocrisy"
-      ]
-    },
-    {
-      "id": "w087",
-      "en": "implement",
-      "phonetic": "/ˈɪmplɪment/",
-      "pos": "v.",
-      "zh": "实施；执行",
-      "example": "The school decided to implement a new policy.",
-      "exampleZh": "学校决定实施一项新政策。",
-      "level": 3,
-      "distractors": [
-        "implicate",
-        "complement",
-        "implant"
-      ]
-    },
-    {
-      "id": "w088",
-      "en": "inevitable",
-      "phonetic": "/ɪnˈevɪtəbl/",
-      "pos": "adj.",
-      "zh": "不可避免的",
-      "example": "Change is inevitable in any organization.",
-      "exampleZh": "在任何组织中，变革都是不可避免的。",
-      "level": 3,
-      "distractors": [
-        "ineligible",
-        "invincible",
-        "invaluable"
-      ]
-    },
-    {
-      "id": "w089",
-      "en": "interpret",
-      "phonetic": "/ɪnˈtɜːrprət/",
-      "pos": "v.",
-      "zh": "解释；口译",
-      "example": "How do you interpret this sentence?",
-      "exampleZh": "你怎么解释这句话？",
-      "level": 3,
-      "distractors": [
-        "interrupt",
-        "intercept",
-        "interpretation"
-      ]
-    },
-    {
-      "id": "w090",
-      "en": "justify",
-      "phonetic": "/ˈdʒʌstɪfaɪ/",
-      "pos": "v.",
-      "zh": "证明…正当；辩护",
-      "example": "Nothing can justify such behavior.",
-      "exampleZh": "没有什么能为这种行为辩护。",
-      "level": 3,
-      "distractors": [
-        "justice",
-        "justifiable",
-        "testify"
-      ]
-    },
-    {
-      "id": "w091",
-      "en": "legitimate",
-      "phonetic": "/lɪˈdʒɪtɪmət/",
-      "pos": "adj.",
-      "zh": "合法的；合理的",
-      "example": "He has a legitimate reason for being late.",
-      "exampleZh": "他迟到有正当理由。",
-      "level": 3,
-      "distractors": [
-        "legislate",
-        "literate",
-        "legacy"
-      ]
-    },
-    {
-      "id": "w092",
-      "en": "negotiate",
-      "phonetic": "/nɪˈɡoʊʃieɪt/",
-      "pos": "v.",
-      "zh": "谈判；协商",
-      "example": "The two companies are negotiating a contract.",
-      "exampleZh": "两家公司正在协商一份合同。",
-      "level": 3,
-      "distractors": [
-        "negate",
-        "navigate",
-        "negotiation"
-      ]
-    },
-    {
-      "id": "w093",
-      "en": "obscure",
-      "phonetic": "/əbˈskjʊr/",
-      "pos": "adj./v.",
-      "zh": "模糊的；使模糊",
-      "example": "The meaning of the poem is rather obscure.",
-      "exampleZh": "这首诗的含义相当晦涩。",
-      "level": 3,
-      "distractors": [
-        "obscene",
-        "obsess",
-        "obscurity"
-      ]
-    },
-    {
-      "id": "w094",
-      "en": "phenomenon",
-      "phonetic": "/fəˈnɑːmɪnən/",
-      "pos": "n.",
-      "zh": "现象",
-      "example": "Online shopping is a worldwide phenomenon.",
-      "exampleZh": "网购是一种世界性现象。",
-      "level": 3,
-      "distractors": [
-        "phenomena",
-        "phenomenal",
-        "philanthropy"
-      ]
-    },
-    {
-      "id": "w095",
-      "en": "precise",
-      "phonetic": "/prɪˈsaɪs/",
-      "pos": "adj.",
-      "zh": "精确的；确切的",
-      "example": "Please give me the precise time of arrival.",
-      "exampleZh": "请告诉我确切的到达时间。",
-      "level": 3,
-      "distractors": [
-        "concise",
-        "premise",
-        "precede"
-      ]
-    },
-    {
-      "id": "w096",
-      "en": "preserve",
-      "phonetic": "/prɪˈzɜːrv/",
-      "pos": "v.",
-      "zh": "保护；保存",
-      "example": "We should preserve the old buildings in the city.",
-      "exampleZh": "我们应该保护城市里的老建筑。",
-      "level": 3,
-      "distractors": [
-        "reserve",
-        "perverse",
-        "persist"
-      ]
-    },
-    {
-      "id": "w097",
-      "en": "reluctance",
-      "phonetic": "/rɪˈlʌktəns/",
-      "pos": "n.",
-      "zh": "不情愿；勉强",
-      "example": "He agreed with great reluctance.",
-      "exampleZh": "他非常勉强地同意了。",
-      "level": 3,
-      "distractors": [
-        "relevance",
-        "resistance",
-        "reliance"
-      ]
-    },
-    {
-      "id": "w098",
-      "en": "simultaneously",
-      "phonetic": "/ˌsaɪməlˈteɪniəsli/",
-      "pos": "adv.",
-      "zh": "同时地",
-      "example": "The two events happened simultaneously.",
-      "exampleZh": "两件事同时发生。",
-      "level": 3,
-      "distractors": [
-        "simultaneous",
-        "spontaneously",
-        "similarly"
-      ]
-    },
-    {
-      "id": "w099",
-      "en": "sustainable",
-      "phonetic": "/səˈsteɪnəbl/",
-      "pos": "adj.",
-      "zh": "可持续的",
-      "example": "We need sustainable solutions for the future.",
-      "exampleZh": "我们需要面向未来的可持续方案。",
-      "level": 3,
-      "distractors": [
-        "sustained",
-        "sustain",
-        "attainable"
-      ]
-    },
-    {
-      "id": "w100",
-      "en": "vulnerable",
-      "phonetic": "/ˈvʌlnərəbl/",
-      "pos": "adj.",
-      "zh": "易受伤害的；脆弱的",
-      "example": "Young children are vulnerable to infections.",
-      "exampleZh": "幼儿容易受感染。",
-      "level": 3,
-      "distractors": [
-        "voluntary",
-        "valuable",
-        "vulnerably"
-      ]
-    }
-  ]
+  "total": 100
+ },
+ "words": [
+  {
+   "id": "w001",
+   "en": "abandon",
+   "phonetic": "/əˈbændən/",
+   "pos": "v.",
+   "zh": "放弃；抛弃",
+   "example": "They had to abandon the plan because of the storm.",
+   "exampleZh": "由于暴风雨，他们不得不放弃这个计划。",
+   "level": 1,
+   "distractors": [
+    "resign",
+    "retreat",
+    "absorb"
+   ]
+  },
+  {
+   "id": "w002",
+   "en": "ability",
+   "phonetic": "/əˈbɪləti/",
+   "pos": "n.",
+   "zh": "能力；才能",
+   "example": "She has the ability to solve difficult problems.",
+   "exampleZh": "她有解决难题的能力。",
+   "level": 1,
+   "distractors": [
+    "agency",
+    "capability",
+    "activity"
+   ]
+  },
+  {
+   "id": "w003",
+   "en": "achieve",
+   "phonetic": "/əˈtʃiːv/",
+   "pos": "v.",
+   "zh": "实现；取得",
+   "example": "He worked hard to achieve his goal.",
+   "exampleZh": "他努力工作以实现目标。",
+   "level": 1,
+   "distractors": [
+    "acquire",
+    "arrive",
+    "approach"
+   ]
+  },
+  {
+   "id": "w004",
+   "en": "ancient",
+   "phonetic": "/ˈeɪnʃənt/",
+   "pos": "adj.",
+   "zh": "古代的；古老的",
+   "example": "We visited an ancient temple in the mountains.",
+   "exampleZh": "我们参观了山中的一座古庙。",
+   "level": 1,
+   "distractors": [
+    "antique",
+    "aged",
+    "annual"
+   ]
+  },
+  {
+   "id": "w005",
+   "en": "annual",
+   "phonetic": "/ˈænjuəl/",
+   "pos": "adj.",
+   "zh": "每年的；年度的",
+   "example": "The annual meeting will be held in May.",
+   "exampleZh": "年度会议将在五月举行。",
+   "level": 1,
+   "distractors": [
+    "manual",
+    "actual",
+    "usual"
+   ]
+  },
+  {
+   "id": "w006",
+   "en": "approach",
+   "phonetic": "/əˈproʊtʃ/",
+   "pos": "n./v.",
+   "zh": "方法；接近",
+   "example": "We need a new approach to this problem.",
+   "exampleZh": "我们需要一种新方法来解决这个问题。",
+   "level": 1,
+   "distractors": [
+    "appear",
+    "approve",
+    "arrange"
+   ]
+  },
+  {
+   "id": "w007",
+   "en": "available",
+   "phonetic": "/əˈveɪləbl/",
+   "pos": "adj.",
+   "zh": "可获得的；有空的",
+   "example": "Tickets are still available at the box office.",
+   "exampleZh": "售票处仍有票可售。",
+   "level": 1,
+   "distractors": [
+    "valuable",
+    "variable",
+    "avoidable"
+   ]
+  },
+  {
+   "id": "w008",
+   "en": "benefit",
+   "phonetic": "/ˈbenɪfɪt/",
+   "pos": "n./v.",
+   "zh": "利益；受益",
+   "example": "Regular exercise will benefit your health.",
+   "exampleZh": "经常锻炼对你的健康有益。",
+   "level": 1,
+   "distractors": [
+    "profit",
+    "budget",
+    "behalf"
+   ]
+  },
+  {
+   "id": "w009",
+   "en": "capable",
+   "phonetic": "/ˈkeɪpəbl/",
+   "pos": "adj.",
+   "zh": "有能力的；能够的",
+   "example": "She is capable of handling the project alone.",
+   "exampleZh": "她有能力独自处理这个项目。",
+   "level": 1,
+   "distractors": [
+    "possible",
+    "probable",
+    "compatible"
+   ]
+  },
+  {
+   "id": "w010",
+   "en": "challenge",
+   "phonetic": "/ˈtʃælɪndʒ/",
+   "pos": "n./v.",
+   "zh": "挑战；质疑",
+   "example": "Learning a language is a real challenge.",
+   "exampleZh": "学一门语言是真正的挑战。",
+   "level": 1,
+   "distractors": [
+    "change",
+    "channel",
+    "chance"
+   ]
+  },
+  {
+   "id": "w011",
+   "en": "community",
+   "phonetic": "/kəˈmjuːnəti/",
+   "pos": "n.",
+   "zh": "社区；团体",
+   "example": "The new library serves the whole community.",
+   "exampleZh": "新图书馆服务于整个社区。",
+   "level": 1,
+   "distractors": [
+    "society",
+    "facility",
+    "ceremony"
+   ]
+  },
+  {
+   "id": "w012",
+   "en": "concentrate",
+   "phonetic": "/ˈkɑːnsəntreɪt/",
+   "pos": "v.",
+   "zh": "集中；专心",
+   "example": "I can't concentrate with all this noise.",
+   "exampleZh": "这么吵我无法集中注意力。",
+   "level": 1,
+   "distractors": [
+    "contrast",
+    "contribute",
+    "conclude"
+   ]
+  },
+  {
+   "id": "w013",
+   "en": "confident",
+   "phonetic": "/ˈkɑːnfɪdənt/",
+   "pos": "adj.",
+   "zh": "自信的；确信的",
+   "example": "She feels confident about the interview.",
+   "exampleZh": "她对面试很有信心。",
+   "level": 1,
+   "distractors": [
+    "consistent",
+    "convenient",
+    "considerate"
+   ]
+  },
+  {
+   "id": "w014",
+   "en": "consider",
+   "phonetic": "/kənˈsɪdər/",
+   "pos": "v.",
+   "zh": "考虑；认为",
+   "example": "Please consider my suggestion carefully.",
+   "exampleZh": "请仔细考虑我的建议。",
+   "level": 1,
+   "distractors": [
+    "consult",
+    "consist",
+    "conserve"
+   ]
+  },
+  {
+   "id": "w015",
+   "en": "culture",
+   "phonetic": "/ˈkʌltʃər/",
+   "pos": "n.",
+   "zh": "文化",
+   "example": "Chinese culture has a long history.",
+   "exampleZh": "中国文化历史悠久。",
+   "level": 1,
+   "distractors": [
+    "custom",
+    "heritage",
+    "creature"
+   ]
+  },
+  {
+   "id": "w016",
+   "en": "decide",
+   "phonetic": "/dɪˈsaɪd/",
+   "pos": "v.",
+   "zh": "决定",
+   "example": "They decided to move to another city.",
+   "exampleZh": "他们决定搬到另一个城市。",
+   "level": 1,
+   "distractors": [
+    "derive",
+    "deprive",
+    "desire"
+   ]
+  },
+  {
+   "id": "w017",
+   "en": "develop",
+   "phonetic": "/dɪˈveləp/",
+   "pos": "v.",
+   "zh": "发展；开发",
+   "example": "The company plans to develop a new app.",
+   "exampleZh": "公司计划开发一款新应用。",
+   "level": 1,
+   "distractors": [
+    "deliver",
+    "depart",
+    "decorate"
+   ]
+  },
+  {
+   "id": "w018",
+   "en": "effort",
+   "phonetic": "/ˈefərt/",
+   "pos": "n.",
+   "zh": "努力",
+   "example": "Success comes from constant effort.",
+   "exampleZh": "成功来自持续的努力。",
+   "level": 1,
+   "distractors": [
+    "effect",
+    "afford",
+    "offer"
+   ]
+  },
+  {
+   "id": "w019",
+   "en": "environment",
+   "phonetic": "/ɪnˈvaɪrənmənt/",
+   "pos": "n.",
+   "zh": "环境",
+   "example": "We should protect the environment.",
+   "exampleZh": "我们应该保护环境。",
+   "level": 1,
+   "distractors": [
+    "equipment",
+    "agreement",
+    "enjoyment"
+   ]
+  },
+  {
+   "id": "w020",
+   "en": "experience",
+   "phonetic": "/ɪkˈspɪriəns/",
+   "pos": "n./v.",
+   "zh": "经验；经历",
+   "example": "She has ten years of teaching experience.",
+   "exampleZh": "她有十年教学经验。",
+   "level": 1,
+   "distractors": [
+    "expense",
+    "existence",
+    "evidence"
+   ]
+  },
+  {
+   "id": "w021",
+   "en": "familiar",
+   "phonetic": "/fəˈmɪliər/",
+   "pos": "adj.",
+   "zh": "熟悉的",
+   "example": "His voice sounded familiar to me.",
+   "exampleZh": "他的声音听起来很熟悉。",
+   "level": 1,
+   "distractors": [
+    "similar",
+    "popular",
+    "fashionable"
+   ]
+  },
+  {
+   "id": "w022",
+   "en": "generation",
+   "phonetic": "/ˌdʒenəˈreɪʃn/",
+   "pos": "n.",
+   "zh": "一代人",
+   "example": "The younger generation loves online shopping.",
+   "exampleZh": "年轻一代喜爱网购。",
+   "level": 1,
+   "distractors": [
+    "operation",
+    "graduation",
+    "occasion"
+   ]
+  },
+  {
+   "id": "w023",
+   "en": "improve",
+   "phonetic": "/ɪmˈpruːv/",
+   "pos": "v.",
+   "zh": "改善；提高",
+   "example": "Reading every day will improve your writing.",
+   "exampleZh": "每天阅读会提高你的写作水平。",
+   "level": 1,
+   "distractors": [
+    "approve",
+    "remove",
+    "prove"
+   ]
+  },
+  {
+   "id": "w024",
+   "en": "influence",
+   "phonetic": "/ˈɪnfluəns/",
+   "pos": "n./v.",
+   "zh": "影响",
+   "example": "Parents have a great influence on children.",
+   "exampleZh": "父母对孩子有很大影响。",
+   "level": 1,
+   "distractors": [
+    "inflation",
+    "instance",
+    "incline"
+   ]
+  },
+  {
+   "id": "w025",
+   "en": "knowledge",
+   "phonetic": "/ˈnɑːlɪdʒ/",
+   "pos": "n.",
+   "zh": "知识",
+   "example": "Knowledge is power.",
+   "exampleZh": "知识就是力量。",
+   "level": 1,
+   "distractors": [
+    "wisdom",
+    "college",
+    "notice"
+   ]
+  },
+  {
+   "id": "w026",
+   "en": "manage",
+   "phonetic": "/ˈmænɪdʒ/",
+   "pos": "v.",
+   "zh": "管理；设法做到",
+   "example": "She manages a team of twenty people.",
+   "exampleZh": "她管理着一个二十人的团队。",
+   "level": 1,
+   "distractors": [
+    "message",
+    "damage",
+    "image"
+   ]
+  },
+  {
+   "id": "w027",
+   "en": "opportunity",
+   "phonetic": "/ˌɑːpərˈtuːnəti/",
+   "pos": "n.",
+   "zh": "机会",
+   "example": "This job is a great opportunity for you.",
+   "exampleZh": "这份工作对你是很好的机会。",
+   "level": 1,
+   "distractors": [
+    "opposition",
+    "operation",
+    "optimism"
+   ]
+  },
+  {
+   "id": "w028",
+   "en": "personal",
+   "phonetic": "/ˈpɜːrsənl/",
+   "pos": "adj.",
+   "zh": "个人的；私人的",
+   "example": "He never talks about his personal life.",
+   "exampleZh": "他从不谈自己的私生活。",
+   "level": 1,
+   "distractors": [
+    "private",
+    "partial",
+    "practical"
+   ]
+  },
+  {
+   "id": "w029",
+   "en": "possible",
+   "phonetic": "/ˈpɑːsəbl/",
+   "pos": "adj.",
+   "zh": "可能的",
+   "example": "It is possible to finish the work today.",
+   "exampleZh": "今天完成这项工作是可能的。",
+   "level": 1,
+   "distractors": [
+    "probable",
+    "portable",
+    "positive"
+   ]
+  },
+  {
+   "id": "w030",
+   "en": "prepare",
+   "phonetic": "/prɪˈper/",
+   "pos": "v.",
+   "zh": "准备",
+   "example": "We must prepare for the exam.",
+   "exampleZh": "我们必须为考试做准备。",
+   "level": 1,
+   "distractors": [
+    "repair",
+    "compare",
+    "declare"
+   ]
+  },
+  {
+   "id": "w031",
+   "en": "provide",
+   "phonetic": "/prəˈvaɪd/",
+   "pos": "v.",
+   "zh": "提供",
+   "example": "The school provides free lunch for students.",
+   "exampleZh": "学校为学生提供免费午餐。",
+   "level": 1,
+   "distractors": [
+    "propose",
+    "protect",
+    "prevent"
+   ]
+  },
+  {
+   "id": "w032",
+   "en": "reason",
+   "phonetic": "/ˈriːzn/",
+   "pos": "n.",
+   "zh": "原因；理由",
+   "example": "What is the reason for your absence?",
+   "exampleZh": "你缺席的原因是什么？",
+   "level": 1,
+   "distractors": [
+    "season",
+    "region",
+    "notion"
+   ]
+  },
+  {
+   "id": "w033",
+   "en": "reduce",
+   "phonetic": "/rɪˈduːs/",
+   "pos": "v.",
+   "zh": "减少；降低",
+   "example": "We should reduce the use of plastic.",
+   "exampleZh": "我们应该减少塑料的使用。",
+   "level": 1,
+   "distractors": [
+    "deduce",
+    "produce",
+    "introduce"
+   ]
+  },
+  {
+   "id": "w034",
+   "en": "support",
+   "phonetic": "/səˈpɔːrt/",
+   "pos": "n./v.",
+   "zh": "支持",
+   "example": "My family always supports my choices.",
+   "exampleZh": "我的家人总是支持我的选择。",
+   "level": 1,
+   "distractors": [
+    "suppose",
+    "report",
+    "suggest"
+   ]
+  },
+  {
+   "id": "w035",
+   "en": "tradition",
+   "phonetic": "/trəˈdɪʃn/",
+   "pos": "n.",
+   "zh": "传统",
+   "example": "It is a tradition to eat dumplings at Spring Festival.",
+   "exampleZh": "春节吃饺子是一种传统。",
+   "level": 1,
+   "distractors": [
+    "transition",
+    "translation",
+    "trainee"
+   ]
+  },
+  {
+   "id": "w036",
+   "en": "accurate",
+   "phonetic": "/ˈækjərət/",
+   "pos": "adj.",
+   "zh": "准确的；精确的",
+   "example": "The report gives an accurate description of the event.",
+   "exampleZh": "这份报告对事件做了准确的描述。",
+   "level": 2,
+   "distractors": [
+    "accelerate",
+    "adequate",
+    "aggregate"
+   ]
+  },
+  {
+   "id": "w037",
+   "en": "adapt",
+   "phonetic": "/əˈdæpt/",
+   "pos": "v.",
+   "zh": "适应；改编",
+   "example": "Children adapt to new environments quickly.",
+   "exampleZh": "孩子们能很快适应新环境。",
+   "level": 2,
+   "distractors": [
+    "adopt",
+    "adept",
+    "accept"
+   ]
+  },
+  {
+   "id": "w038",
+   "en": "afford",
+   "phonetic": "/əˈfɔːrd/",
+   "pos": "v.",
+   "zh": "负担得起",
+   "example": "I can't afford such an expensive car.",
+   "exampleZh": "我买不起这么贵的车。",
+   "level": 2,
+   "distractors": [
+    "offer",
+    "affect",
+    "effort"
+   ]
+  },
+  {
+   "id": "w039",
+   "en": "appreciate",
+   "phonetic": "/əˈpriːʃieɪt/",
+   "pos": "v.",
+   "zh": "欣赏；感激",
+   "example": "I really appreciate your help.",
+   "exampleZh": "我非常感激你的帮助。",
+   "level": 2,
+   "distractors": [
+    "associate",
+    "appropriate",
+    "anticipate"
+   ]
+  },
+  {
+   "id": "w040",
+   "en": "assume",
+   "phonetic": "/əˈsuːm/",
+   "pos": "v.",
+   "zh": "假定；承担",
+   "example": "Don't assume that everyone agrees with you.",
+   "exampleZh": "不要假定每个人都赞同你的观点。",
+   "level": 2,
+   "distractors": [
+    "resume",
+    "consume",
+    "presume"
+   ]
+  },
+  {
+   "id": "w041",
+   "en": "attitude",
+   "phonetic": "/ˈætɪtuːd/",
+   "pos": "n.",
+   "zh": "态度",
+   "example": "A positive attitude helps you go further.",
+   "exampleZh": "积极的态度能帮你走得更远。",
+   "level": 2,
+   "distractors": [
+    "altitude",
+    "aptitude",
+    "latitude"
+   ]
+  },
+  {
+   "id": "w042",
+   "en": "aware",
+   "phonetic": "/əˈwer/",
+   "pos": "adj.",
+   "zh": "意识到的；知道的",
+   "example": "Are you aware of the risks involved?",
+   "exampleZh": "你意识到其中的风险了吗？",
+   "level": 2,
+   "distractors": [
+    "award",
+    "awake",
+    "alert"
+   ]
+  },
+  {
+   "id": "w043",
+   "en": "compete",
+   "phonetic": "/kəmˈpiːt/",
+   "pos": "v.",
+   "zh": "竞争；比赛",
+   "example": "Ten teams will compete for the prize.",
+   "exampleZh": "十支队伍将争夺这个奖项。",
+   "level": 2,
+   "distractors": [
+    "complete",
+    "compute",
+    "compel"
+   ]
+  },
+  {
+   "id": "w044",
+   "en": "complex",
+   "phonetic": "/kəmˈpleks/",
+   "pos": "adj.",
+   "zh": "复杂的",
+   "example": "This is a complex issue with no easy answer.",
+   "exampleZh": "这是一个没有简单答案的复杂问题。",
+   "level": 2,
+   "distractors": [
+    "context",
+    "content",
+    "conflict"
+   ]
+  },
+  {
+   "id": "w045",
+   "en": "contribute",
+   "phonetic": "/kənˈtrɪbjuːt/",
+   "pos": "v.",
+   "zh": "贡献；促成",
+   "example": "Everyone contributed to the success of the event.",
+   "exampleZh": "每个人都为活动的成功做出了贡献。",
+   "level": 2,
+   "distractors": [
+    "distribute",
+    "attribute",
+    "constitute"
+   ]
+  },
+  {
+   "id": "w046",
+   "en": "convince",
+   "phonetic": "/kənˈvɪns/",
+   "pos": "v.",
+   "zh": "说服；使确信",
+   "example": "She convinced me to change my mind.",
+   "exampleZh": "她说服我改变了主意。",
+   "level": 2,
+   "distractors": [
+    "conceive",
+    "consist",
+    "concern"
+   ]
+  },
+  {
+   "id": "w047",
+   "en": "declare",
+   "phonetic": "/dɪˈkler/",
+   "pos": "v.",
+   "zh": "宣布；声明",
+   "example": "The government declared a state of emergency.",
+   "exampleZh": "政府宣布进入紧急状态。",
+   "level": 2,
+   "distractors": [
+    "decline",
+    "decorate",
+    "deliver"
+   ]
+  },
+  {
+   "id": "w048",
+   "en": "demand",
+   "phonetic": "/dɪˈmænd/",
+   "pos": "n./v.",
+   "zh": "需求；要求",
+   "example": "The demand for clean energy is growing.",
+   "exampleZh": "对清洁能源的需求在增长。",
+   "level": 2,
+   "distractors": [
+    "command",
+    "remark",
+    "desire"
+   ]
+  },
+  {
+   "id": "w049",
+   "en": "deposit",
+   "phonetic": "/dɪˈpɑːzɪt/",
+   "pos": "n./v.",
+   "zh": "存款；押金",
+   "example": "You need to pay a deposit before moving in.",
+   "exampleZh": "入住前你需要交押金。",
+   "level": 2,
+   "distractors": [
+    "depict",
+    "position",
+    "dispose"
+   ]
+  },
+  {
+   "id": "w050",
+   "en": "deserve",
+   "phonetic": "/dɪˈzɜːrv/",
+   "pos": "v.",
+   "zh": "应得；值得",
+   "example": "You deserve a rest after all that work.",
+   "exampleZh": "做了那么多工作，你应该休息一下。",
+   "level": 2,
+   "distractors": [
+    "reserve",
+    "observe",
+    "presume"
+   ]
+  },
+  {
+   "id": "w051",
+   "en": "distinguish",
+   "phonetic": "/dɪˈstɪŋɡwɪʃ/",
+   "pos": "v.",
+   "zh": "区分；辨别",
+   "example": "Can you distinguish between the two twins?",
+   "exampleZh": "你能区分这对双胞胎吗？",
+   "level": 2,
+   "distractors": [
+    "distract",
+    "disguise",
+    "dispute"
+   ]
+  },
+  {
+   "id": "w052",
+   "en": "efficient",
+   "phonetic": "/ɪˈfɪʃnt/",
+   "pos": "adj.",
+   "zh": "高效的",
+   "example": "The new system is much more efficient.",
+   "exampleZh": "新系统效率高得多。",
+   "level": 2,
+   "distractors": [
+    "sufficient",
+    "proficient",
+    "excellent"
+   ]
+  },
+  {
+   "id": "w053",
+   "en": "emphasize",
+   "phonetic": "/ˈemfəsaɪz/",
+   "pos": "v.",
+   "zh": "强调",
+   "example": "The teacher emphasized the importance of practice.",
+   "exampleZh": "老师强调了练习的重要性。",
+   "level": 2,
+   "distractors": [
+    "enclose",
+    "empathize",
+    "energize"
+   ]
+  },
+  {
+   "id": "w054",
+   "en": "essential",
+   "phonetic": "/ɪˈsenʃl/",
+   "pos": "adj.",
+   "zh": "必要的；本质的",
+   "example": "Water is essential to all living things.",
+   "exampleZh": "水对所有生物都是必不可少的。",
+   "level": 2,
+   "distractors": [
+    "special",
+    "sensible",
+    "sequential"
+   ]
+  },
+  {
+   "id": "w055",
+   "en": "estimate",
+   "phonetic": "/ˈestɪmeɪt/ 动 · /ˈestɪmət/ 名",
+   "pos": "n./v.",
+   "zh": "估计；估算",
+   "example": "Experts estimate the cost at one million dollars.",
+   "exampleZh": "专家估计成本为一百万美元。",
+   "level": 2,
+   "distractors": [
+    "intimate",
+    "ultimate",
+    "stimulate"
+   ]
+  },
+  {
+   "id": "w056",
+   "en": "guarantee",
+   "phonetic": "/ˌɡærənˈtiː/",
+   "pos": "n./v.",
+   "zh": "保证；担保",
+   "example": "We guarantee the quality of our products.",
+   "exampleZh": "我们保证产品的质量。",
+   "level": 2,
+   "distractors": [
+    "generate",
+    "gratitude",
+    "guardian"
+   ]
+  },
+  {
+   "id": "w057",
+   "en": "ignore",
+   "phonetic": "/ɪɡˈnɔːr/",
+   "pos": "v.",
+   "zh": "忽视；不理",
+   "example": "He ignored my advice and failed.",
+   "exampleZh": "他忽视我的建议，结果失败了。",
+   "level": 2,
+   "distractors": [
+    "ignite",
+    "recognize",
+    "neglect"
+   ]
+  },
+  {
+   "id": "w058",
+   "en": "impress",
+   "phonetic": "/ɪmˈpres/",
+   "pos": "v.",
+   "zh": "给…留下深刻印象",
+   "example": "Her speech impressed everyone in the room.",
+   "exampleZh": "她的演讲给屋里每个人留下深刻印象。",
+   "level": 2,
+   "distractors": [
+    "express",
+    "compress",
+    "suppress"
+   ]
+  },
+  {
+   "id": "w059",
+   "en": "indicate",
+   "phonetic": "/ˈɪndɪkeɪt/",
+   "pos": "v.",
+   "zh": "表明；指示",
+   "example": "The results indicate a clear improvement.",
+   "exampleZh": "结果表明有明显的进步。",
+   "level": 2,
+   "distractors": [
+    "dedicate",
+    "intimate",
+    "initiate"
+   ]
+  },
+  {
+   "id": "w060",
+   "en": "maintain",
+   "phonetic": "/meɪnˈteɪn/",
+   "pos": "v.",
+   "zh": "维持；保养",
+   "example": "It is important to maintain a healthy diet.",
+   "exampleZh": "保持健康饮食很重要。",
+   "level": 2,
+   "distractors": [
+    "contain",
+    "retain",
+    "remain"
+   ]
+  },
+  {
+   "id": "w061",
+   "en": "obtain",
+   "phonetic": "/əbˈteɪn/",
+   "pos": "v.",
+   "zh": "获得；取得",
+   "example": "You must obtain permission before entering.",
+   "exampleZh": "进入前你必须获得许可。",
+   "level": 2,
+   "distractors": [
+    "attain",
+    "sustain",
+    "abstain"
+   ]
+  },
+  {
+   "id": "w062",
+   "en": "participate",
+   "phonetic": "/pɑːrˈtɪsɪpeɪt/",
+   "pos": "v.",
+   "zh": "参加；参与",
+   "example": "All students are encouraged to participate.",
+   "exampleZh": "鼓励所有学生参加。",
+   "level": 2,
+   "distractors": [
+    "separate",
+    "calculate",
+    "appreciate"
+   ]
+  },
+  {
+   "id": "w063",
+   "en": "persuade",
+   "phonetic": "/pərˈsweɪd/",
+   "pos": "v.",
+   "zh": "劝说；说服",
+   "example": "He persuaded her to try again.",
+   "exampleZh": "他说服她再试一次。",
+   "level": 2,
+   "distractors": [
+    "invade",
+    "pursue",
+    "provide"
+   ]
+  },
+  {
+   "id": "w064",
+   "en": "potential",
+   "phonetic": "/pəˈtenʃl/",
+   "pos": "n./adj.",
+   "zh": "潜力；潜在的",
+   "example": "The young player has great potential.",
+   "exampleZh": "这位年轻球员潜力巨大。",
+   "level": 2,
+   "distractors": [
+    "patience",
+    "passion",
+    "portion"
+   ]
+  },
+  {
+   "id": "w065",
+   "en": "recognize",
+   "phonetic": "/ˈrekəɡnaɪz/",
+   "pos": "v.",
+   "zh": "认出；承认",
+   "example": "I didn't recognize him with a beard.",
+   "exampleZh": "他留了胡子，我没认出他。",
+   "level": 2,
+   "distractors": [
+    "realize",
+    "organize",
+    "receive"
+   ]
+  },
+  {
+   "id": "w066",
+   "en": "reflect",
+   "phonetic": "/rɪˈflekt/",
+   "pos": "v.",
+   "zh": "反映；反思",
+   "example": "The survey reflects public opinion.",
+   "exampleZh": "这项调查反映了公众意见。",
+   "level": 2,
+   "distractors": [
+    "neglect",
+    "select",
+    "reject"
+   ]
+  },
+  {
+   "id": "w067",
+   "en": "reluctant",
+   "phonetic": "/rɪˈlʌktənt/",
+   "pos": "adj.",
+   "zh": "不情愿的",
+   "example": "She was reluctant to leave her hometown.",
+   "exampleZh": "她不情愿离开家乡。",
+   "level": 2,
+   "distractors": [
+    "redundant",
+    "resistant",
+    "relevant"
+   ]
+  },
+  {
+   "id": "w068",
+   "en": "sufficient",
+   "phonetic": "/səˈfɪʃnt/",
+   "pos": "adj.",
+   "zh": "足够的",
+   "example": "We have sufficient food for a week.",
+   "exampleZh": "我们有够吃一周的食物。",
+   "level": 2,
+   "distractors": [
+    "deficient",
+    "proficient",
+    "efficient"
+   ]
+  },
+  {
+   "id": "w069",
+   "en": "accomplish",
+   "phonetic": "/əˈkɑːmplɪʃ/",
+   "pos": "v.",
+   "zh": "完成；实现",
+   "example": "She accomplished the task ahead of schedule.",
+   "exampleZh": "她提前完成了任务。",
+   "level": 3,
+   "distractors": [
+    "accompany",
+    "polish",
+    "abolish"
+   ]
+  },
+  {
+   "id": "w070",
+   "en": "adequate",
+   "phonetic": "/ˈædɪkwət/",
+   "pos": "adj.",
+   "zh": "足够的；适当的",
+   "example": "The room is adequate for two people.",
+   "exampleZh": "这个房间供两人住是够的。",
+   "level": 3,
+   "distractors": [
+    "accurate",
+    "adoptive",
+    "adherent"
+   ]
+  },
+  {
+   "id": "w071",
+   "en": "anticipate",
+   "phonetic": "/ænˈtɪsɪpeɪt/",
+   "pos": "v.",
+   "zh": "预期；预料",
+   "example": "We anticipate a rise in prices.",
+   "exampleZh": "我们预计价格会上涨。",
+   "level": 3,
+   "distractors": [
+    "participate",
+    "participant",
+    "estimate"
+   ]
+  },
+  {
+   "id": "w072",
+   "en": "arbitrary",
+   "phonetic": "/ˈɑːrbɪtreri/",
+   "pos": "adj.",
+   "zh": "任意的；武断的",
+   "example": "The decision seemed completely arbitrary.",
+   "exampleZh": "这个决定看起来完全是武断的。",
+   "level": 3,
+   "distractors": [
+    "ordinary",
+    "arbitrate",
+    "artificial"
+   ]
+  },
+  {
+   "id": "w073",
+   "en": "assess",
+   "phonetic": "/əˈses/",
+   "pos": "v.",
+   "zh": "评估；评定",
+   "example": "Teachers assess students' progress each term.",
+   "exampleZh": "老师每学期评估学生的进步。",
+   "level": 3,
+   "distractors": [
+    "access",
+    "assert",
+    "assets"
+   ]
+  },
+  {
+   "id": "w074",
+   "en": "comprehensive",
+   "phonetic": "/ˌkɑːmprɪˈhensɪv/",
+   "pos": "adj.",
+   "zh": "全面的；综合的",
+   "example": "The book offers a comprehensive overview of history.",
+   "exampleZh": "这本书提供了对历史的全面概览。",
+   "level": 3,
+   "distractors": [
+    "competitive",
+    "cooperative",
+    "consecutive"
+   ]
+  },
+  {
+   "id": "w075",
+   "en": "consistent",
+   "phonetic": "/kənˈsɪstənt/",
+   "pos": "adj.",
+   "zh": "一致的；持续的",
+   "example": "His story is consistent with the facts.",
+   "exampleZh": "他的说法与事实一致。",
+   "level": 3,
+   "distractors": [
+    "insistent",
+    "resistant",
+    "constant"
+   ]
+  },
+  {
+   "id": "w076",
+   "en": "contemporary",
+   "phonetic": "/kənˈtempəreri/",
+   "pos": "adj.",
+   "zh": "当代的；同时代的",
+   "example": "She studies contemporary art in college.",
+   "exampleZh": "她在大学学习当代艺术。",
+   "level": 3,
+   "distractors": [
+    "contempt",
+    "contemplate",
+    "compliment"
+   ]
+  },
+  {
+   "id": "w077",
+   "en": "crucial",
+   "phonetic": "/ˈkruːʃl/",
+   "pos": "adj.",
+   "zh": "关键的；至关重要的",
+   "example": "This is a crucial moment for the team.",
+   "exampleZh": "这对球队来说是关键时刻。",
+   "level": 3,
+   "distractors": [
+    "critical",
+    "crude",
+    "cruel"
+   ]
+  },
+  {
+   "id": "w078",
+   "en": "deliberate",
+   "phonetic": "/dɪˈlɪbərət/",
+   "pos": "adj.",
+   "zh": "故意的；深思熟虑的",
+   "example": "The damage was clearly deliberate.",
+   "exampleZh": "这一损坏显然是故意的。",
+   "level": 3,
+   "distractors": [
+    "delicate",
+    "celebrate",
+    "decorate"
+   ]
+  },
+  {
+   "id": "w079",
+   "en": "diminish",
+   "phonetic": "/dɪˈmɪnɪʃ/",
+   "pos": "v.",
+   "zh": "减少；削弱",
+   "example": "His influence has diminished over the years.",
+   "exampleZh": "多年来他的影响力已经减弱。",
+   "level": 3,
+   "distractors": [
+    "demolish",
+    "minister",
+    "distinguish"
+   ]
+  },
+  {
+   "id": "w080",
+   "en": "elaborate",
+   "phonetic": "/ɪˈlæbərət/ 形 · /ɪˈlæbəreɪt/ 动",
+   "pos": "adj./v.",
+   "zh": "详尽的；详细阐述",
+   "example": "Could you elaborate on your plan?",
+   "exampleZh": "你能详细说明一下你的计划吗？",
+   "level": 3,
+   "distractors": [
+    "evaporate",
+    "liberate",
+    "celebrate"
+   ]
+  },
+  {
+   "id": "w081",
+   "en": "enormous",
+   "phonetic": "/ɪˈnɔːrməs/",
+   "pos": "adj.",
+   "zh": "巨大的",
+   "example": "They live in an enormous house in the countryside.",
+   "exampleZh": "他们住在乡下一栋巨大的房子里。",
+   "level": 3,
+   "distractors": [
+    "anonymous",
+    "famous",
+    "curious"
+   ]
+  },
+  {
+   "id": "w082",
+   "en": "exaggerate",
+   "phonetic": "/ɪɡˈzædʒəreɪt/",
+   "pos": "v.",
+   "zh": "夸大；夸张",
+   "example": "Don't exaggerate; it wasn't that serious.",
+   "exampleZh": "别夸张，没那么严重。",
+   "level": 3,
+   "distractors": [
+    "congratulate",
+    "negotiate",
+    "investigate"
+   ]
+  },
+  {
+   "id": "w083",
+   "en": "explicit",
+   "phonetic": "/ɪkˈsplɪsɪt/",
+   "pos": "adj.",
+   "zh": "明确的；直白的",
+   "example": "She gave explicit instructions for the task.",
+   "exampleZh": "她为这项任务给出了明确的指示。",
+   "level": 3,
+   "distractors": [
+    "implicit",
+    "strict",
+    "distinct"
+   ]
+  },
+  {
+   "id": "w084",
+   "en": "fluctuate",
+   "phonetic": "/ˈflʌktʃueɪt/",
+   "pos": "v.",
+   "zh": "波动；起伏",
+   "example": "Prices fluctuate with market demand.",
+   "exampleZh": "价格随市场需求波动。",
+   "level": 3,
+   "distractors": [
+    "fabricate",
+    "formulate",
+    "stimulate"
+   ]
+  },
+  {
+   "id": "w085",
+   "en": "fundamental",
+   "phonetic": "/ˌfʌndəˈmentl/",
+   "pos": "adj.",
+   "zh": "根本的；基础的",
+   "example": "Reading is a fundamental skill in education.",
+   "exampleZh": "阅读是教育中的一项基本技能。",
+   "level": 3,
+   "distractors": [
+    "foundation",
+    "funeral",
+    "framework"
+   ]
+  },
+  {
+   "id": "w086",
+   "en": "hypothesis",
+   "phonetic": "/haɪˈpɑːθəsɪs/",
+   "pos": "n.",
+   "zh": "假设；假说",
+   "example": "The data support the original hypothesis.",
+   "exampleZh": "数据支持最初的假设。",
+   "level": 3,
+   "distractors": [
+    "hyphen",
+    "synthesis",
+    "symptom"
+   ]
+  },
+  {
+   "id": "w087",
+   "en": "implement",
+   "phonetic": "/ˈɪmplɪment/",
+   "pos": "v.",
+   "zh": "实施；执行",
+   "example": "The school decided to implement a new policy.",
+   "exampleZh": "学校决定实施一项新政策。",
+   "level": 3,
+   "distractors": [
+    "implicate",
+    "implant",
+    "immigrate"
+   ]
+  },
+  {
+   "id": "w088",
+   "en": "inevitable",
+   "phonetic": "/ɪnˈevɪtəbl/",
+   "pos": "adj.",
+   "zh": "不可避免的",
+   "example": "Change is inevitable in any organization.",
+   "exampleZh": "在任何组织中，变革都是不可避免的。",
+   "level": 3,
+   "distractors": [
+    "ineligible",
+    "invincible",
+    "invaluable"
+   ]
+  },
+  {
+   "id": "w089",
+   "en": "interpret",
+   "phonetic": "/ɪnˈtɜːrprət/",
+   "pos": "v.",
+   "zh": "解释；口译",
+   "example": "How do you interpret this sentence?",
+   "exampleZh": "你怎么解释这句话？",
+   "level": 3,
+   "distractors": [
+    "interrupt",
+    "intercept",
+    "interview"
+   ]
+  },
+  {
+   "id": "w090",
+   "en": "justify",
+   "phonetic": "/ˈdʒʌstɪfaɪ/",
+   "pos": "v.",
+   "zh": "证明…正当；辩护",
+   "example": "Nothing can justify such behavior.",
+   "exampleZh": "没有什么能为这种行为辩护。",
+   "level": 3,
+   "distractors": [
+    "testify",
+    "verify",
+    "clarify"
+   ]
+  },
+  {
+   "id": "w091",
+   "en": "legitimate",
+   "phonetic": "/lɪˈdʒɪtɪmət/",
+   "pos": "adj.",
+   "zh": "合法的；合理的",
+   "example": "He has a legitimate reason for being late.",
+   "exampleZh": "他迟到有正当理由。",
+   "level": 3,
+   "distractors": [
+    "literate",
+    "tolerate",
+    "liberate"
+   ]
+  },
+  {
+   "id": "w092",
+   "en": "negotiate",
+   "phonetic": "/nɪˈɡoʊʃieɪt/",
+   "pos": "v.",
+   "zh": "谈判；协商",
+   "example": "The two companies are negotiating a contract.",
+   "exampleZh": "两家公司正在协商一份合同。",
+   "level": 3,
+   "distractors": [
+    "navigate",
+    "generate",
+    "originate"
+   ]
+  },
+  {
+   "id": "w093",
+   "en": "obscure",
+   "phonetic": "/əbˈskjʊr/",
+   "pos": "adj./v.",
+   "zh": "模糊的；使模糊",
+   "example": "The meaning of the poem is rather obscure.",
+   "exampleZh": "这首诗的含义相当晦涩。",
+   "level": 3,
+   "distractors": [
+    "obscene",
+    "obsess",
+    "obstacle"
+   ]
+  },
+  {
+   "id": "w094",
+   "en": "phenomenon",
+   "phonetic": "/fəˈnɑːmɪnən/",
+   "pos": "n.",
+   "zh": "现象",
+   "example": "Online shopping is a worldwide phenomenon.",
+   "exampleZh": "网购是一种世界性现象。",
+   "level": 3,
+   "distractors": [
+    "philosophy",
+    "paragraph",
+    "parade"
+   ]
+  },
+  {
+   "id": "w095",
+   "en": "precise",
+   "phonetic": "/prɪˈsaɪs/",
+   "pos": "adj.",
+   "zh": "精确的；确切的",
+   "example": "Please give me the precise time of arrival.",
+   "exampleZh": "请告诉我确切的到达时间。",
+   "level": 3,
+   "distractors": [
+    "premise",
+    "precede",
+    "precious"
+   ]
+  },
+  {
+   "id": "w096",
+   "en": "preserve",
+   "phonetic": "/prɪˈzɜːrv/",
+   "pos": "v.",
+   "zh": "保护；保存",
+   "example": "We should preserve the old buildings in the city.",
+   "exampleZh": "我们应该保护城市里的老建筑。",
+   "level": 3,
+   "distractors": [
+    "reserve",
+    "perverse",
+    "persist"
+   ]
+  },
+  {
+   "id": "w097",
+   "en": "reluctance",
+   "phonetic": "/rɪˈlʌktəns/",
+   "pos": "n.",
+   "zh": "不情愿；勉强",
+   "example": "He agreed with great reluctance.",
+   "exampleZh": "他非常勉强地同意了。",
+   "level": 3,
+   "distractors": [
+    "relevance",
+    "resistance",
+    "reliance"
+   ]
+  },
+  {
+   "id": "w098",
+   "en": "simultaneously",
+   "phonetic": "/ˌsaɪməlˈteɪniəsli/",
+   "pos": "adv.",
+   "zh": "同时地",
+   "example": "The two events happened simultaneously.",
+   "exampleZh": "两件事同时发生。",
+   "level": 3,
+   "distractors": [
+    "spontaneously",
+    "continuously",
+    "consequently"
+   ]
+  },
+  {
+   "id": "w099",
+   "en": "sustainable",
+   "phonetic": "/səˈsteɪnəbl/",
+   "pos": "adj.",
+   "zh": "可持续的",
+   "example": "We need sustainable solutions for the future.",
+   "exampleZh": "我们需要面向未来的可持续方案。",
+   "level": 3,
+   "distractors": [
+    "durable",
+    "reliable",
+    "feasible"
+   ]
+  },
+  {
+   "id": "w100",
+   "en": "vulnerable",
+   "phonetic": "/ˈvʌlnərəbl/",
+   "pos": "adj.",
+   "zh": "易受伤害的；脆弱的",
+   "example": "Young children are vulnerable to infections.",
+   "exampleZh": "幼儿容易受感染。",
+   "level": 3,
+   "distractors": [
+    "voluntary",
+    "valuable",
+    "variable"
+   ]
+  }
+ ]
 }

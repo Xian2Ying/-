@@ -83,18 +83,18 @@ const POOLS = {"easy":[{"en":"water","phon":"ˈwɒtɜː","mean":"水；水域","
 /* ===== 四难度阶梯：简单10 → 普通25 → 困难40 → 地狱60（地狱4段递增 5/10/20/25，需通关困难解锁） ===== */
 const TIERS=[
  {key:'easy',name:'简单',sub:'放学后·练习室',levels:10,emoji:'🌸',tint:'#3a4a7a',bossEvery:0},
- {key:'normal',name:'普通',sub:'少女乐队·邦多利 × GBC',levels:25,emoji:'🎸',tint:'#7a3a6e',bossEvery:8},
- {key:'hard',name:'困难',sub:'少女歌剧·Revue Starlight',levels:40,emoji:'🎭',tint:'#a83232',bossEvery:5},
- {key:'hell',name:'地狱',sub:'終幕·最終公演',levels:60,emoji:'💀',tint:'#3a0d0d',bossEvery:10,
+ {key:'normal',name:'普通',sub:'校园乐队·合奏练习',levels:25,emoji:'🎸',tint:'#7a3a6e',bossEvery:8},
+ {key:'hard',name:'困难',sub:'舞台歌剧·聚光之夜',levels:40,emoji:'🎭',tint:'#a83232',bossEvery:5},
+ {key:'hell',name:'地狱',sub:'终幕·深渊试炼',levels:60,emoji:'💀',tint:'#3a0d0d',bossEvery:10,
   stages:['I','II','III','IV'],stageFloors:[5,10,20,25]}
 ];
-/* 二次元主题包装：校园 / 少女乐队(BanG Dream!·GBC) / 少女歌剧(Revue Starlight) / 終幕公演
-   仅用题材意象（乐器/舞台/剧场）与应援风文案，不引歌词、不抄 logo、不用人名。 */
+/* 原创二次元主题包装：校园 / 校园乐队 / 舞台歌剧 / 终幕试炼
+   仅用题材意象（乐器/舞台/剧场）与应援风文案，不引任何真实作品名、歌词、logo 或人名。 */
 const TIER_FLAVOR={
  easy:{line:'放学后游荡的单词小怪', mobs:['🎒','📚','🌸','🎀','✏️'], names:['走神怪','瞌睡怪','迟到怪','单词小怪','橡皮怪']},
  normal:{line:'排练室里走音的单词怪', mobs:['🎸','🥁','🎹','🎤','🎶'], names:['吉他怪','贝斯怪','鼓手怪','键盘怪','主唱怪']},
- hard:{line:'聚光灯下逞强的舞台少女怪', mobs:['🎭','⭐','🎪','🌹','🎀'], names:['舞台少女怪','聚光怪','華之怪','revue怪','安可怪']},
- hell:{line:'深渊里爬出来的终幕词魔', mobs:['💀','🔥','🎭','⭐','👹'], names:['词魔','深渊词魔','终幕词魔','華击词魔','安可词魔']}
+ hard:{line:'聚光灯下逞强的舞台少女怪', mobs:['🎭','⭐','🎪','🌹','🎀'], names:['舞台少女怪','聚光怪','幕布怪','剪影怪','安可怪']},
+ hell:{line:'深渊里爬出来的终幕词魔', mobs:['💀','🔥','🎭','⭐','👹'], names:['词魔','深渊词魔','终幕词魔','幕击词魔','安可词魔']}
 };
 const BOSS_MOBS={easy:'👑',normal:'🌟',hard:'🎭',hell:'💀'};
 const HIT_LINES=['击退！','NICE！','完美！','Encore！','好评！'];
@@ -104,7 +104,7 @@ const CHARS={
        oops:[{name:'班主任·先生',emoji:'✏️',line:'答错了哦，再读一遍例句～'},{name:'同桌·小樱',emoji:'🌸',line:'差一点点，下次稳住！'}]},
  normal:{cheer:[{name:'吉他手·弦',emoji:'🎸',line:'Perfect take！这段 solo 是你的了！'},{name:'主唱·歌',emoji:'🎤',line:'Encore！全场都为你嗨起来！'}],
          oops:[{name:'鼓手·咚',emoji:'🥁',line:'节奏乱了，重新数拍子来一遍～'},{name:'键盘·键',emoji:'🎹',line:'走音啦，校准音准再上！'}]},
- hard:{cheer:[{name:'舞台少女·华',emoji:'🎭',line:'Bravo！这一幕属于你！'},{name:'顶点之星·星',emoji:'⭐',line:'Top star 就是你，华之光闪耀！'}],
+ hard:{cheer:[{name:'舞台少女·幕',emoji:'🎭',line:'Bravo！这一幕属于你！'},{name:'顶点之星·星',emoji:'⭐',line:'C 位就是你，舞台为你闪耀！'}],
        oops:[{name:'舞台监督·幕',emoji:'🎪',line:'谢幕太早，这场重排！'},{name:'对手演员·蔷',emoji:'🌹',line:'被抢了戏，下一幕抢回来！'}]},
  hell:{cheer:[{name:'终幕向导·冥',emoji:'💀',line:'深渊也为你鼓掌，继续下沉！'},{name:'业火精灵·焰',emoji:'🔥',line:'燃起来了！此词永世铭记！'}],
        oops:[{name:'词魔王·魔',emoji:'👹',line:'被你识破，下一词可没这么简单！'},{name:'审判者·雷',emoji:'⚡',line:'Wrong！重整旗鼓再战！'}]}
@@ -143,10 +143,45 @@ var voiceCache={},voiceFail=0,voiceResult="",sharedAudio=null,audioUnlocked=fals
 function ensureAudio(){try{if(!sharedAudio)sharedAudio=new Audio();}catch(e){}}
 function unlockVoice(){if(audioUnlocked)return;audioUnlocked=true;try{if(!sharedAudio)sharedAudio=new Audio();sharedAudio.onplaying=function(){voiceFail=0;voiceResult="ok";};sharedAudio.src="data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAgD4AAAB9AAACABAAZGF0YQAAAAA=";var p=sharedAudio.play();if(p&&p.catch)p.catch(function(){});}catch(e){}}
 function voiceSrc(text,stage){if(stage===0)return "audio/"+encodeURIComponent(text)+".mp3"+SHARE_Q;if(stage===1)return "https://dict.youdao.com/dictvoice?audio="+encodeURIComponent(text)+"&type=2";return "";}
-function voiceFor(text){var a=voiceCache[text];if(a)return a;a=new Audio();a.preload="auto";var st0=noLocal[text]?1:0;a.dataset.stage=String(st0);a.onplaying=function(){voiceFail=0;voiceResult="ok";};a.onerror=function(){var st=parseInt(a.dataset.stage||"0",10);if(st===0)noLocal[text]=1;if(st<2){var nx=voiceSrc(text,st+1);a.dataset.stage=String(st+1);if(nx){try{a.src=nx;}catch(e){}var p=a.play();if(p&&p.catch)p.catch(function(){});return;}}voiceFail++;voiceResult="fail";speakNative(text);};a.src=voiceSrc(text,st0);voiceCache[text]=a;return a;}
+/* 本地 mp3 只有主线 100 词；肉鸽 850 词中不在 LOCAL_AUDIO 白名单的，直接走在线源，避免请求缺失文件（不写 console 404） */
+var LOCAL_AUDIO={"abandon":1,"ability":1,"accomplish":1,"accurate":1,"achieve":1,"adapt":1,"adequate":1,"afford":1,"ancient":1,"annual":1,"anticipate":1,"appreciate":1,"approach":1,"arbitrary":1,"assess":1,"assume":1,"attitude":1,"available":1,"aware":1,"benefit":1,"capable":1,"challenge":1,"community":1,"compete":1,"complex":1,"comprehensive":1,"concentrate":1,"confident":1,"consider":1,"consistent":1,"contemporary":1,"contribute":1,"convince":1,"crucial":1,"culture":1,"decide":1,"declare":1,"deliberate":1,"demand":1,"deposit":1,"deserve":1,"develop":1,"diminish":1,"distinguish":1,"efficient":1,"effort":1,"elaborate":1,"emphasize":1,"enormous":1,"environment":1,"essential":1,"estimate":1,"exaggerate":1,"experience":1,"explicit":1,"familiar":1,"fluctuate":1,"fundamental":1,"generation":1,"guarantee":1,"hypothesis":1,"ignore":1,"implement":1,"impress":1,"improve":1,"indicate":1,"inevitable":1,"influence":1,"interpret":1,"justify":1,"knowledge":1,"legitimate":1,"maintain":1,"manage":1,"negotiate":1,"obscure":1,"obtain":1,"opportunity":1,"participate":1,"personal":1,"persuade":1,"phenomenon":1,"possible":1,"potential":1,"precise":1,"prepare":1,"preserve":1,"provide":1,"reason":1,"recognize":1,"reduce":1,"reflect":1,"reluctance":1,"reluctant":1,"simultaneously":1,"sufficient":1,"support":1,"sustainable":1,"tradition":1,"vulnerable":1};
+function voiceFor(text){
+  var a=voiceCache[text];
+  if(a)return a;
+  a=new Audio();a.preload="auto";
+  var st0=(noLocal[text]||!LOCAL_AUDIO[(text||"").toLowerCase()])?1:0;
+  a.dataset.stage=String(st0);
+  a.onplaying=function(){voiceFail=0;voiceResult="ok";};
+  a.onerror=function(){
+    var st=parseInt(a.dataset.stage||"0",10);
+    if(st===0)noLocal[text]=1;
+    if(st<2){var nx=voiceSrc(text,st+1);a.dataset.stage=String(st+1);
+      if(nx){try{a.src=nx;}catch(e){}var p=a.play();if(p&&p.catch)p.catch(function(){});return;}}
+    voiceFail++;voiceResult="fail";speakNative(text);
+  };
+  a.src=voiceSrc(text,st0);
+  voiceCache[text]=a;
+  return a;
+}
 function speakNative(text){if(!window.speechSynthesis)return false;try{window.speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(text);u.lang="en-US";u.rate=1;u.volume=1;window.speechSynthesis.speak(u);return true;}catch(e){return false;}}
 function playShared(text){try{if(!sharedAudio)return false;var a=voiceCache[text];var st=a?parseInt(a.dataset.stage||"0",10):0;if(st>=2)return false;sharedAudio.src=voiceSrc(text,st);var p=sharedAudio.play();if(p&&p.catch)p.catch(function(){voiceResult="fail";});return true;}catch(e){return false;}}
-function speak(text){if(!text)return;unlockVoice();if(voiceFail<3){var a;try{a=voiceFor(text);}catch(e){a=null;}if(a){var st=parseInt(a.dataset.stage||"0",10);if(st>=2){voiceFail++;voiceResult="fail";speakNative(text);return;}for(var k in voiceCache){if(k!==text){try{voiceCache[k].pause();voiceCache[k].currentTime=0;}catch(e){}}}try{window.speechSynthesis&&window.speechSynthesis.cancel();}catch(e){}try{a.pause();a.currentTime=0;}catch(e){}var p=a.play();if(p&&p.catch){p.catch(function(err){if(err&&err.name==="AbortError")return;if(parseInt(a.dataset.stage||"0",10)<2)return;voiceFail++;voiceResult="fail";speakNative(text);});}return;}}speakNative(text);}
+function speak(text){
+  if(!text)return;unlockVoice();
+  if(voiceFail<3){
+    var a;try{a=voiceFor(text);}catch(e){a=null;}
+    if(a){
+      var st=parseInt(a.dataset.stage||"0",10);
+      if(st>=2){voiceFail++;voiceResult="fail";speakNative(text);return;}
+      for(var k in voiceCache){if(k!==text){try{voiceCache[k].pause();voiceCache[k].currentTime=0;}catch(e){}}}
+      try{window.speechSynthesis&&window.speechSynthesis.cancel();}catch(e){}
+      try{a.pause();a.currentTime=0;}catch(e){}
+      var p=a.play();
+      if(p&&p.catch){p.catch(function(err){if(err&&err.name==="AbortError")return;if(parseInt(a.dataset.stage||"0",10)<2)return;voiceFail++;voiceResult="fail";speakNative(text);});}
+      return;
+    }
+  }
+  speakNative(text);
+}
 ["pointerdown","touchstart","click"].forEach(function(ev){document.addEventListener(ev,function(){unlockVoice();ensureAudio();},{once:true,passive:true});});
 let META=loadMeta();
 function loadMeta(){try{return JSON.parse(localStorage.getItem(WQ_DEMO?"wq_rogue4_demo":"wq_rogue4")||"{}")}catch(e){return{}}}
@@ -195,18 +230,18 @@ let S={};
 function applyTheme(t){document.documentElement.style.setProperty('--tint',t.tint);}
 function showBanner(t){$("banner").innerHTML='<span class="e">'+t.emoji+'</span><span>'+t.name+' 难度</span><span class="sub">'+t.sub+'</span>';}
 function tierSelect(){ wqSyncUnlock();
-  applyTheme(TIERS[Math.min(META.unlocked,3)]);
+  applyTheme(TIERS[0]);   // 难度选择页用默认配色，进入具体档位后跟随所选难度
   showBanner({emoji:'🎲',name:'单词肉鸽',sub:'四难度 · 永久死亡'});
   const btns=TIERS.map((t,i)=>{
     const locked=(i===3)?!wqHellUnlocked():false;
-    return '<button class="tierbtn" data-i="'+i+'" '+(locked?'disabled':'')+'><b>'+t.emoji+' '+t.name+'</b> · '+t.levels+'关 · '+t.sub+(locked?'<span class="lock">🔒 通关前三档解锁 · 进度 '+wqClearCount()+'/3</span>':(i===3?' · 已解锁 💀':(META.cleared[i]?' · ✅ 已通关':' · 最佳 '+META.best[i]+'层')))+'</button>';
+    return '<button class="tierbtn" data-i="'+i+'" '+(locked?'disabled':'')+'><b>'+t.emoji+' '+t.name+'</b> · '+t.levels+'层 · '+t.sub+(locked?'<span class="lock">🔒 通关前三档解锁 · 进度 '+wqClearCount()+'/3</span>':(i===3?' · 已解锁 💀':(META.cleared[i]?' · ✅ 已通关':' · 最佳 '+META.best[i]+'层')))+'</button>';
   }).join('');
   $("hud").innerHTML='<div class="stat">累计记忆碎片 <b>'+META.fragments+'</b></div>';
   $("stage").innerHTML='<div class="overlay">'+(WQ_DEMO?'<div style="display:inline-block;margin-bottom:12px;padding:5px 12px;border:1px solid #f4c75b;border-radius:20px;color:#f4c75b;font-size:12px;font-weight:800">演示模式 · 四档难度已全部解锁</div><br>':'')+'<div class="big">🎲</div><h2>选择难度</h2><p>'+(WQ_DEMO?'<b style="color:#f4c75b">演示模式：</b>简单 / 普通 / 困难 / 地狱 四档均可直接进入（正常版需通关前三档解锁地狱）':'简单 / 普通 / 困难 三档自由挑战 · 各到 3 / 5 / 8 层即算通关<br>三档全部通关解锁 💀 地狱（当前进度 '+wqClearCount()+'/3）· 无需刷完全部关卡')+'</p>'+btns+'</div>';
   document.querySelectorAll('.tierbtn').forEach(b=>{if(!b.disabled)b.onclick=()=>talentPick(parseInt(b.dataset.i));});
 }
 function talentPick(tierIdx){ if(tierIdx===3&&!wqHellUnlocked()){tierSelect();return;}
-  S.tierIdx=tierIdx; showBanner(TIERS[tierIdx]);
+  S.tierIdx=tierIdx; applyTheme(TIERS[tierIdx]); showBanner(TIERS[tierIdx]);
   $("hud").innerHTML='<div class="stat">选择开局天赋</div>';
   $("stage").innerHTML='<div class="overlay"><div class="big">'+TIERS[tierIdx].emoji+'</div><h2>'+TIERS[tierIdx].name+' 难度 · 选天赋</h2>'+
     TALENTS.map(t=>'<button class="talent" data-id="'+t.id+'"><b>'+t.name+'</b> — '+t.desc+'</button>').join('')+'</div>';
@@ -274,7 +309,7 @@ function choose(btn){
     gain=S.isBoss?3:1; if(S.tid==="combo"&&S.combo%3===0)gain+=5;
     S.frag+=gain;
     const hl=HIT_LINES[Math.floor(Math.random()*HIT_LINES.length)];
-    $("fb").textContent=(S.isBoss?"🌟 词魔王被击败！华之王座易主！":hl)+(S.combo>=3?" 🔥x"+S.combo:"");$("fb").className="feedback ok";
+    $("fb").textContent=(S.isBoss?"🌟 词魔王被击败！深渊王座易主！":hl)+(S.combo>=3?" 🔥x"+S.combo:"");$("fb").className="feedback ok";
     blip(660,.12,"triangle");setTimeout(()=>blip(880,.12,"triangle"),90);
   }else{
     btn.classList.add("wrong");const m=document.createElement("span");m.className="mark no";m.textContent="✗";btn.appendChild(m);
@@ -308,12 +343,12 @@ function tierClear(){
   META.unlocked=wqHellUnlocked()?3:2;
   saveMeta();
   const nextIdx=S.tierIdx+1;
-  $("stage").innerHTML='<div class="overlay"><div class="big">🏆</div><h2>'+t.name+' 难度 · 公演通关！</h2>'+
+  $("stage").innerHTML='<div class="overlay"><div class="big">🏆</div><h2>'+t.name+' 难度 · 通关！</h2>'+
     '<p>本局到达 <b style="color:var(--gold)">'+S.floor+'</b> 层 · 击败 <b style="color:var(--gold)">'+S.kills+'</b> 怪<br>'+
     '获得记忆碎片 <b style="color:var(--gold)">'+S.frag+'</b></p>'+
     (nextIdx<TIERS.length
-      ? '<p>解锁下一档：<b style="color:var(--gold)">'+TIERS[nextIdx].name+'（'+TIERS[nextIdx].levels+'关 · '+TIERS[nextIdx].sub+'）</b></p><button class="next" onclick="talentPick('+nextIdx+')">挑战下一难度 →</button>'
-      : '<p>🌟 你打穿了全部四档公演！单词肉鸽通关！</p><button class="next" onclick="tierSelect()">返回难度选择</button>')+
+      ? '<p>解锁下一档：<b style="color:var(--gold)">'+TIERS[nextIdx].name+'（'+TIERS[nextIdx].levels+'层 · '+TIERS[nextIdx].sub+'）</b></p><button class="next" onclick="talentPick('+nextIdx+')">挑战下一难度 →</button>'
+      : '<p>🌟 你打穿了全部四档难度！单词肉鸽通关！</p><button class="next" onclick="tierSelect()">返回难度选择</button>')+
     '</div>';
 }
 function gameOver(){
